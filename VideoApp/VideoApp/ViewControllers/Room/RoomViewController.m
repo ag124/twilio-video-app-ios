@@ -303,10 +303,6 @@
 
     BOOL videoEnabled = videoTrack.isEnabled;
 
-    for (id <TVIVideoRenderer> renderer in videoTrack.renderers) {
-        [videoTrack removeRenderer:renderer];
-    }
-
     [videoTrack addRenderer:self.largeVideoView];
 
     self.largeVideoView.mirror = shouldMirror;
@@ -381,7 +377,7 @@
             [self updateVideoUIForSelectedParticipantUIModel:addedModel];
             [self refreshLocalParticipantVideoView];
         } else {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[[self unselectedRemoteModels] count] inSection:0];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.remoteParticipantUIModels.count inSection:0];
             [self.videoCollectionView insertItemsAtIndexPaths:@[indexPath]];
         }
     }
@@ -465,20 +461,13 @@
     if (!([previouslySelectedParticipantUIModel isEqual:cell.remoteParticipantUIModel] ||
           (previouslySelectedParticipantUIModel == nil && cell.remoteParticipantUIModel == nil))) {
         [self updateVideoUIForSelectedParticipantUIModel:cell.remoteParticipantUIModel];
-        [self refreshVideoViews];
     }
-}
-
-- (NSArray *)unselectedRemoteModels {
-    NSMutableArray *exclusiveModels = [NSMutableArray arrayWithArray:self.remoteParticipantUIModels];
-    [exclusiveModels removeObject:self.selectedParticipantUIModel];
-    return [exclusiveModels copy];
 }
 
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [[self unselectedRemoteModels] count] + 1;
+    return self.remoteParticipantUIModels.count + 1;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -488,7 +477,7 @@
         // 0th element is always the local participant
         [cell setLocalParticipant:self.room.localParticipant isCurrentlySelected:(self.selectedParticipantUIModel == nil)];
     } else {
-        RemoteParticipantUIModel *remoteParticipantUIModel = [self unselectedRemoteModels][indexPath.row - 1];
+        RemoteParticipantUIModel *remoteParticipantUIModel = self.remoteParticipantUIModels[indexPath.row - 1];
         [cell setRemoteParticipantUIModel:remoteParticipantUIModel isDominantSpeaker:(remoteParticipantUIModel.remoteParticipant == self.currentDominantSpeaker)];
     }
 
@@ -753,7 +742,7 @@
     if ([participant isEqual:self.selectedParticipantUIModel.remoteParticipant]) {
         [self updateRemoteParticipantView:participant];
     } else {
-        NSUInteger index = [[self unselectedRemoteModels] indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        NSUInteger index = [self.remoteParticipantUIModels indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             return [participant isEqual:((RemoteParticipantUIModel *)obj).remoteParticipant];
         }];
 
