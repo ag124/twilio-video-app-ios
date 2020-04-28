@@ -23,6 +23,7 @@
 @interface VideoCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, assign) TVINetworkQualityLevel networkQualityLevel;
+@property (nonatomic, assign) BOOL isPinned;
 
 // A cell can only have one or the other. If you set one, it nil's the other
 @property (nonatomic, readonly, weak) TVILocalParticipant *localParticipant;

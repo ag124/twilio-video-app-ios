@@ -63,6 +63,7 @@
 @property (nonatomic, strong) NSMutableArray<RemoteParticipantUIModel *> *remoteParticipantUIModels;
 
 @property (nonatomic, strong) TVIRemoteParticipant *currentDominantSpeaker;
+@property (nonatomic, strong) TVIRemoteParticipant *pinnedParticipant;
 
 @end
 
@@ -178,7 +179,7 @@
     self.videoToggleButton.selected = !self.localMediaController.localVideoTrack;
     self.flipCameraButton.enabled = (self.localMediaController.localVideoTrack != nil);
 
-    [self updateVideoUIForSelectedParticipantUIModel:nil];
+    [self updateMainParticipant];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -223,10 +224,7 @@
 
     self.videoToggleButton.selected = !self.localMediaController.localVideoTrack;
 
-    if (self.selectedParticipantUIModel == nil) {
-        // We are displaying ourselves in the big view...
-        [self updateVideoUIForSelectedParticipantUIModel:nil];
-    }
+    [self updateMainParticipant];
 }
 
 - (IBAction)hangupPressed:(id)sender {
@@ -387,6 +385,10 @@
 
 - (void)deleteParticipantModel:(TVIRemoteParticipant *)participant
                    publication:(TVIRemoteVideoTrack *)videoTrack {
+    if (participant == self.currentDominantSpeaker) {
+        self.currentDominantSpeaker = nil;
+    }
+
     BOOL clearsSelection = [participant isEqual:self.selectedParticipantUIModel.remoteParticipant] &&
     ((videoTrack == nil) || [self.selectedParticipantUIModel.remoteVideoTrack isEqual:videoTrack]);
 
@@ -454,6 +456,16 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    for (VideoCollectionViewCell *cell in collectionView.visibleCells) {
+        cell.isPinned = false;
+    }
+
+    VideoCollectionViewCell *cell = (VideoCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    cell.isPinned = !cell.isPinned;
+
+    
+    
+    
     RemoteParticipantUIModel *previouslySelectedParticipantUIModel = self.selectedParticipantUIModel;
 
     VideoCollectionViewCell *cell = (VideoCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -462,6 +474,16 @@
           (previouslySelectedParticipantUIModel == nil && cell.remoteParticipantUIModel == nil))) {
         [self updateVideoUIForSelectedParticipantUIModel:cell.remoteParticipantUIModel];
     }
+}
+
+- (TVIParticipant *)participantForIndex:(NSInteger)index {
+    if index == 0 {
+        
+    }
+}
+
+- (NSArray<TVIParticipant *> *)allParticipants {
+    
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -593,26 +615,36 @@
 - (void)room:(TVIRoom *)room dominantSpeakerDidChange:(TVIRemoteParticipant *)participant {
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
-    TVIRemoteParticipant *previousDominantSpeaker = self.currentDominantSpeaker;
-    self.currentDominantSpeaker = participant;
+    if (participant != nil) {
+        self.currentDominantSpeaker = participant;
+        [self updateMainParticipant];
+    }
+}
 
-    // Remove indicator from previous dominant speaker if necessary
-    if (previousDominantSpeaker != nil) {
-        if ([self.selectedParticipantUIModel.remoteParticipant isEqual:previousDominantSpeaker]) {
-            [self updateRemoteParticipantView:previousDominantSpeaker];
-        } else {
-            [self refreshParticipantVideoViews:previousDominantSpeaker];
+- (void)updateMainParticipant {
+    NSString *identity;
+    
+    if (self.pinnedParticipant != nil) {
+        identity = self.pinnedParticipant.identity;
+    } else if (self.currentDominantSpeaker != nil) {
+        identity = self.currentDominantSpeaker.identity;
+    } else if (self.remoteParticipantUIModels.count > 0) {
+        identity = self.remoteParticipantUIModels[0].remoteParticipant.identity;
+    } else {
+        identity = nil; // Local participant
+    }
+    
+    [self updateVideoUIForSelectedParticipantUIModel:[self remoteParticipantUIModelWithIdentity:identity]];
+}
+
+- (RemoteParticipantUIModel *)remoteParticipantUIModelWithIdentity:(NSString *)identity {
+    for (RemoteParticipantUIModel *model in self.remoteParticipantUIModels) {
+        if (model.remoteParticipant.identity == identity) {
+            return model;
         }
     }
 
-    // Add indicator for current dominant speaker if necessary
-    if (self.currentDominantSpeaker != nil) {
-        if ([self.selectedParticipantUIModel.remoteParticipant isEqual:self.currentDominantSpeaker]) {
-            [self updateRemoteParticipantView:self.currentDominantSpeaker];
-        } else {
-            [self refreshParticipantVideoViews:self.currentDominantSpeaker];
-        }
-    }
+    return nil; // Required?
 }
 
 #pragma mark - TVIRemoteParticipantDelegate
