@@ -15,12 +15,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VideoApp-Swift.h"
 
-@class LocalMediaController;
-
-@interface RoomViewController : UIViewController
-
-@property (nonatomic, strong, nonnull) RoomViewModel *viewModel;
+@interface RoomViewControllerOld : UIViewController
 
 @end

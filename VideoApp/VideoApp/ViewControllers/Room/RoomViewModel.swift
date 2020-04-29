@@ -14,60 +14,42 @@
 //  limitations under the License.
 //
 
-import TwilioVideo
+struct RoomViewModelData {
+    let roomName: String
+    let mainVideo: String
+    let participants: [String]
+}
 
-@objc class RoomViewModel: NSObject {
-    @objc let roomName: String
-    @objc var room: Room?
-    @objc let localMediaController: LocalMediaController
-    @objc var selectedParticipantUIModel: RemoteParticipantUIModel?
-    @objc var remoteParticipantUIModels: [RemoteParticipantUIModel] = []
-    @objc var mainParticipant: Participant? {
-        if let pinnedParticipant = pinnedParticipant {
-            return pinnedParticipant
-        } else if let dominantSpeaker = dominantSpeaker {
-            return dominantSpeaker
-        } else {
-            return remoteParticipantUIModels.first?.remoteParticipant
-        }
-    }
-    @objc var mainParticipantUIModel: RemoteParticipantUIModel? {
-        guard let mainParticipant = mainParticipant else { return nil }
-        
-        return remoteParticipantUIModels.first { $0.remoteParticipant == mainParticipant }
-    }
-    @objc var dominantSpeaker: Participant?
-    @objc var pinnedParticipant: Participant?
-    @objc var allParticipants: [Participant] {
-        let localParticipant = localMediaController.localParticipant! as Participant // Don't bang?
-        let remoteParticipants = remoteParticipantUIModels.map { $0.remoteParticipant as Participant }
-        return [localParticipant] + remoteParticipants
-    }
+protocol RoomViewModelDelegate: AnyObject {
+    func didUpdateData()
+}
 
-    @objc init(localMediaController: LocalMediaController, roomName: String) {
-        self.localMediaController = localMediaController
+class RoomViewModel {
+    weak var delegate: RoomViewModelDelegate?
+    private let roomName: String
+    private let roomStore: RoomStore
+
+    init(roomName: String, roomStore: RoomStore) {
         self.roomName = roomName
+        self.roomStore = roomStore
+        roomStore.delegate = self
     }
     
-    @objc func addRemoteParticipantUIModel(_ model: RemoteParticipantUIModel) {
-        remoteParticipantUIModels.append(model)
+    func connect() {
+        roomStore.connect(roomName: roomName)
     }
+}
 
-    @objc func removeAllRemoteParticipantUIModels() {
-        remoteParticipantUIModels.removeAll()
+extension RoomViewModel: RoomStoreDelegate {
+    func didConnect() {
+        delegate?.didUpdateData()
     }
     
-    @objc func removeRemoteParticipantUIModels(at indexes: IndexSet) {
-        indexes.reversed().forEach { remoteParticipantUIModels.remove(at: $0) } // Try to remove this
-    }
-    
-    @objc func togglePin(at index: Int) {
-        let participant = allParticipants[index]
+    func didFailToConnect(error: Error) {
         
-        if participant == pinnedParticipant {
-            pinnedParticipant = nil
-        } else {
-            pinnedParticipant = participant
-        }
+    }
+    
+    func didDisconnect(error: Error?) {
+        delegate?.didUpdateData()
     }
 }
