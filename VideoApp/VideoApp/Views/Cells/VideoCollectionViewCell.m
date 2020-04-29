@@ -190,6 +190,10 @@
     self.audioMutedImage.hidden = shouldHideAudioMutedIndicator;
 }
 
+- (TVIParticipant *)getParticipant {
+    return self.localParticipant != nil ? self.localParticipant : self.remoteParticipantUIModel.remoteParticipant;
+}
+
 #pragma mark - TVIVideoViewDelegate
 - (void)videoViewDidReceiveData:(TVIVideoView *)view {
     NSLog(@"%s", __PRETTY_FUNCTION__);

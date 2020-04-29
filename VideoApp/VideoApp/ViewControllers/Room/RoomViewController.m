@@ -22,7 +22,6 @@
 #import "StatsUIModel.h"
 #import "VideoCollectionViewCell.h"
 #import "RemoteParticipantUIModel.h"
-#import "VideoApp-Swift.h"
 
 @import TwilioVideo;
 
@@ -55,15 +54,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *flipCameraButton;
 @property (nonatomic, weak) IBOutlet TVIVideoView *largeVideoView;
 
-@property (nonatomic, strong) TVIRoom *room;
-
 @property (nonatomic, weak) StatsViewController *statsViewController;
-
-@property (nonatomic, strong) RemoteParticipantUIModel *selectedParticipantUIModel;
-@property (nonatomic, strong) NSMutableArray<RemoteParticipantUIModel *> *remoteParticipantUIModels;
-
-@property (nonatomic, strong) TVIRemoteParticipant *currentDominantSpeaker;
-@property (nonatomic, strong) TVIRemoteParticipant *pinnedParticipant;
 
 @end
 
@@ -77,7 +68,7 @@
     [self.statsViewController addAsSwipeableViewToParentViewController:self];
 
     self.mainLabel.text = SwiftToObjc.userDisplayName;
-    self.joiningRoomLabel.text = self.roomName;
+    self.joiningRoomLabel.text = self.viewModel.roomName;
 
     self.remoteParticipantLabelView.layer.cornerRadius = self.remoteParticipantLabelView.bounds.size.width / 2.0;
     self.remoteParticipantLabelView.layer.backgroundColor = CGColorCreateCopyWithAlpha(self.remoteParticipantLabelView.layer.backgroundColor, 0.5);
@@ -88,8 +79,6 @@
 
     self.videoCollectionView.hidden = YES;
 
-    self.remoteParticipantUIModels = [NSMutableArray new];
-
     [self fetchAccessToken];
 }
 
@@ -99,7 +88,7 @@
 }
 
 - (BOOL)prefersHomeIndicatorAutoHidden {
-    return self.room.state == TVIRoomStateConnected;
+    return self.viewModel.room.state == TVIRoomStateConnected;
 }
 
 - (void)viewSafeAreaInsetsDidChange {
@@ -110,7 +99,7 @@
 - (void)fetchAccessToken {
     typeof(self) __weak weakSelf = self;
 
-    [SwiftToObjc fetchTwilioAccessTokenWithRoomName:self.roomName completion:^(NSString *accessToken, NSString *error) {
+    [SwiftToObjc fetchTwilioAccessTokenWithRoomName:self.viewModel.roomName completion:^(NSString *accessToken, NSString *error) {
         typeof(self) __strong strongSelf = weakSelf;
 
         if (accessToken != nil) {
@@ -147,12 +136,12 @@
     if (onConnect) {
         title = @"Room Connection Error";
         message = [NSString stringWithFormat:@"Unable to connect to room: %@\n\nError: %@",
-                   self.roomName,
+                   self.viewModel.roomName,
                    error.localizedDescription];
     } else {
         title = @"Room Error";
         message = [NSString stringWithFormat:@"Error with room: %@\n\nError: %@",
-                   self.roomName,
+                   self.viewModel.roomName,
                    error.localizedDescription];
     }
 
@@ -161,11 +150,11 @@
 
 - (void)joinRoomWithAccessToken:(NSString *)accessToken {
     TVIConnectOptions *options = [[ConnectOptionsFactory new] makeConnectOptionsWithAccessToken:accessToken
-                                                                                       roomName:self.roomName
-                                                                                    audioTracks:self.localMediaController.localAudioTrack ? @[self.localMediaController.localAudioTrack] : @[]
-                                                                                    videoTracks:self.localMediaController.localVideoTrack ? @[self.localMediaController.localVideoTrack] : @[]];
-    self.room = [TwilioVideoSDK connectWithOptions:options delegate:self];
-    self.statsViewController.room = self.room;
+                                                                                       roomName:self.viewModel.roomName
+                                                                                    audioTracks:self.viewModel.localMediaController.localAudioTrack ? @[self.viewModel.localMediaController.localAudioTrack] : @[]
+                                                                                    videoTracks:self.viewModel.localMediaController.localVideoTrack ? @[self.viewModel.localMediaController.localVideoTrack] : @[]];
+    self.viewModel.room = [TwilioVideoSDK connectWithOptions:options delegate:self];
+    self.statsViewController.room = self.viewModel.room;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -173,11 +162,11 @@
 
     [UIApplication sharedApplication].idleTimerDisabled = YES;
 
-    [self.localMediaController addDelegate:self];
+    [self.viewModel.localMediaController addDelegate:self];
 
-    self.audioToggleButton.selected = !self.localMediaController.localAudioTrack;
-    self.videoToggleButton.selected = !self.localMediaController.localVideoTrack;
-    self.flipCameraButton.enabled = (self.localMediaController.localVideoTrack != nil);
+    self.audioToggleButton.selected = !self.viewModel.localMediaController.localAudioTrack;
+    self.videoToggleButton.selected = !self.viewModel.localMediaController.localVideoTrack;
+    self.flipCameraButton.enabled = (self.viewModel.localMediaController.localVideoTrack != nil);
 
     [self updateMainParticipant];
 }
@@ -186,13 +175,13 @@
     [UIApplication sharedApplication].idleTimerDisabled = NO;
 
     // I am not sure the best approach here yet... I wonder what will happen as we have other participant video showing on the main stage...
-    [self.localMediaController removeDelegate:self];
+    [self.viewModel.localMediaController removeDelegate:self];
 
     [super viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [self.localMediaController.localVideoTrack removeRenderer:self.largeVideoView];
+    [self.viewModel.localMediaController.localVideoTrack removeRenderer:self.largeVideoView];
 
     [super viewDidDisappear:animated];
 }
@@ -202,27 +191,27 @@
 }
 
 - (IBAction)toggleAudioPressed:(id)sender {
-    if (self.localMediaController.localAudioTrack) {
-        [self.localMediaController destroyLocalAudioTrack];
+    if (self.viewModel.localMediaController.localAudioTrack) {
+        [self.viewModel.localMediaController destroyLocalAudioTrack];
         [self refreshLocalParticipantVideoView];
     } else {
-        [self.localMediaController createLocalAudioTrack];
+        [self.viewModel.localMediaController createLocalAudioTrack];
     }
 
-    self.audioToggleButton.selected = !self.localMediaController.localAudioTrack;
+    self.audioToggleButton.selected = !self.viewModel.localMediaController.localAudioTrack;
 }
 
 - (IBAction)toggleVideoPressed:(id)sender {
-    if (self.localMediaController.localVideoTrack) {
-        [self.localMediaController destroyLocalVideoTrack];
+    if (self.viewModel.localMediaController.localVideoTrack) {
+        [self.viewModel.localMediaController destroyLocalVideoTrack];
         self.flipCameraButton.enabled = NO;
         [self refreshLocalParticipantVideoView];
     } else {
-        [self.localMediaController createLocalVideoTrack];
+        [self.viewModel.localMediaController createLocalVideoTrack];
         self.flipCameraButton.enabled = YES;
     }
 
-    self.videoToggleButton.selected = !self.localMediaController.localVideoTrack;
+    self.videoToggleButton.selected = !self.viewModel.localMediaController.localVideoTrack;
 
     [self updateMainParticipant];
 }
@@ -230,15 +219,15 @@
 - (IBAction)hangupPressed:(id)sender {
     self.statsViewController.room = nil;
 
-    if (self.room) {
-        [self.room disconnect];
+    if (self.viewModel.room) {
+        [self.viewModel.room disconnect];
     } else {
         [self dismissViewController];
     }
 }
 
 - (IBAction)flipCameraPressed:(id)sender {
-    [self.localMediaController flipCamera];
+    [self.viewModel.localMediaController flipCamera];
 }
 
 - (void)refreshLocalParticipantVideoView {
@@ -269,18 +258,18 @@
 }
 
 - (void)updateVideoUIForSelectedParticipantUIModel:(RemoteParticipantUIModel *)selectedParticipantUIModel {
-    RemoteParticipantUIModel *previouslySelectedParticipantUIModel = self.selectedParticipantUIModel;
+    RemoteParticipantUIModel *previouslySelectedParticipantUIModel = self.viewModel.selectedParticipantUIModel;
 
     if (previouslySelectedParticipantUIModel != selectedParticipantUIModel) {
         // Remove the big view from the previous participant's list of renderers
         if (previouslySelectedParticipantUIModel == nil) {
-            [self.localMediaController.localVideoTrack removeRenderer:self.largeVideoView];
+            [self.viewModel.localMediaController.localVideoTrack removeRenderer:self.largeVideoView];
         } else {
             [previouslySelectedParticipantUIModel.remoteVideoTrack removeRenderer:self.largeVideoView];
         }
     }
 
-    self.selectedParticipantUIModel = selectedParticipantUIModel;
+    self.viewModel.selectedParticipantUIModel = selectedParticipantUIModel;
 
     NSString *identity = nil;
     TVIVideoTrack *videoTrack = nil;
@@ -290,8 +279,8 @@
     if (selectedParticipantUIModel == nil) {
         // We selected the local participant
         identity = @"You";
-        videoTrack = self.localMediaController.localVideoTrack;
-        shouldMirror = self.localMediaController.shouldMirrorLocalVideoView;
+        videoTrack = self.viewModel.localMediaController.localVideoTrack;
+        shouldMirror = self.viewModel.localMediaController.shouldMirrorLocalVideoView;
     } else {
         identity = selectedParticipantUIModel.remoteParticipant.identity;
         videoTrack = selectedParticipantUIModel.remoteVideoTrack;
@@ -310,9 +299,9 @@
     self.noVideoParticipantLabel.hidden = videoEnabled;
     self.noVideoImageView.hidden = videoEnabled;
 
-    [self updateRemoteParticipantView:self.selectedParticipantUIModel.remoteParticipant];
+    [self updateRemoteParticipantView:self.viewModel.selectedParticipantUIModel.remoteParticipant];
 
-    if (videoEnabled && self.selectedParticipantUIModel != nil) {
+    if (videoEnabled && self.viewModel.selectedParticipantUIModel != nil) {
         self.remoteParticipantLabelView.hidden = NO;
     } else {
         self.remoteParticipantLabelView.hidden = YES;
@@ -335,7 +324,7 @@
 
     self.remoteParticipantLabel.text = initials;
 
-    if (self.currentDominantSpeaker == participant) {
+    if (self.viewModel.dominantSpeaker == participant) {
         self.remoteParticipantMutedStateImage.hidden = YES;
         self.remoteParticipantDominantSpeakerIndicatorImage.hidden = NO;
     } else {
@@ -358,7 +347,7 @@
 - (RemoteParticipantUIModel *)addRemoteParticipantModel:(TVIRemoteParticipant *)participant
                                              videoTrack:(TVIRemoteVideoTrack *)videoTrack {
     BOOL hasVideo = videoTrack != nil;
-    BOOL shouldSelectParticipant = (self.remoteParticipantUIModels.count == 0);
+    BOOL shouldSelectParticipant = (self.viewModel.remoteParticipantUIModels.count == 0);
 
     RemoteParticipantUIModel *addedModel = nil;
     if (!hasVideo && [participant.videoTracks count] == 0) {
@@ -370,12 +359,12 @@
     }
 
     if (addedModel) {
-        [self.remoteParticipantUIModels addObject:addedModel];
+        [self.viewModel addRemoteParticipantUIModel:addedModel];
         if (shouldSelectParticipant) {
             [self updateVideoUIForSelectedParticipantUIModel:addedModel];
             [self refreshLocalParticipantVideoView];
         } else {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.remoteParticipantUIModels.count inSection:0];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.viewModel.remoteParticipantUIModels.count inSection:0];
             [self.videoCollectionView insertItemsAtIndexPaths:@[indexPath]];
         }
     }
@@ -385,17 +374,17 @@
 
 - (void)deleteParticipantModel:(TVIRemoteParticipant *)participant
                    publication:(TVIRemoteVideoTrack *)videoTrack {
-    if (participant == self.currentDominantSpeaker) {
-        self.currentDominantSpeaker = nil;
+    if (participant == self.viewModel.dominantSpeaker) {
+        self.viewModel.dominantSpeaker = nil;
     }
 
-    BOOL clearsSelection = [participant isEqual:self.selectedParticipantUIModel.remoteParticipant] &&
-    ((videoTrack == nil) || [self.selectedParticipantUIModel.remoteVideoTrack isEqual:videoTrack]);
+    BOOL clearsSelection = [participant isEqual:self.viewModel.selectedParticipantUIModel.remoteParticipant] &&
+    ((videoTrack == nil) || [self.viewModel.selectedParticipantUIModel.remoteVideoTrack isEqual:videoTrack]);
 
     // Remove relevant entries from the model.
-    NSIndexSet *indexSet = [self.remoteParticipantUIModels indexesOfObjectsPassingTest:^BOOL(RemoteParticipantUIModel * _Nonnull model,
-                                                                                             NSUInteger idx,
-                                                                                             BOOL * _Nonnull stop) {
+    NSIndexSet *indexSet = [self.viewModel.remoteParticipantUIModels indexesOfObjectsPassingTest:^BOOL(RemoteParticipantUIModel * _Nonnull model,
+                                                                                                       NSUInteger idx,
+                                                                                                       BOOL * _Nonnull stop) {
         if ([model.remoteParticipant isEqual:participant]) {
             if (videoTrack == nil) {
                 return YES;
@@ -406,8 +395,8 @@
         return NO;
     }];
 
-    NSUInteger selectedIndex = [self.remoteParticipantUIModels indexOfObject:self.selectedParticipantUIModel];
-    [self.remoteParticipantUIModels removeObjectsAtIndexes:indexSet];
+    NSUInteger selectedIndex = [self.viewModel.remoteParticipantUIModels indexOfObject:self.viewModel.selectedParticipantUIModel];
+    [self.viewModel removeRemoteParticipantUIModelsAt:indexSet];
 
     // Update the selected UI.
     if (clearsSelection) {
@@ -433,20 +422,20 @@
 }
 
 - (void)rebuildRemoteParticipantUIModels {
-    [self.remoteParticipantUIModels removeAllObjects];
+    [self.viewModel removeAllRemoteParticipantUIModels];
 
-    for (TVIRemoteParticipant *participant in self.room.remoteParticipants) {
+    for (TVIRemoteParticipant *participant in self.viewModel.room.remoteParticipants) {
         if (participant.videoTracks.count == 0) {
             RemoteParticipantUIModel *model = [[RemoteParticipantUIModel alloc] initWithRemoteParticipant:participant
                                                                                                videoTrack:nil];
-            [self.remoteParticipantUIModels addObject:model];
+            [self.viewModel addRemoteParticipantUIModel:model];
         } else {
             for (TVIRemoteVideoTrackPublication *publication in participant.videoTracks) {
                 // Wait for subscriptions instead.
                 if (publication.remoteTrack) {
                     RemoteParticipantUIModel *model = [[RemoteParticipantUIModel alloc] initWithRemoteParticipant:participant
                                                                                                        videoTrack:publication.remoteTrack];
-                    [self.remoteParticipantUIModels addObject:model];
+                    [self.viewModel addRemoteParticipantUIModel:model];
                 }
             }
         }
@@ -456,40 +445,19 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.viewModel togglePinAt:indexPath.row];
+
     for (VideoCollectionViewCell *cell in collectionView.visibleCells) {
-        cell.isPinned = false;
+        cell.isPinned = self.viewModel.pinnedParticipant == [cell getParticipant];
     }
 
-    VideoCollectionViewCell *cell = (VideoCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    cell.isPinned = !cell.isPinned;
-
-    
-    
-    
-    RemoteParticipantUIModel *previouslySelectedParticipantUIModel = self.selectedParticipantUIModel;
-
-    VideoCollectionViewCell *cell = (VideoCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-
-    if (!([previouslySelectedParticipantUIModel isEqual:cell.remoteParticipantUIModel] ||
-          (previouslySelectedParticipantUIModel == nil && cell.remoteParticipantUIModel == nil))) {
-        [self updateVideoUIForSelectedParticipantUIModel:cell.remoteParticipantUIModel];
-    }
-}
-
-- (TVIParticipant *)participantForIndex:(NSInteger)index {
-    if index == 0 {
-        
-    }
-}
-
-- (NSArray<TVIParticipant *> *)allParticipants {
-    
+    [self updateMainParticipant]; // Have view model trigger this with delegate
 }
 
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.remoteParticipantUIModels.count + 1;
+    return self.viewModel.remoteParticipantUIModels.count + 1;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -497,10 +465,10 @@
 
     if (indexPath.row == 0) {
         // 0th element is always the local participant
-        [cell setLocalParticipant:self.room.localParticipant isCurrentlySelected:(self.selectedParticipantUIModel == nil)];
+        [cell setLocalParticipant:self.viewModel.room.localParticipant isCurrentlySelected:(self.viewModel.selectedParticipantUIModel == nil)];
     } else {
-        RemoteParticipantUIModel *remoteParticipantUIModel = self.remoteParticipantUIModels[indexPath.row - 1];
-        [cell setRemoteParticipantUIModel:remoteParticipantUIModel isDominantSpeaker:(remoteParticipantUIModel.remoteParticipant == self.currentDominantSpeaker)];
+        RemoteParticipantUIModel *remoteParticipantUIModel = self.viewModel.remoteParticipantUIModels[indexPath.row - 1];
+        [cell setRemoteParticipantUIModel:remoteParticipantUIModel isDominantSpeaker:(remoteParticipantUIModel.remoteParticipant == self.viewModel.dominantSpeaker)];
     }
 
     return cell;
@@ -509,7 +477,7 @@
 #pragma mark - LocalMediaControllerDelegate
 
 - (void)localMediaControllerStartedVideoCapture:(LocalMediaController *)localMediaController {
-    if (self.selectedParticipantUIModel == nil) {
+    if (self.viewModel.selectedParticipantUIModel == nil) {
         [self updateVideoUIForSelectedParticipantUIModel:nil];
     }
 
@@ -525,10 +493,10 @@
     self.joiningRoomLabel.hidden = YES;
     self.recordingWarningLabel.hidden = YES;
     self.recordingIndicator.hidden = !(room.isRecording);
-    self.mainLabel.text = self.roomName;
+    self.mainLabel.text = self.viewModel.roomName;
 
-    self.localMediaController.localParticipant = self.room.localParticipant;
-    self.localMediaController.localParticipant.delegate = self;
+    self.viewModel.localMediaController.localParticipant = self.viewModel.room.localParticipant;
+    self.viewModel.localMediaController.localParticipant.delegate = self;
 
     for (TVIRemoteParticipant *participant in room.remoteParticipants) {
         participant.delegate = self;
@@ -539,7 +507,7 @@
     [self rebuildRemoteParticipantUIModels];
 
     // Select the screen Track automatically?
-    RemoteParticipantUIModel *model = [self.remoteParticipantUIModels firstObject];
+    RemoteParticipantUIModel *model = [self.viewModel.remoteParticipantUIModels firstObject];
     if (model) {
         [self updateVideoUIForSelectedParticipantUIModel:model];
     }
@@ -552,17 +520,17 @@
 - (void)room:(TVIRoom *)room didFailToConnectWithError:(NSError *)error {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     [self handleRoomError:error onConnect:YES];
-    self.room = nil;
+    self.viewModel.room = nil;
     [self setNeedsUpdateOfHomeIndicatorAutoHidden];
 }
 
 - (void)room:(TVIRoom *)room didDisconnectWithError:(NSError *)error {
     NSLog(@"%s - Room sid: %@", __PRETTY_FUNCTION__, room.sid);
 
-    self.localMediaController.localParticipant = nil;
+    self.viewModel.localMediaController.localParticipant = nil;
     self.statsViewController.room = nil;
 
-    self.room = nil;
+    self.viewModel.room = nil;
     [self setNeedsUpdateOfHomeIndicatorAutoHidden];
 
     if (error) {
@@ -616,29 +584,17 @@
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
     if (participant != nil) {
-        self.currentDominantSpeaker = participant;
+        self.viewModel.dominantSpeaker = participant;
         [self updateMainParticipant];
     }
 }
 
 - (void)updateMainParticipant {
-    NSString *identity;
-    
-    if (self.pinnedParticipant != nil) {
-        identity = self.pinnedParticipant.identity;
-    } else if (self.currentDominantSpeaker != nil) {
-        identity = self.currentDominantSpeaker.identity;
-    } else if (self.remoteParticipantUIModels.count > 0) {
-        identity = self.remoteParticipantUIModels[0].remoteParticipant.identity;
-    } else {
-        identity = nil; // Local participant
-    }
-    
-    [self updateVideoUIForSelectedParticipantUIModel:[self remoteParticipantUIModelWithIdentity:identity]];
+    [self updateVideoUIForSelectedParticipantUIModel:self.viewModel.mainParticipantUIModel];
 }
 
 - (RemoteParticipantUIModel *)remoteParticipantUIModelWithIdentity:(NSString *)identity {
-    for (RemoteParticipantUIModel *model in self.remoteParticipantUIModels) {
+    for (RemoteParticipantUIModel *model in self.viewModel.remoteParticipantUIModels) {
         if (model.remoteParticipant.identity == identity) {
             return model;
         }
@@ -687,7 +643,7 @@
                   forParticipant:(TVIRemoteParticipant *)participant {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
-    if ([self.selectedParticipantUIModel.remoteParticipant isEqual:participant]) {
+    if ([self.viewModel.selectedParticipantUIModel.remoteParticipant isEqual:participant]) {
         [self updateRemoteParticipantView:participant];
     }
     
@@ -699,7 +655,7 @@
                       forParticipant:(TVIRemoteParticipant *)participant {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
-    if ([self.selectedParticipantUIModel.remoteParticipant isEqual:participant]) {
+    if ([self.viewModel.selectedParticipantUIModel.remoteParticipant isEqual:participant]) {
         [self updateRemoteParticipantView:participant];
     }
     
@@ -737,8 +693,8 @@
 - (void)remoteParticipant:(TVIRemoteParticipant *)participant didEnableAudioTrack:(TVIRemoteAudioTrackPublication *)publication {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
-    if ([self.selectedParticipantUIModel.remoteParticipant isEqual:participant]) {
-        [self updateRemoteParticipantView:self.selectedParticipantUIModel.remoteParticipant];
+    if ([self.viewModel.selectedParticipantUIModel.remoteParticipant isEqual:participant]) {
+        [self updateRemoteParticipantView:self.viewModel.selectedParticipantUIModel.remoteParticipant];
     }
     [self refreshParticipantVideoViews:participant];
 }
@@ -746,8 +702,8 @@
 - (void)remoteParticipant:(TVIRemoteParticipant *)participant didDisableAudioTrack:(TVIRemoteAudioTrackPublication *)publication {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
-    if ([self.selectedParticipantUIModel.remoteParticipant isEqual:participant]) {
-        [self updateRemoteParticipantView:self.selectedParticipantUIModel.remoteParticipant];
+    if ([self.viewModel.selectedParticipantUIModel.remoteParticipant isEqual:participant]) {
+        [self updateRemoteParticipantView:self.viewModel.selectedParticipantUIModel.remoteParticipant];
     }
     [self refreshParticipantVideoViews:participant];
 }
@@ -755,8 +711,8 @@
 - (void)remoteParticipant:(TVIRemoteParticipant *)participant didEnableVideoTrack:(TVIRemoteVideoTrackPublication *)publication {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
-    if ([self.selectedParticipantUIModel.remoteParticipant isEqual:participant]) {
-        [self updateVideoUIForSelectedParticipantUIModel:self.selectedParticipantUIModel];
+    if ([self.viewModel.selectedParticipantUIModel.remoteParticipant isEqual:participant]) {
+        [self updateVideoUIForSelectedParticipantUIModel:self.viewModel.selectedParticipantUIModel];
     }
     [self refreshParticipantVideoViews:participant];
 }
@@ -764,17 +720,17 @@
 - (void)remoteParticipant:(TVIRemoteParticipant *)participant didDisableVideoTrack:(TVIRemoteVideoTrackPublication *)publication {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
-    if ([self.selectedParticipantUIModel.remoteParticipant isEqual:participant]) {
-        [self updateVideoUIForSelectedParticipantUIModel:self.selectedParticipantUIModel];
+    if ([self.viewModel.selectedParticipantUIModel.remoteParticipant isEqual:participant]) {
+        [self updateVideoUIForSelectedParticipantUIModel:self.viewModel.selectedParticipantUIModel];
     }
     [self refreshParticipantVideoViews:participant];
 }
 
 - (void)remoteParticipant:(TVIRemoteParticipant *)participant networkQualityLevelDidChange:(TVINetworkQualityLevel)networkQualityLevel {
-    if ([participant isEqual:self.selectedParticipantUIModel.remoteParticipant]) {
+    if ([participant isEqual:self.viewModel.selectedParticipantUIModel.remoteParticipant]) {
         [self updateRemoteParticipantView:participant];
     } else {
-        NSUInteger index = [self.remoteParticipantUIModels indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        NSUInteger index = [self.viewModel.remoteParticipantUIModels indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             return [participant isEqual:((RemoteParticipantUIModel *)obj).remoteParticipant];
         }];
 

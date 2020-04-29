@@ -4,4 +4,5 @@
 
 #import "LobbyViewController.h"
 #import "LocalMediaController.h"
+#import "RemoteParticipantUIModel.h"
 #import "VideoAppCamera.h"

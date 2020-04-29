@@ -172,8 +172,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"roomSegue"]) {
         self.roomViewController = segue.destinationViewController;
-        self.roomViewController.roomName = self.roomTextField.text;
-        self.roomViewController.localMediaController = self.localMediaController;
+        self.roomViewController.viewModel = [[RoomViewModel alloc] initWithLocalMediaController:self.localMediaController
+                                                                                       roomName:self.roomTextField.text];
     } else if ([segue.identifier isEqualToString:@"showSettings"]) {
         [SwiftToObjc prepareForShowSettingsSegue:segue];
     }

@@ -116,6 +116,9 @@
 		DC1C2F9323AC34B30044FB4D /* BundleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1C2F9123AC34B30044FB4D /* BundleProtocol.swift */; };
 		DC1C2F9423AC34B30044FB4D /* BundleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1C2F9123AC34B30044FB4D /* BundleProtocol.swift */; };
 		DC1C2F9623AC35E40044FB4D /* AppInfoStoreSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1C2F9523AC35E40044FB4D /* AppInfoStoreSpec.swift */; };
+		DC386DD12458DC05009E994A /* RoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386DD02458DC05009E994A /* RoomViewModel.swift */; };
+		DC386DD22458DC05009E994A /* RoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386DD02458DC05009E994A /* RoomViewModel.swift */; };
+		DC386DD32458DC05009E994A /* RoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386DD02458DC05009E994A /* RoomViewModel.swift */; };
 		DC3924892416A1D80068E33F /* SelectEnvironmentViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3924872416A1D80068E33F /* SelectEnvironmentViewModelFactory.swift */; };
 		DC39248A2416A1D80068E33F /* SelectEnvironmentViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3924872416A1D80068E33F /* SelectEnvironmentViewModelFactory.swift */; };
 		DC39248B2416A1D80068E33F /* SelectEnvironmentViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3924872416A1D80068E33F /* SelectEnvironmentViewModelFactory.swift */; };
@@ -573,6 +576,7 @@
 		DC338A2724367AEC0093E855 /* Unit.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Unit.xctestplan; sourceTree = "<group>"; };
 		DC338A292437E7380093E855 /* StatusCheck.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = StatusCheck.xctestplan; sourceTree = "<group>"; };
 		DC338A2A2437E7380093E855 /* UI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = UI.xctestplan; sourceTree = "<group>"; };
+		DC386DD02458DC05009E994A /* RoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewModel.swift; sourceTree = "<group>"; };
 		DC3924872416A1D80068E33F /* SelectEnvironmentViewModelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectEnvironmentViewModelFactory.swift; sourceTree = "<group>"; };
 		DC3924882416A1D80068E33F /* SelectEnvironmentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectEnvironmentViewModel.swift; sourceTree = "<group>"; };
 		DC39248F2416A8070068E33F /* APIErrorResponseDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorResponseDecoder.swift; sourceTree = "<group>"; };
@@ -983,6 +987,7 @@
 			children = (
 				24927E2D1ECC9E44006510E3 /* RoomViewController.h */,
 				24927E2E1ECC9E44006510E3 /* RoomViewController.m */,
+				DC386DD02458DC05009E994A /* RoomViewModel.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -2463,6 +2468,7 @@
 				DCB64B4F2409976F00E090BE /* APIRequest.swift in Sources */,
 				DCB7C1812405BD2C009DEA70 /* PasscodeComponents.swift in Sources */,
 				DC3C32D02417E6C400F56AFB /* CommunityAPIErrorResponseDecoder.swift in Sources */,
+				DC386DD12458DC05009E994A /* RoomViewModel.swift in Sources */,
 				DCA80B28236B821E009141C9 /* LaunchFlow.swift in Sources */,
 				DC044695238F1FAA0072F597 /* User.swift in Sources */,
 				DC8EAE3B23BA88850045018F /* URLOpening.swift in Sources */,
@@ -2595,6 +2601,7 @@
 				DCB64B502409976F00E090BE /* APIRequest.swift in Sources */,
 				DCB7C1822405BD2C009DEA70 /* PasscodeComponents.swift in Sources */,
 				DC3C32D12417E6C400F56AFB /* CommunityAPIErrorResponseDecoder.swift in Sources */,
+				DC386DD22458DC05009E994A /* RoomViewModel.swift in Sources */,
 				DCA80B29236B821E009141C9 /* LaunchFlow.swift in Sources */,
 				DC044696238F1FAA0072F597 /* User.swift in Sources */,
 				DC8EAE3C23BA88850045018F /* URLOpening.swift in Sources */,
@@ -2727,6 +2734,7 @@
 				DCB64B512409976F00E090BE /* APIRequest.swift in Sources */,
 				DCB7C1832405BD2C009DEA70 /* PasscodeComponents.swift in Sources */,
 				DC3C32D22417E6C400F56AFB /* CommunityAPIErrorResponseDecoder.swift in Sources */,
+				DC386DD32458DC05009E994A /* RoomViewModel.swift in Sources */,
 				DCA80B2A236B821E009141C9 /* LaunchFlow.swift in Sources */,
 				DC044697238F1FAA0072F597 /* User.swift in Sources */,
 				DC8EAE3D23BA88850045018F /* URLOpening.swift in Sources */,

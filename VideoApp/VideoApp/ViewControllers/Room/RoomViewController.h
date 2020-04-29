@@ -15,12 +15,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VideoApp-Swift.h"
 
 @class LocalMediaController;
 
 @interface RoomViewController : UIViewController
 
-@property (nonatomic, strong, nonnull) LocalMediaController *localMediaController;
-@property (nonatomic, copy, nonnull) NSString *roomName;
+@property (nonatomic, strong, nonnull) RoomViewModel *viewModel;
 
 @end
