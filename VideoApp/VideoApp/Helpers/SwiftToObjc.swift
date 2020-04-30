@@ -58,11 +58,11 @@ import Foundation
         let roomViewController = segue.destination as! RoomViewController
         let identity = AppSettingsStore.shared.userIdentity.nilIfEmpty ?? AuthStore.shared.userDisplayName // TODO: Make more DRY
         let localParticipant = LocalParticipant(identity: identity, localMediaController: localMediaController)
-        let roomStore = RoomStore(
+        let room = Room(
+            localParticipant: localParticipant,
             accessTokenStore: TwilioAccessTokenStoreFactory().makeTwilioAccessTokenStore(),
-            connectOptionsFactory: ConnectOptionsFactory(),
-            localParticipant: localParticipant
+            connectOptionsFactory: ConnectOptionsFactory()
         )
-        roomViewController.viewModel = RoomViewModel(roomName: roomName, roomStore: roomStore)
+        roomViewController.viewModel = RoomViewModel(roomName: roomName, room: room)
     }
 }

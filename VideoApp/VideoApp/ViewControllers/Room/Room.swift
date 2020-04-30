@@ -16,29 +16,35 @@
 
 import TwilioVideo
 
-protocol RoomStoreDelegate: AnyObject {
+protocol RoomDelegate: AnyObject {
     func didConnect()
     func didFailToConnect(error: Error)
     func didDisconnect(error: Error?)
+    func didUpdate()
+    func didAddRemoteParticipants(at indexes: [Int])
+    func didRemoveRemoteParticipant(at index: Int)
 }
 
-class RoomStore: NSObject {
-    weak var delegate: RoomStoreDelegate?
-    private(set) var room: Room?
+// TODO: Rename to RoomStore?
+class Room: NSObject {
+    weak var delegate: RoomDelegate?
+    var isRecording: Bool { room?.isRecording ?? false }
+    let localParticipant: LocalParticipant
+    var remoteParticipants: [RemoteParticipant] = []
     private let accessTokenStore: TwilioAccessTokenStoreReading
     private let connectOptionsFactory: ConnectOptionsFactory
-    private let localParticipant: LocalParticipant
+    private var room: TwilioVideo.Room?
     
     init(
+        localParticipant: LocalParticipant,
         accessTokenStore: TwilioAccessTokenStoreReading,
-        connectOptionsFactory: ConnectOptionsFactory,
-        localParticipant: LocalParticipant
+        connectOptionsFactory: ConnectOptionsFactory
     ) {
+        self.localParticipant = localParticipant
         self.accessTokenStore = accessTokenStore
         self.connectOptionsFactory = connectOptionsFactory
-        self.localParticipant = localParticipant
     }
-    
+
     // TODO: Create new status that includes fetching access token
     func connect(roomName: String) {
         // TODO: Fatal error if we are already connecting or connected
@@ -56,50 +62,72 @@ class RoomStore: NSObject {
                     videoTracks: [self.localParticipant.localCameraVideoTrack].compactMap { $0 }
                 )
                 // TODO: Inject
-                let room = TwilioVideoSDK.connect(options: options, delegate: self)
-                self.room = Room(room: room, localParticipant: self.localParticipant)
+                self.room = TwilioVideoSDK.connect(options: options, delegate: self)
             case let .failure(error):
                 self.delegate?.didFailToConnect(error: error)
             }
         }
     }
+
+    private func updateRemoteParticipants() {
+        guard let room = room else { remoteParticipants = []; return }
+        
+        remoteParticipants = room.remoteParticipants.map { RemoteParticipant(participant: $0) }
+    }
 }
 
-extension RoomStore: TwilioVideo.RoomDelegate {
+extension Room: TwilioVideo.RoomDelegate {
     func roomDidConnect(room: TwilioVideo.Room) {
-        self.room?.roomDidConnect(room: room)
+        print("Connect remote participant count: \(room.remoteParticipants.count)")
+        localParticipant.participant = room.localParticipant
+        updateRemoteParticipants()
         delegate?.didConnect()
+        
+        if remoteParticipants.count > 0 {
+            delegate?.didAddRemoteParticipants(at: [Int](remoteParticipants.indices))
+        }
     }
     
     func roomDidFailToConnect(room: TwilioVideo.Room, error: Error) {
-        self.room?.roomDidFailToConnect(room: room, error: error)
         self.room = nil
         delegate?.didFailToConnect(error: error)
     }
     
     func roomDidDisconnect(room: TwilioVideo.Room, error: Error?) {
-        self.room?.roomDidDisconnect(room: room, error: error)
         self.room = nil
+        let oldIndices = remoteParticipants.indices
+        updateRemoteParticipants()
         delegate?.didDisconnect(error: error)
+        
+        if oldIndices.count > 0 {
+            delegate?.didAddRemoteParticipants(at: [Int](oldIndices))
+        }
     }
     
     func participantDidConnect(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant) {
-        self.room?.participantDidConnect(room: room, participant: participant)
+        print("Participant did connect participant count: \(room.remoteParticipants.count)")
+        updateRemoteParticipants()
+        delegate?.didAddRemoteParticipants(at: [remoteParticipants.count - 1])
     }
     
     func participantDidDisconnect(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant) {
-        self.room?.participantDidDisconnect(room: room, participant: participant)
+        print("Participant did disconnect participant count: \(room.remoteParticipants.count)")
+        // TODO: Log error
+        guard let index = remoteParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
+        
+        updateRemoteParticipants()
+        delegate?.didRemoveRemoteParticipant(at: index)
     }
     
     func roomDidStartRecording(room: TwilioVideo.Room) {
-        self.room?.roomDidStartRecording(room: room)
+        // Do nothing
     }
     
     func roomDidStopRecording(room: TwilioVideo.Room) {
-        self.room?.roomDidStopRecording(room: room)
+        // Do nothing
     }
     
     func dominantSpeakerDidChange(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant?) {
-        self.room?.dominantSpeakerDidChange(room: room, participant: participant)
+
     }
 }

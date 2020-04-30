@@ -59,7 +59,31 @@ class RoomViewController: UIViewController {
 
 extension RoomViewController: RoomViewModelDelegate {
     func didUpdateData() {
-        participantCollectionView.reloadData()
+
+    }
+    
+    // TODO: Rename to indices?
+    func didAddParticipants(at indexes: [Int]) {
+        participantCollectionView.insertItems(at: indexes.map { IndexPath(item: $0, section: 0) })
+    }
+    
+    func didRemoveParticipant(at index: Int) {
+        participantCollectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
+    }
+
+    func didUpdateParticipantAttributes(at index: Int) {
+        guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCollectionViewCell else { return }
+        
+        let participant = viewModel.data.participants[index]
+        cell.configure(withIdentity: participant.identity)
+    }
+    
+    func didUpdateParticipantVideoConfig(at index: Int) {
+        // TDOO: Make more DRY
+        guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCollectionViewCell else { return }
+        
+        let participant = viewModel.data.participants[index]
+        cell.configure(with: participant.cameraVideoTrack)
     }
 }
 
@@ -71,8 +95,9 @@ extension RoomViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoCollectionViewCell
 
-        let participant = viewModel.data.participants[indexPath.row]
-        cell.configure(with: participant.identity, cameraVideoTrack: participant.cameraVideoTrack)
+        let participant = viewModel.data.participants[indexPath.item]
+        cell.configure(withIdentity: participant.identity)
+        cell.configure(with: participant.cameraVideoTrack)
         
         return cell
     }

@@ -31,7 +31,8 @@
 
 @property (nonatomic, readonly, weak) RemoteParticipantUIModel *remoteParticipantUIModel;
 - (void)setRemoteParticipantUIModel:(RemoteParticipantUIModel *)remoteParticipantUIModel isDominantSpeaker:(BOOL)isDominantSpeaker;
-- (void)configureWith:(NSString *)identity cameraVideoTrack:(TVIVideoTrack *)videoTrack;
+- (void)configureWithIdentity:(NSString *)identity;
+- (void)configureWithVideoTrack:(TVIVideoTrack *)videoTrack;
 
 - (TVIParticipant *)getParticipant;
 

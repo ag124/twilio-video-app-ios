@@ -30,14 +30,16 @@ struct RoomViewModelData {
 }
 
 protocol RoomViewModelDelegate: AnyObject {
-    func didUpdateData()
+    func didUpdateData() // TODO: Change to connection changes
+    func didAddParticipants(at indexes: [Int])
+    func didRemoveParticipant(at index: Int)
+    func didUpdateParticipantAttributes(at index: Int)
+    func didUpdateParticipantVideoConfig(at index: Int)
 }
 
 class RoomViewModel {
     weak var delegate: RoomViewModelDelegate?
     var data: RoomViewModelData {
-        guard let room = roomStore.room else { return RoomViewModelData(roomName: roomName, participants: []) }
-        
         let participants: [Participant] = [room.localParticipant] + room.remoteParticipants
         let newParticipants = participants.map {
             RoomViewModelData.Participant(
@@ -55,30 +57,29 @@ class RoomViewModel {
         )
     }
     var isMicOn: Bool {
-        get { roomStore.room?.localParticipant.isMicOn ?? false
+        get { room.localParticipant.isMicOn
         }
         set {
             // TODO: Make sure the only gets called on a real change
-            roomStore.room?.localParticipant.isMicOn = newValue
+            room.localParticipant.isMicOn = newValue
         }
     }
     private let roomName: String
-    private let roomStore: RoomStore
+    private let room: Room
 
-    init(roomName: String, roomStore: RoomStore) {
+    init(roomName: String, room: Room) {
         self.roomName = roomName
-        self.roomStore = roomStore
-        roomStore.delegate = self
+        self.room = room
+        room.delegate = self
     }
     
     func connect() {
-        roomStore.connect(roomName: roomName)
+        room.connect(roomName: roomName)
     }
 }
 
-extension RoomViewModel: RoomStoreDelegate {
+extension RoomViewModel: RoomDelegate {
     func didConnect() {
-        roomStore.room?.delegate = self
         delegate?.didUpdateData()
     }
     
@@ -89,10 +90,32 @@ extension RoomViewModel: RoomStoreDelegate {
     func didDisconnect(error: Error?) {
         delegate?.didUpdateData()
     }
-}
 
-extension RoomViewModel: RoomDelegate {
     func didUpdate() {
         delegate?.didUpdateData()
+    }
+
+    func didAddRemoteParticipants(at indexes: [Int]) {
+        room.remoteParticipants.forEach { $0.delegate = self }
+        delegate?.didAddParticipants(at: indexes.map { $0 + 1 })
+    }
+    
+    func didRemoveRemoteParticipant(at index: Int) {
+        delegate?.didRemoveParticipant(at: index + 1)
+    }
+}
+
+extension RoomViewModel: ParticipantDelegate {
+    func didUpdateAttributes(participant: Participant) {
+        guard let index = room.remoteParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
+        
+        delegate?.didUpdateParticipantAttributes(at: index + 1)
+    }
+    
+    func didUpdateVideoConfig(participant: Participant) {
+        // TODO: Make more DRY
+        guard let index = room.remoteParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
+
+        delegate?.didUpdateParticipantVideoConfig(at: index + 1)
     }
 }

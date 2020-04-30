@@ -255,9 +255,6 @@
 		DC8EAE4E23BA9F5E0045018F /* WindowSceneObserverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8EAE4B23BA9F5E0045018F /* WindowSceneObserverFactory.swift */; };
 		DC8EAE5023BBA6790045018F /* AppDelegateSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8EAE4F23BBA6790045018F /* AppDelegateSpec.swift */; };
 		DC9A4C9223D161A200D37CEC /* TestSecrets.json in Resources */ = {isa = PBXBuildFile; fileRef = DC9A4C9123D161A200D37CEC /* TestSecrets.json */; };
-		DC9A5DBC2459C7B900E4B079 /* RoomStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DBB2459C7B900E4B079 /* RoomStore.swift */; };
-		DC9A5DBD2459C7B900E4B079 /* RoomStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DBB2459C7B900E4B079 /* RoomStore.swift */; };
-		DC9A5DBE2459C7B900E4B079 /* RoomStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DBB2459C7B900E4B079 /* RoomStore.swift */; };
 		DC9A5DC02459F1D100E4B079 /* Participant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DBF2459F1D100E4B079 /* Participant.swift */; };
 		DC9A5DC12459F1D100E4B079 /* Participant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DBF2459F1D100E4B079 /* Participant.swift */; };
 		DC9A5DC22459F1D100E4B079 /* Participant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DBF2459F1D100E4B079 /* Participant.swift */; };
@@ -270,6 +267,9 @@
 		DC9A5DCE245B0E6100E4B079 /* LocalParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */; };
 		DC9A5DCF245B0E6100E4B079 /* LocalParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */; };
 		DC9A5DD0245B0E6100E4B079 /* LocalParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */; };
+		DC9A5DD2245B332D00E4B079 /* RemoteParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */; };
+		DC9A5DD3245B332D00E4B079 /* RemoteParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */; };
+		DC9A5DD4245B332D00E4B079 /* RemoteParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */; };
 		DCA53948235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA53949235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA5394A235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
@@ -647,11 +647,11 @@
 		DC8EAE4F23BBA6790045018F /* AppDelegateSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateSpec.swift; sourceTree = "<group>"; };
 		DC9A4C8723D0BC2C00D37CEC /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		DC9A4C9123D161A200D37CEC /* TestSecrets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = TestSecrets.json; path = ../../../IOSVideoAppSecrets/TestSecrets.json; sourceTree = "<group>"; };
-		DC9A5DBB2459C7B900E4B079 /* RoomStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStore.swift; sourceTree = "<group>"; };
 		DC9A5DBF2459F1D100E4B079 /* Participant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Participant.swift; sourceTree = "<group>"; };
 		DC9A5DC4245A0B5F00E4B079 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		DC9A5DC9245A215000E4B079 /* RoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
 		DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalParticipant.swift; sourceTree = "<group>"; };
+		DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipant.swift; sourceTree = "<group>"; };
 		DCA53947235F53E700CA26FB /* InternalAuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAuthStore.swift; sourceTree = "<group>"; };
 		DCA5394B235F740200CA26FB /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		DCA5394F235F765D00CA26FB /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
@@ -1002,6 +1002,11 @@
 			children = (
 				DC9A5DC9245A215000E4B079 /* RoomViewController.swift */,
 				DC386DD02458DC05009E994A /* RoomViewModel.swift */,
+				DC9A5DC4245A0B5F00E4B079 /* Room.swift */,
+				DCD940B0243B9B7A00D9ECC5 /* ConnectOptionsFactory.swift */,
+				DC9A5DBF2459F1D100E4B079 /* Participant.swift */,
+				DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */,
+				DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -1252,18 +1257,6 @@
 			path = Video;
 			sourceTree = "<group>";
 		};
-		DC9A5DC8245A1B7E00E4B079 /* Room */ = {
-			isa = PBXGroup;
-			children = (
-				DCD940B0243B9B7A00D9ECC5 /* ConnectOptionsFactory.swift */,
-				DC9A5DBF2459F1D100E4B079 /* Participant.swift */,
-				DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */,
-				DC9A5DC4245A0B5F00E4B079 /* Room.swift */,
-				DC9A5DBB2459C7B900E4B079 /* RoomStore.swift */,
-			);
-			path = Room;
-			sourceTree = "<group>";
-		};
 		DCA53946235F534400CA26FB /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -1296,7 +1289,6 @@
 				DC0446B623A182780072F597 /* CrashReport */,
 				DCB7C18C2405C0A4009DEA70 /* Keychain */,
 				DC76FCFF241054A3001B2FFC /* EnvironmentVariable */,
-				DC9A5DC8245A1B7E00E4B079 /* Room */,
 				DCDCD370241929C6004A30FC /* TwilioAccessToken */,
 				DC04468F238F1E2D0072F597 /* User */,
 				DCD7675423DF551B00A2939C /* UserActivity */,
@@ -2403,7 +2395,6 @@
 				DCDCD372241929E1004A30FC /* TwilioAccessTokenStore.swift in Sources */,
 				DCF4615D2385B10200DD8FEA /* GeneralSettingsViewModel.swift in Sources */,
 				DCC7E35D24070C5200431AC3 /* AuthFlowFactory.swift in Sources */,
-				DC9A5DBC2459C7B900E4B079 /* RoomStore.swift in Sources */,
 				DC85CA6123CE4FCA00BF016F /* AppCenterStoreFactory.swift in Sources */,
 				DC82A38C24008AE00081578C /* SelectSDKLogLevelViewModel.swift in Sources */,
 				DCC7E3552406ED3900431AC3 /* UserDefaultsProtocol.swift in Sources */,
@@ -2421,6 +2412,7 @@
 				DC3C32D42417E6E000F56AFB /* InternalAPIErrorResponseDecoder.swift in Sources */,
 				DCA65021240D91CA0038DEE1 /* CommunityCreateTwilioAccessTokenResponse.swift in Sources */,
 				DC1C2F8A23A6E7270044FB4D /* NotificationCenterProtocol.swift in Sources */,
+				DC9A5DD2245B332D00E4B079 /* RemoteParticipant.swift in Sources */,
 				DC8EAE3323BA71990045018F /* LaunchStoresFactory.swift in Sources */,
 				DC44C2EA23876B4700205174 /* EditTextSegueSender.swift in Sources */,
 				DC4E4E2323577EE500C5D313 /* Topology.swift in Sources */,
@@ -2540,7 +2532,6 @@
 				DCDCD373241929E1004A30FC /* TwilioAccessTokenStore.swift in Sources */,
 				DCF4615E2385B10200DD8FEA /* GeneralSettingsViewModel.swift in Sources */,
 				DCC7E35E24070C5200431AC3 /* AuthFlowFactory.swift in Sources */,
-				DC9A5DBD2459C7B900E4B079 /* RoomStore.swift in Sources */,
 				DC85CA6223CE4FCA00BF016F /* AppCenterStoreFactory.swift in Sources */,
 				DC82A38D24008AE00081578C /* SelectSDKLogLevelViewModel.swift in Sources */,
 				DCC7E3562406ED3900431AC3 /* UserDefaultsProtocol.swift in Sources */,
@@ -2558,6 +2549,7 @@
 				DC3C32D52417E6E000F56AFB /* InternalAPIErrorResponseDecoder.swift in Sources */,
 				DCA65020240D91CA0038DEE1 /* CommunityCreateTwilioAccessTokenResponse.swift in Sources */,
 				DC1C2F8B23A6E7270044FB4D /* NotificationCenterProtocol.swift in Sources */,
+				DC9A5DD3245B332D00E4B079 /* RemoteParticipant.swift in Sources */,
 				DC8EAE3423BA71990045018F /* LaunchStoresFactory.swift in Sources */,
 				DC44C2EB23876B4700205174 /* EditTextSegueSender.swift in Sources */,
 				DC4E4E2423577EE500C5D313 /* Topology.swift in Sources */,
@@ -2677,7 +2669,6 @@
 				DCDCD374241929E1004A30FC /* TwilioAccessTokenStore.swift in Sources */,
 				DCF4615F2385B10200DD8FEA /* GeneralSettingsViewModel.swift in Sources */,
 				DCC7E35F24070C5200431AC3 /* AuthFlowFactory.swift in Sources */,
-				DC9A5DBE2459C7B900E4B079 /* RoomStore.swift in Sources */,
 				DC85CA6323CE4FCA00BF016F /* AppCenterStoreFactory.swift in Sources */,
 				DC82A38E24008AE00081578C /* SelectSDKLogLevelViewModel.swift in Sources */,
 				DCC7E3572406ED3900431AC3 /* UserDefaultsProtocol.swift in Sources */,
@@ -2695,6 +2686,7 @@
 				DC3C32D62417E6E000F56AFB /* InternalAPIErrorResponseDecoder.swift in Sources */,
 				DCA6501F240D91C90038DEE1 /* CommunityCreateTwilioAccessTokenResponse.swift in Sources */,
 				DC1C2F8C23A6E7270044FB4D /* NotificationCenterProtocol.swift in Sources */,
+				DC9A5DD4245B332D00E4B079 /* RemoteParticipant.swift in Sources */,
 				DC8EAE3523BA71990045018F /* LaunchStoresFactory.swift in Sources */,
 				DC44C2EC23876B4700205174 /* EditTextSegueSender.swift in Sources */,
 				DC4E4E2523577EE500C5D313 /* Topology.swift in Sources */,

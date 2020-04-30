@@ -119,8 +119,12 @@
     }
 }
 
-- (void)configureWith:(NSString *)identity cameraVideoTrack:(TVIVideoTrack *)videoTrack {
+// TODO: Move to separate file?
+- (void)configureWithIdentity:(NSString *)identity {
     [self setIdentity:identity];
+}
+
+- (void)configureWithVideoTrack:(TVIVideoTrack *)videoTrack {
     self.videoTrack = videoTrack;
 }
 
