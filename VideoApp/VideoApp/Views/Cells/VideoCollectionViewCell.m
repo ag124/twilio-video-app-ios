@@ -28,7 +28,6 @@
 @property (nonatomic, assign, getter=isDominantSpeaker) BOOL dominantSpeaker;
 
 @property (nonatomic, weak) IBOutlet UIView *audioMutedImage;
-@property (nonatomic, weak) IBOutlet UIView *dominantSpeakerIndicatorImage;
 @property (nonatomic, weak) IBOutlet UIImageView *networkQualityLevelIndicator;
 
 // Displayed when we have no video
@@ -54,9 +53,6 @@
     self.audioMutedImage.layer.cornerRadius = self.audioMutedImage.bounds.size.width / 2.0;
     self.audioMutedImage.layer.backgroundColor = CGColorCreateCopyWithAlpha([UIColor blackColor].CGColor, 0.5);
 
-    self.dominantSpeakerIndicatorImage.layer.cornerRadius = self.dominantSpeakerIndicatorImage.bounds.size.width / 2.0;
-    self.dominantSpeakerIndicatorImage.layer.backgroundColor = CGColorCreateCopyWithAlpha([UIColor blackColor].CGColor, 0.5);
-
     self.networkQualityLevel = TVINetworkQualityLevelUnknown;
 
     [self updateUIForVideoTrack:NO];
@@ -74,7 +70,6 @@
 
     self.videoTrack = nil;
     self.audioMutedImage.hidden = NO;
-    self.dominantSpeakerIndicatorImage.hidden = YES;
     self.dominantSpeaker = NO;
     self.networkQualityLevel = TVINetworkQualityLevelUnknown;
 
