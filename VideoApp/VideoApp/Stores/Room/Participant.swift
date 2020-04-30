@@ -18,7 +18,10 @@ import TwilioVideo
 
 protocol Participant: AnyObject {
     var delegate: ParticipantDelegate? { get set }
-
+    var identity: String { get }
+    var cameraVideoTrack: VideoTrack? { get }
+    
+    
     // Screen share track
     // Camera track
     // Audio track
@@ -31,10 +34,33 @@ protocol ParticipantDelegate: AnyObject {
 
 class LocalParticipant: NSObject, Participant {
     weak var delegate: ParticipantDelegate?
+    var identity: String { participant.identity }
+    var cameraVideoTrack: VideoTrack? { participant.localVideoTracks.first?.localTrack } // Use track name
+    var isMicOn: Bool {
+        get {
+            localMediaController.localAudioTrack != nil
+        }
+        set {
+            if newValue {
+                localMediaController.createLocalAudioTrack()
+                
+                if let localAudioTrack = localMediaController.localAudioTrack {
+                    participant.publishAudioTrack(localAudioTrack)
+                }
+            } else {
+                guard let localAudioTrack = localMediaController.localAudioTrack else { return }
+                
+                participant.unpublishAudioTrack(localAudioTrack) // TODO: Rename this to mic
+                localMediaController.destroyLocalAudioTrack()
+            }
+        }
+    }
     private let participant: TwilioVideo.LocalParticipant
-
-    init(participant: TwilioVideo.LocalParticipant) {
+    private let localMediaController: LocalMediaController
+    
+    init(participant: TwilioVideo.LocalParticipant, localMediaController: LocalMediaController) {
         self.participant = participant
+        self.localMediaController = localMediaController
         super.init()
         participant.delegate = self
     }
@@ -64,6 +90,8 @@ extension LocalParticipant: LocalParticipantDelegate {
 
 class RemoteParticipant: NSObject, Participant {
     weak var delegate: ParticipantDelegate?
+    var identity: String { participant.identity }
+    var cameraVideoTrack: VideoTrack? { participant.remoteVideoTracks.first?.remoteTrack }
     private let participant: TwilioVideo.RemoteParticipant
     
     init(participant: TwilioVideo.RemoteParticipant) {

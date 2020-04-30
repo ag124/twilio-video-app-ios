@@ -16,7 +16,6 @@
 
 #import "LobbyViewController.h"
 #import "LocalMediaController.h"
-#import "RoomViewController.h"
 #import "VariableAlphaToggleButton.h"
 #import "VideoApp-Swift.h"
 @import TwilioVideo;
@@ -32,8 +31,6 @@
 @property (nonatomic, weak) IBOutlet VariableAlphaToggleButton *audioToggleButton;
 @property (nonatomic, weak) IBOutlet VariableAlphaToggleButton *videoToggleButton;
 @property (nonatomic, weak) IBOutlet UIButton *flipCameraButton;
-
-@property (nonatomic, weak) RoomViewController *roomViewController;
 
 @property (nonatomic, strong) LocalMediaController *localMediaController;
 
@@ -171,9 +168,9 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"roomSegue"]) {
-        self.roomViewController = segue.destinationViewController;
-        self.roomViewController.viewModel = [[RoomViewModel alloc] initWithLocalMediaController:self.localMediaController
-                                                                                       roomName:self.roomTextField.text];
+        [SwiftToObjc prepareForRoomSegue:segue
+                                roomName:self.roomTextField.text
+                    localMediaController:self.localMediaController];
     } else if ([segue.identifier isEqualToString:@"showSettings"]) {
         [SwiftToObjc prepareForShowSettingsSegue:segue];
     }
@@ -191,36 +188,36 @@
     return dismissed;
 }
 
-- (void)handleDeepLinkedURL:(NSURL *)deepLinkedURL {
-    // We only care about the user tapping the link if we are not currently in a room.
-    if (!self.roomViewController) {
-        NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:deepLinkedURL resolvingAgainstBaseURL:NO];
-
-        if ([urlComponents.path hasPrefix:@"/room"]) {
-            NSString *roomName = urlComponents.path.lastPathComponent;
-            self.roomTextField.text = roomName;
-
-            NSString *message = [NSString stringWithFormat:@"Would you like to join room: %@?", roomName];
-
-            typeof(self) __weak weakSelf = self;
-
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {}];
-
-                UIAlertAction *join = [UIAlertAction actionWithTitle:@"Join" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                    typeof(self) __strong strongSelf = weakSelf;
-                    [strongSelf joinRoomButtonPressed:strongSelf];
-                }];
-
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Join Room?" message:message preferredStyle:UIAlertControllerStyleAlert];
-                [alert addAction:cancel];
-                [alert addAction:join];
-
-                [self presentViewController:alert animated:YES completion:nil];
-            }];
-        }
-    }
-}
+//- (void)handleDeepLinkedURL:(NSURL *)deepLinkedURL {
+//    // We only care about the user tapping the link if we are not currently in a room.
+//    if (!self.roomViewController) {
+//        NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:deepLinkedURL resolvingAgainstBaseURL:NO];
+//
+//        if ([urlComponents.path hasPrefix:@"/room"]) {
+//            NSString *roomName = urlComponents.path.lastPathComponent;
+//            self.roomTextField.text = roomName;
+//
+//            NSString *message = [NSString stringWithFormat:@"Would you like to join room: %@?", roomName];
+//
+//            typeof(self) __weak weakSelf = self;
+//
+//            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//                UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {}];
+//
+//                UIAlertAction *join = [UIAlertAction actionWithTitle:@"Join" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//                    typeof(self) __strong strongSelf = weakSelf;
+//                    [strongSelf joinRoomButtonPressed:strongSelf];
+//                }];
+//
+//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Join Room?" message:message preferredStyle:UIAlertControllerStyleAlert];
+//                [alert addAction:cancel];
+//                [alert addAction:join];
+//
+//                [self presentViewController:alert animated:YES completion:nil];
+//            }];
+//        }
+//    }
+//}
 
 #pragma mark - LocalMediaControllerDelegate
 - (void)localMediaControllerStartedVideoCapture:(LocalMediaController *)localMediaController {

@@ -5,4 +5,6 @@
 #import "LobbyViewController.h"
 #import "LocalMediaController.h"
 #import "RemoteParticipantUIModel.h"
+#import "VariableAlphaToggleButton.h"
 #import "VideoAppCamera.h"
+#import "VideoCollectionViewCell.h"

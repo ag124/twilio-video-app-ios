@@ -49,4 +49,22 @@ import Foundation
             selectVideoCodecViewModelFactory: SelectVideoCodecViewModelFactory()
         )
     }
+
+    @objc static func prepareForRoomSegue(
+        _ segue: UIStoryboardSegue,
+        roomName: String,
+        localMediaController: LocalMediaController
+    ) {
+        let roomViewController = segue.destination as! RoomViewController
+        let roomStore = RoomStore(
+            accessTokenStore: TwilioAccessTokenStoreFactory().makeTwilioAccessTokenStore(),
+            connectOptionsFactory: ConnectOptionsFactory(),
+            localMediaController: localMediaController
+        )
+        roomViewController.viewModel = RoomViewModel(
+            roomName: roomName,
+            roomStore: roomStore,
+            localMediaController: localMediaController
+        )
+    }
 }

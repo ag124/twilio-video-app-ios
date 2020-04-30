@@ -119,6 +119,11 @@
     }
 }
 
+- (void)configureWith:(NSString *)identity cameraVideoTrack:(TVIVideoTrack *)videoTrack {
+    [self setIdentity:identity];
+    self.videoTrack = videoTrack;
+}
+
 - (void)setIdentity:(NSString *)identity {
     self.identityLabel.text = identity;
     self.noVideoIdentityLabel.text = identity;
@@ -172,22 +177,22 @@
 }
 
 - (void)updateUIForAudioState {
-    BOOL shouldHideDominantSpeakerIndicator = YES;
-    BOOL shouldHideAudioMutedIndicator = YES;
-
-    if (self.localParticipant != nil) {
-        shouldHideAudioMutedIndicator = [self.localParticipant.audioTracks count] > 0 && self.localParticipant.audioTracks[0].track.isEnabled;
-    } else if (self.remoteParticipantUIModel.remoteParticipant != nil) {
-        if (self.isDominantSpeaker) {
-            shouldHideDominantSpeakerIndicator = NO;
-        } else {
-            TVIRemoteParticipant *remoteParticipant = self.remoteParticipantUIModel.remoteParticipant;
-            shouldHideAudioMutedIndicator = [remoteParticipant.audioTracks count] > 0 && remoteParticipant.audioTracks[0].track.isEnabled;
-        }
-    }
-
-    self.dominantSpeakerIndicatorImage.hidden = shouldHideDominantSpeakerIndicator;
-    self.audioMutedImage.hidden = shouldHideAudioMutedIndicator;
+//    BOOL shouldHideDominantSpeakerIndicator = YES;
+//    BOOL shouldHideAudioMutedIndicator = YES;
+//
+//    if (self.localParticipant != nil) {
+//        shouldHideAudioMutedIndicator = [self.localParticipant.audioTracks count] > 0 && self.localParticipant.audioTracks[0].track.isEnabled;
+//    } else if (self.remoteParticipantUIModel.remoteParticipant != nil) {
+//        if (self.isDominantSpeaker) {
+//            shouldHideDominantSpeakerIndicator = NO;
+//        } else {
+//            TVIRemoteParticipant *remoteParticipant = self.remoteParticipantUIModel.remoteParticipant;
+//            shouldHideAudioMutedIndicator = [remoteParticipant.audioTracks count] > 0 && remoteParticipant.audioTracks[0].track.isEnabled;
+//        }
+//    }
+//
+//    self.dominantSpeakerIndicatorImage.hidden = shouldHideDominantSpeakerIndicator;
+//    self.audioMutedImage.hidden = shouldHideAudioMutedIndicator;
 }
 
 - (TVIParticipant *)getParticipant {

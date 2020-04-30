@@ -14,10 +14,19 @@
 //  limitations under the License.
 //
 
+import TwilioVideo
+
 struct RoomViewModelData {
+    struct Participant {
+        let identity: String
+        let networkQualityLevel: String // TODO: Enum
+        let isAudioMuted: Bool
+        let shouldMirrorVideo: Bool
+        let cameraVideoTrack: VideoTrack?
+    }
+    
     let roomName: String
-    let mainVideo: String
-    let participants: [String]
+    let participants: [Participant]
 }
 
 protocol RoomViewModelDelegate: AnyObject {
@@ -26,12 +35,41 @@ protocol RoomViewModelDelegate: AnyObject {
 
 class RoomViewModel {
     weak var delegate: RoomViewModelDelegate?
+    var data: RoomViewModelData {
+        guard let room = roomStore.room else { return RoomViewModelData(roomName: roomName, participants: []) }
+        
+        let participants: [Participant] = [room.localParticipant] + room.remoteParticipants
+        let newParticipants = participants.map {
+            RoomViewModelData.Participant(
+                identity: $0.identity,
+                networkQualityLevel: "",
+                isAudioMuted: false,
+                shouldMirrorVideo: false,
+                cameraVideoTrack: $0.cameraVideoTrack
+            )
+        }
+        
+        return RoomViewModelData(
+            roomName: roomName,
+            participants: newParticipants
+        )
+    }
+    var isMicOn: Bool {
+        get { roomStore.room?.localParticipant.isMicOn ?? false
+        }
+        set {
+            // TODO: Make sure the only gets called on a real change
+            roomStore.room?.localParticipant.isMicOn = newValue
+        }
+    }
     private let roomName: String
     private let roomStore: RoomStore
+    private let localMediaController: LocalMediaController
 
-    init(roomName: String, roomStore: RoomStore) {
+    init(roomName: String, roomStore: RoomStore, localMediaController: LocalMediaController) {
         self.roomName = roomName
         self.roomStore = roomStore
+        self.localMediaController = localMediaController
         roomStore.delegate = self
     }
     
@@ -42,6 +80,7 @@ class RoomViewModel {
 
 extension RoomViewModel: RoomStoreDelegate {
     func didConnect() {
+        roomStore.room?.delegate = self
         delegate?.didUpdateData()
     }
     
@@ -50,6 +89,12 @@ extension RoomViewModel: RoomStoreDelegate {
     }
     
     func didDisconnect(error: Error?) {
+        delegate?.didUpdateData()
+    }
+}
+
+extension RoomViewModel: RoomDelegate {
+    func didUpdate() {
         delegate?.didUpdateData()
     }
 }

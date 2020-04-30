@@ -17,14 +17,14 @@
 import TwilioVideo
 
 protocol RoomDelegate: AnyObject {
-
+    func didUpdate()
 }
 
 class Room: NSObject {
     weak var delegate: RoomDelegate?
     var isRecording: Bool { room.isRecording }
-    private(set) var localParticipant: LocalParticipant!
-    private(set) var allParticipants: [Participant] = []
+    var localParticipant: LocalParticipant!
+    var remoteParticipants: [RemoteParticipant] = []
     private let room: TwilioVideo.Room
     private let localMediaController: LocalMediaController
     
@@ -32,17 +32,17 @@ class Room: NSObject {
         self.room = room
         self.localMediaController = localMediaController
     }
-    
-    private func updateParticipants() {
-        localMediaController.localParticipant = room.localParticipant
-        localParticipant = LocalParticipant(participant: room.localParticipant!)
-        allParticipants = [localParticipant] + room.remoteParticipants.map { RemoteParticipant(participant: $0) }
+
+    private func updateRemoteParticipants() {
+        remoteParticipants = room.remoteParticipants.map { RemoteParticipant(participant: $0) }
+        remoteParticipants.forEach { $0.delegate = self }
     }
 }
 
 extension Room: TwilioVideo.RoomDelegate {
     func roomDidConnect(room: TwilioVideo.Room) {
-        updateParticipants()
+        localParticipant = LocalParticipant(participant: room.localParticipant!, localMediaController: localMediaController)
+        delegate?.didUpdate()
     }
     
     func roomDidFailToConnect(room: TwilioVideo.Room, error: Error) {
@@ -50,15 +50,17 @@ extension Room: TwilioVideo.RoomDelegate {
     }
     
     func roomDidDisconnect(room: TwilioVideo.Room, error: Error?) {
-        updateParticipants()
+        
     }
     
     func participantDidConnect(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant) {
-        updateParticipants()
+        updateRemoteParticipants()
+        delegate?.didUpdate()
     }
     
     func participantDidDisconnect(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant) {
-        updateParticipants()
+        updateRemoteParticipants()
+        delegate?.didUpdate()
     }
     
     func roomDidStartRecording(room: TwilioVideo.Room) {
@@ -70,6 +72,12 @@ extension Room: TwilioVideo.RoomDelegate {
     }
     
     func dominantSpeakerDidChange(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant?) {
-        
+
+    }
+}
+
+extension Room: ParticipantDelegate {
+    func didUpdate() {
+        delegate?.didUpdate()
     }
 }

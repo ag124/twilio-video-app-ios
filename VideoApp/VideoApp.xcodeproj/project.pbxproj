@@ -19,7 +19,6 @@
 		243CDB502266629E00637B6B /* NetworkQualityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243CDB4D2266629E00637B6B /* NetworkQualityIndicator.swift */; };
 		24491F7D1E37F8F000028B24 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24491F7C1E37F8F000028B24 /* LoginViewController.m */; };
 		248D94A71ED3176000FC8A94 /* VideoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 248D94A61ED3176000FC8A94 /* VideoCollectionViewCell.m */; };
-		24927E2F1ECC9E44006510E3 /* RoomViewControllerOld.m in Sources */ = {isa = PBXBuildFile; fileRef = 24927E2E1ECC9E44006510E3 /* RoomViewControllerOld.m */; };
 		24A5984D1ECCC4D4003466B4 /* LocalMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A5984C1ECCC4D4003466B4 /* LocalMediaController.m */; };
 		24A598531ECCE069003466B4 /* RoundButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A598521ECCE069003466B4 /* RoundButton.m */; };
 		24A723E31ECE1C8500486E7A /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723E21ECE1C8500486E7A /* StatsViewController.m */; };
@@ -39,7 +38,6 @@
 		4B0012281FBA52C4004A587E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24491F7C1E37F8F000028B24 /* LoginViewController.m */; };
 		4B0012291FBA52C4004A587E /* TrackStatsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723EC1ECE1D2A00486E7A /* TrackStatsTableViewCell.m */; };
 		4B00122A1FBA52C4004A587E /* LobbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 241282411E36A6AB002198BE /* LobbyViewController.m */; };
-		4B00122B1FBA52C4004A587E /* RoomViewControllerOld.m in Sources */ = {isa = PBXBuildFile; fileRef = 24927E2E1ECC9E44006510E3 /* RoomViewControllerOld.m */; };
 		4B00122C1FBA52C4004A587E /* StatsUIModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723E61ECE1CBD00486E7A /* StatsUIModel.m */; };
 		4B00122D1FBA52C4004A587E /* RemoteParticipantUIModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C239F51EDF263800AA9419 /* RemoteParticipantUIModel.m */; };
 		4B00122F1FBA52C4004A587E /* HeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723EA1ECE1D2A00486E7A /* HeaderTableViewCell.m */; };
@@ -54,7 +52,6 @@
 		4B0012651FBA52E5004A587E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24491F7C1E37F8F000028B24 /* LoginViewController.m */; };
 		4B0012661FBA52E5004A587E /* TrackStatsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723EC1ECE1D2A00486E7A /* TrackStatsTableViewCell.m */; };
 		4B0012671FBA52E5004A587E /* LobbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 241282411E36A6AB002198BE /* LobbyViewController.m */; };
-		4B0012681FBA52E5004A587E /* RoomViewControllerOld.m in Sources */ = {isa = PBXBuildFile; fileRef = 24927E2E1ECC9E44006510E3 /* RoomViewControllerOld.m */; };
 		4B0012691FBA52E5004A587E /* StatsUIModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723E61ECE1CBD00486E7A /* StatsUIModel.m */; };
 		4B00126A1FBA52E5004A587E /* RemoteParticipantUIModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C239F51EDF263800AA9419 /* RemoteParticipantUIModel.m */; };
 		4B00126C1FBA52E5004A587E /* HeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723EA1ECE1D2A00486E7A /* HeaderTableViewCell.m */; };
@@ -521,8 +518,6 @@
 		24491F7C1E37F8F000028B24 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		248D94A51ED3176000FC8A94 /* VideoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoCollectionViewCell.h; sourceTree = "<group>"; };
 		248D94A61ED3176000FC8A94 /* VideoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoCollectionViewCell.m; sourceTree = "<group>"; };
-		24927E2D1ECC9E44006510E3 /* RoomViewControllerOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomViewControllerOld.h; sourceTree = "<group>"; };
-		24927E2E1ECC9E44006510E3 /* RoomViewControllerOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomViewControllerOld.m; sourceTree = "<group>"; };
 		24A5984B1ECCC4D4003466B4 /* LocalMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalMediaController.h; sourceTree = "<group>"; };
 		24A5984C1ECCC4D4003466B4 /* LocalMediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalMediaController.m; sourceTree = "<group>"; };
 		24A598511ECCE069003466B4 /* RoundButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundButton.h; sourceTree = "<group>"; };
@@ -1001,8 +996,6 @@
 		DC0446C423A2D5E70072F597 /* Room */ = {
 			isa = PBXGroup;
 			children = (
-				24927E2D1ECC9E44006510E3 /* RoomViewControllerOld.h */,
-				24927E2E1ECC9E44006510E3 /* RoomViewControllerOld.m */,
 				DC9A5DC9245A215000E4B079 /* RoomViewController.swift */,
 				DC386DD02458DC05009E994A /* RoomViewModel.swift */,
 			);
@@ -2466,7 +2459,6 @@
 				241282421E36A6AB002198BE /* LobbyViewController.m in Sources */,
 				DC44C2E623876AFB00205174 /* SelectOptionSegueSender.swift in Sources */,
 				DCB7C18E2405C0BE009DEA70 /* KeychainStorage.swift in Sources */,
-				24927E2F1ECC9E44006510E3 /* RoomViewControllerOld.m in Sources */,
 				DC44C2E223875C4F00205174 /* StringHelpers.swift in Sources */,
 				DCF4614C238598C700DD8FEA /* SettingsViewModel.swift in Sources */,
 				DCC7E36A24085AD800431AC3 /* APIError.swift in Sources */,
@@ -2603,7 +2595,6 @@
 				4B00122A1FBA52C4004A587E /* LobbyViewController.m in Sources */,
 				DC44C2E723876AFB00205174 /* SelectOptionSegueSender.swift in Sources */,
 				DCB7C18F2405C0BE009DEA70 /* KeychainStorage.swift in Sources */,
-				4B00122B1FBA52C4004A587E /* RoomViewControllerOld.m in Sources */,
 				DC44C2E323875C4F00205174 /* StringHelpers.swift in Sources */,
 				DCF4614D238598C700DD8FEA /* SettingsViewModel.swift in Sources */,
 				DCC7E36B24085AD800431AC3 /* APIError.swift in Sources */,
@@ -2740,7 +2731,6 @@
 				4B0012671FBA52E5004A587E /* LobbyViewController.m in Sources */,
 				DC44C2E823876AFB00205174 /* SelectOptionSegueSender.swift in Sources */,
 				DCB7C1902405C0BE009DEA70 /* KeychainStorage.swift in Sources */,
-				4B0012681FBA52E5004A587E /* RoomViewControllerOld.m in Sources */,
 				DC44C2E423875C4F00205174 /* StringHelpers.swift in Sources */,
 				DCF4614E238598C700DD8FEA /* SettingsViewModel.swift in Sources */,
 				DCC7E36C24085AD800431AC3 /* APIError.swift in Sources */,
