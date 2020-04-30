@@ -32,62 +32,6 @@ protocol ParticipantDelegate: AnyObject {
     func didUpdate()
 }
 
-class LocalParticipant: NSObject, Participant {
-    weak var delegate: ParticipantDelegate?
-    var identity: String { participant.identity }
-    var cameraVideoTrack: VideoTrack? { participant.localVideoTracks.first?.localTrack } // Use track name
-    var isMicOn: Bool {
-        get {
-            localMediaController.localAudioTrack != nil
-        }
-        set {
-            if newValue {
-                localMediaController.createLocalAudioTrack()
-                
-                if let localAudioTrack = localMediaController.localAudioTrack {
-                    participant.publishAudioTrack(localAudioTrack)
-                }
-            } else {
-                guard let localAudioTrack = localMediaController.localAudioTrack else { return }
-                
-                participant.unpublishAudioTrack(localAudioTrack) // TODO: Rename this to mic
-                localMediaController.destroyLocalAudioTrack()
-            }
-        }
-    }
-    private let participant: TwilioVideo.LocalParticipant
-    private let localMediaController: LocalMediaController
-    
-    init(participant: TwilioVideo.LocalParticipant, localMediaController: LocalMediaController) {
-        self.participant = participant
-        self.localMediaController = localMediaController
-        super.init()
-        participant.delegate = self
-    }
-}
-
-extension LocalParticipant: LocalParticipantDelegate {
-    func localParticipantDidPublishVideoTrack(participant: TwilioVideo.LocalParticipant, videoTrackPublication: LocalVideoTrackPublication) {
-        delegate?.didUpdate()
-    }
-    
-    func localParticipantDidFailToPublishVideoTrack(participant: TwilioVideo.LocalParticipant, videoTrack: LocalVideoTrack, error: Error) {
-        delegate?.didUpdate()
-    }
-    
-    func localParticipantDidPublishAudioTrack(participant: TwilioVideo.LocalParticipant, audioTrackPublication: LocalAudioTrackPublication) {
-        delegate?.didUpdate()
-    }
-    
-    func localParticipantDidFailToPublishAudioTrack(participant: TwilioVideo.LocalParticipant, audioTrack: LocalAudioTrack, error: Error) {
-        delegate?.didUpdate()
-    }
-    
-    func localParticipantNetworkQualityLevelDidChange(participant: TwilioVideo.LocalParticipant, networkQualityLevel: NetworkQualityLevel) {
-        delegate?.didUpdate()
-    }
-}
-
 class RemoteParticipant: NSObject, Participant {
     weak var delegate: ParticipantDelegate?
     var identity: String { participant.identity }

@@ -23,14 +23,13 @@ protocol RoomDelegate: AnyObject {
 class Room: NSObject {
     weak var delegate: RoomDelegate?
     var isRecording: Bool { room.isRecording }
-    var localParticipant: LocalParticipant!
+    let localParticipant: LocalParticipant
     var remoteParticipants: [RemoteParticipant] = []
     private let room: TwilioVideo.Room
-    private let localMediaController: LocalMediaController
     
-    init(room: TwilioVideo.Room, localMediaController: LocalMediaController) {
+    init(room: TwilioVideo.Room, localParticipant: LocalParticipant) {
         self.room = room
-        self.localMediaController = localMediaController
+        self.localParticipant = localParticipant
     }
 
     private func updateRemoteParticipants() {
@@ -41,7 +40,7 @@ class Room: NSObject {
 
 extension Room: TwilioVideo.RoomDelegate {
     func roomDidConnect(room: TwilioVideo.Room) {
-        localParticipant = LocalParticipant(participant: room.localParticipant!, localMediaController: localMediaController)
+        localParticipant.participant = room.localParticipant
         delegate?.didUpdate()
     }
     

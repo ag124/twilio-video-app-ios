@@ -27,16 +27,16 @@ class RoomStore: NSObject {
     private(set) var room: Room?
     private let accessTokenStore: TwilioAccessTokenStoreReading
     private let connectOptionsFactory: ConnectOptionsFactory
-    private let localMediaController: LocalMediaController
+    private let localParticipant: LocalParticipant
     
     init(
         accessTokenStore: TwilioAccessTokenStoreReading,
         connectOptionsFactory: ConnectOptionsFactory,
-        localMediaController: LocalMediaController
+        localParticipant: LocalParticipant
     ) {
         self.accessTokenStore = accessTokenStore
         self.connectOptionsFactory = connectOptionsFactory
-        self.localMediaController = localMediaController
+        self.localParticipant = localParticipant
     }
     
     // TODO: Create new status that includes fetching access token
@@ -52,12 +52,12 @@ class RoomStore: NSObject {
                 let options = self.connectOptionsFactory.makeConnectOptions(
                     accessToken: accessToken,
                     roomName: roomName,
-                    audioTracks: [self.localMediaController.localAudioTrack].compactMap { $0 },
-                    videoTracks: [self.localMediaController.localVideoTrack].compactMap { $0 }
+                    audioTracks: [self.localParticipant.micAudioTrack].compactMap { $0 },
+                    videoTracks: [self.localParticipant.localCameraVideoTrack].compactMap { $0 }
                 )
                 // TODO: Inject
                 let room = TwilioVideoSDK.connect(options: options, delegate: self)
-                self.room = Room(room: room, localMediaController: self.localMediaController)
+                self.room = Room(room: room, localParticipant: self.localParticipant)
             case let .failure(error):
                 self.delegate?.didFailToConnect(error: error)
             }

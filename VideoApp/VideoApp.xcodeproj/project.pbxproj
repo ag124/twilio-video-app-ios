@@ -267,6 +267,9 @@
 		DC9A5DCA245A215000E4B079 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DC9245A215000E4B079 /* RoomViewController.swift */; };
 		DC9A5DCB245A215000E4B079 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DC9245A215000E4B079 /* RoomViewController.swift */; };
 		DC9A5DCC245A215000E4B079 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DC9245A215000E4B079 /* RoomViewController.swift */; };
+		DC9A5DCE245B0E6100E4B079 /* LocalParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */; };
+		DC9A5DCF245B0E6100E4B079 /* LocalParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */; };
+		DC9A5DD0245B0E6100E4B079 /* LocalParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */; };
 		DCA53948235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA53949235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA5394A235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
@@ -648,6 +651,7 @@
 		DC9A5DBF2459F1D100E4B079 /* Participant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Participant.swift; sourceTree = "<group>"; };
 		DC9A5DC4245A0B5F00E4B079 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		DC9A5DC9245A215000E4B079 /* RoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
+		DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalParticipant.swift; sourceTree = "<group>"; };
 		DCA53947235F53E700CA26FB /* InternalAuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAuthStore.swift; sourceTree = "<group>"; };
 		DCA5394B235F740200CA26FB /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		DCA5394F235F765D00CA26FB /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
@@ -1253,6 +1257,7 @@
 			children = (
 				DCD940B0243B9B7A00D9ECC5 /* ConnectOptionsFactory.swift */,
 				DC9A5DBF2459F1D100E4B079 /* Participant.swift */,
+				DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */,
 				DC9A5DC4245A0B5F00E4B079 /* Room.swift */,
 				DC9A5DBB2459C7B900E4B079 /* RoomStore.swift */,
 			);
@@ -2491,6 +2496,7 @@
 				DCB64B4F2409976F00E090BE /* APIRequest.swift in Sources */,
 				DCB7C1812405BD2C009DEA70 /* PasscodeComponents.swift in Sources */,
 				DC3C32D02417E6C400F56AFB /* CommunityAPIErrorResponseDecoder.swift in Sources */,
+				DC9A5DCE245B0E6100E4B079 /* LocalParticipant.swift in Sources */,
 				DC386DD12458DC05009E994A /* RoomViewModel.swift in Sources */,
 				DCA80B28236B821E009141C9 /* LaunchFlow.swift in Sources */,
 				DC044695238F1FAA0072F597 /* User.swift in Sources */,
@@ -2627,6 +2633,7 @@
 				DCB64B502409976F00E090BE /* APIRequest.swift in Sources */,
 				DCB7C1822405BD2C009DEA70 /* PasscodeComponents.swift in Sources */,
 				DC3C32D12417E6C400F56AFB /* CommunityAPIErrorResponseDecoder.swift in Sources */,
+				DC9A5DCF245B0E6100E4B079 /* LocalParticipant.swift in Sources */,
 				DC386DD22458DC05009E994A /* RoomViewModel.swift in Sources */,
 				DCA80B29236B821E009141C9 /* LaunchFlow.swift in Sources */,
 				DC044696238F1FAA0072F597 /* User.swift in Sources */,
@@ -2763,6 +2770,7 @@
 				DCB64B512409976F00E090BE /* APIRequest.swift in Sources */,
 				DCB7C1832405BD2C009DEA70 /* PasscodeComponents.swift in Sources */,
 				DC3C32D22417E6C400F56AFB /* CommunityAPIErrorResponseDecoder.swift in Sources */,
+				DC9A5DD0245B0E6100E4B079 /* LocalParticipant.swift in Sources */,
 				DC386DD32458DC05009E994A /* RoomViewModel.swift in Sources */,
 				DCA80B2A236B821E009141C9 /* LaunchFlow.swift in Sources */,
 				DC044697238F1FAA0072F597 /* User.swift in Sources */,

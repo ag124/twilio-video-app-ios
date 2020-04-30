@@ -64,12 +64,10 @@ class RoomViewModel {
     }
     private let roomName: String
     private let roomStore: RoomStore
-    private let localMediaController: LocalMediaController
 
-    init(roomName: String, roomStore: RoomStore, localMediaController: LocalMediaController) {
+    init(roomName: String, roomStore: RoomStore) {
         self.roomName = roomName
         self.roomStore = roomStore
-        self.localMediaController = localMediaController
         roomStore.delegate = self
     }
     
