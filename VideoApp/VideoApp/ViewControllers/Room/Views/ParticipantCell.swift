@@ -69,7 +69,7 @@ class ParticipantCell: UICollectionViewCell {
     }
 }
 
-extension ParticipantCell: VideoViewDelegate { // TODO: Make private?
+extension ParticipantCell: TwilioVideo.VideoViewDelegate { // TODO: Make private?
     func videoViewDidReceiveData(view: TwilioVideo.VideoView) {
         videoView.isHidden = false
     }

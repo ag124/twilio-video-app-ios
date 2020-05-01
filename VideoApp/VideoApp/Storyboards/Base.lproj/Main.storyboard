@@ -523,46 +523,8 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RPn-5A-hlv" userLabel="Main Video" customClass="MainVideoView" customModule="VideoApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="twr-LA-nLP" userLabel="Placeholder">
-                                        <rect key="frame" x="0.0" y="241" width="414" height="414"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Identity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s6e-vs-ymB" userLabel="Identity">
-                                                <rect key="frame" x="41.5" y="185.5" width="331" height="43"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="s6e-vs-ymB" firstAttribute="width" secondItem="twr-LA-nLP" secondAttribute="width" multiplier="0.8" id="HxA-lx-tQG"/>
-                                            <constraint firstItem="s6e-vs-ymB" firstAttribute="centerY" secondItem="twr-LA-nLP" secondAttribute="centerY" id="SiD-ia-0jb"/>
-                                            <constraint firstItem="s6e-vs-ymB" firstAttribute="centerX" secondItem="twr-LA-nLP" secondAttribute="centerX" id="brm-Oa-Zvk"/>
-                                            <constraint firstAttribute="width" secondItem="twr-LA-nLP" secondAttribute="height" multiplier="1:1" id="rfw-G9-Uqr"/>
-                                        </constraints>
-                                    </view>
-                                    <view hidden="YES" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ta-da-1ai" userLabel="Video" customClass="TVIVideoView">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                        <color key="backgroundColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstItem="9ta-da-1ai" firstAttribute="leading" secondItem="RPn-5A-hlv" secondAttribute="leading" id="24N-wP-Ru6"/>
-                                    <constraint firstItem="twr-LA-nLP" firstAttribute="leading" secondItem="RPn-5A-hlv" secondAttribute="leading" id="A8a-rB-PvX"/>
-                                    <constraint firstAttribute="bottom" secondItem="9ta-da-1ai" secondAttribute="bottom" id="AWI-jA-Yy0"/>
-                                    <constraint firstItem="9ta-da-1ai" firstAttribute="top" secondItem="RPn-5A-hlv" secondAttribute="top" id="ISe-jD-2Px"/>
-                                    <constraint firstItem="twr-LA-nLP" firstAttribute="centerY" secondItem="RPn-5A-hlv" secondAttribute="centerY" id="WDe-En-c0V"/>
-                                    <constraint firstAttribute="trailing" secondItem="9ta-da-1ai" secondAttribute="trailing" id="jrc-xP-Qrt"/>
-                                    <constraint firstAttribute="trailing" secondItem="twr-LA-nLP" secondAttribute="trailing" id="n4u-Ex-KjS"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wQq-n1-BV3" userLabel="Test" customClass="MainVideoView" customModule="VideoApp" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wQq-n1-BV3" userLabel="Main Video" customClass="MainVideoView" customModule="VideoApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wU6-sZ-Ash">
                                 <rect key="frame" x="4" y="682" width="406" height="172"/>
@@ -793,13 +755,9 @@
                             <constraint firstItem="sqN-Vg-1NI" firstAttribute="top" secondItem="xjQ-ct-136" secondAttribute="bottom" constant="8" id="4WW-4D-eRi"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dW2-aV-srT" secondAttribute="trailing" id="5wg-5S-wmQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wU6-sZ-Ash" secondAttribute="trailing" constant="-16" id="8p6-3i-Gxq"/>
-                            <constraint firstAttribute="bottom" secondItem="RPn-5A-hlv" secondAttribute="bottom" id="Cqc-pU-jYt"/>
-                            <constraint firstItem="RPn-5A-hlv" firstAttribute="leading" secondItem="5Nf-Ic-CeP" secondAttribute="leading" id="DL6-S0-fVQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xjQ-ct-136" secondAttribute="trailing" id="Eqn-D8-yVk"/>
                             <constraint firstItem="Rmp-3a-cAl" firstAttribute="trailing" secondItem="wQq-n1-BV3" secondAttribute="trailing" id="Ije-Eu-Gcq"/>
                             <constraint firstItem="bMv-zJ-vdD" firstAttribute="centerY" secondItem="DEq-Qj-jWj" secondAttribute="centerY" id="O5j-xA-3sh"/>
-                            <constraint firstAttribute="trailing" secondItem="RPn-5A-hlv" secondAttribute="trailing" id="P0P-HZ-WYa"/>
-                            <constraint firstItem="RPn-5A-hlv" firstAttribute="top" secondItem="5Nf-Ic-CeP" secondAttribute="top" id="RBW-x7-QfU"/>
                             <constraint firstItem="LQi-P8-wlg" firstAttribute="top" secondItem="Zhb-7D-ZBf" secondAttribute="bottom" constant="-30" id="TQl-oe-xkh"/>
                             <constraint firstItem="wQq-n1-BV3" firstAttribute="leading" secondItem="Rmp-3a-cAl" secondAttribute="leading" id="UdD-Fh-I6b"/>
                             <constraint firstItem="wQq-n1-BV3" firstAttribute="top" secondItem="Rmp-3a-cAl" secondAttribute="top" id="VIc-vX-YQB"/>
@@ -823,10 +781,10 @@
                         <outlet property="disableCameraButton" destination="sqN-Vg-1NI" id="y5T-Nf-psh"/>
                         <outlet property="disableMicButton" destination="xjQ-ct-136" id="Gjm-8P-1Sd"/>
                         <outlet property="leaveButton" destination="dW2-aV-srT" id="V6o-I0-16I"/>
+                        <outlet property="mainVideoView" destination="wQq-n1-BV3" id="IEa-gb-6eu"/>
                         <outlet property="participantCollectionView" destination="wU6-sZ-Ash" id="1ue-Zg-5ps"/>
                         <outlet property="roomNameLabel" destination="LQi-P8-wlg" id="ysU-OB-NcB"/>
                         <outlet property="switchCameraButton" destination="DEq-Qj-jWj" id="4iu-kv-dUt"/>
-                        <outlet property="testView" destination="wQq-n1-BV3" id="ZP3-H5-2hd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PuS-AJ-Sbf" userLabel="First Responder" sceneMemberID="firstResponder"/>

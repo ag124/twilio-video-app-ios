@@ -21,11 +21,23 @@ class MainVideoView: CustomView {
     @IBOutlet weak var emptyVideoView: EmptyVideoView!
     @IBOutlet weak var videoView: VideoView!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        videoView.delegate = self
+    }
+    
     func configure(identity: String) {
         emptyVideoView.configure(identity: identity)
     }
 
     func configure(videoTrack: VideoTrack?, shouldMirror: Bool = false) {
         videoView.configure(videoTrack: videoTrack, shouldMirror: shouldMirror)
+    }
+}
+
+extension MainVideoView: VideoViewDelegate {
+    func didUpdateStatus(isVideoOn: Bool) {
+        emptyVideoView.isHidden = isVideoOn
     }
 }

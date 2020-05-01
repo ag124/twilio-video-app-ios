@@ -17,11 +17,22 @@
 import TwilioVideo
 import UIKit
 
+protocol VideoViewDelegate: AnyObject {
+    func didUpdateStatus(isVideoOn: Bool)
+}
+
 @IBDesignable
 class VideoView: CustomView {
     @IBOutlet weak var videoView: TwilioVideo.VideoView!
+    weak var delegate: VideoViewDelegate?
     private var videoTrack: VideoTrack?
-
+    private var isVideoOn = false {
+        didSet {
+            isHidden = !isVideoOn
+            delegate?.didUpdateStatus(isVideoOn: !isHidden)
+        }
+    }
+    
     deinit {
         videoTrack?.removeRenderer(videoView) // TODO: Really needed?
     }
@@ -40,10 +51,12 @@ class VideoView: CustomView {
     ) {
         guard let videoTrack = videoTrack, videoTrack.isEnabled else {
             self.videoTrack?.removeRenderer(videoView)
-            isHidden = true
+            isVideoOn = false
             return
         }
 
+        self.videoTrack?.removeRenderer(videoView)
+        self.videoTrack = videoTrack
         videoTrack.addRenderer(videoView)
         videoView.shouldMirror = shouldMirror
         isHidden = !videoView.hasVideoData
@@ -52,8 +65,8 @@ class VideoView: CustomView {
 }
 
 // TODO: Make private?
-extension VideoView: VideoViewDelegate {
+extension VideoView: TwilioVideo.VideoViewDelegate {
     func videoViewDidReceiveData(view: TwilioVideo.VideoView) {
-        videoView.isHidden = false
+        isVideoOn = true
     }
 }

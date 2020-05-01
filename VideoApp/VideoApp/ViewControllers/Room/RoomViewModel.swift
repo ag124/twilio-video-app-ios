@@ -147,7 +147,12 @@ class RoomViewModel {
     }
     
     private func updateMainParticipant() {
+        let mainParticipant = calculcateMainParticipant()
         
+        if mainParticipant.identity != self.mainParticipant.identity {
+            self.mainParticipant = mainParticipant
+            delegate?.didUpdateMainParticipant()
+        }
     }
 }
 

@@ -20,14 +20,14 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dPn-nF-Hy9" userLabel="Empty" customClass="EmptyVideoView" customModule="VideoApp" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="401" height="540"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZs-me-AZy" userLabel="Video" customClass="VideoView" customModule="VideoApp" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="401" height="540"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="dPn-nF-Hy9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="1fy-5r-xBa"/>
                 <constraint firstAttribute="bottom" secondItem="kZs-me-AZy" secondAttribute="bottom" id="TQi-ZZ-dnp"/>

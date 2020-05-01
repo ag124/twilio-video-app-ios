@@ -23,7 +23,7 @@ class RoomViewController: UIViewController {
     @IBOutlet weak var switchCameraButton: UIButton!
     @IBOutlet weak var roomNameLabel: UILabel!
     @IBOutlet weak var participantCollectionView: UICollectionView!
-    @IBOutlet weak var testView: MainVideoView!
+    @IBOutlet weak var mainVideoView: MainVideoView!
     
     var viewModel: RoomViewModel!
     
@@ -37,6 +37,8 @@ class RoomViewController: UIViewController {
         
         viewModel.delegate = self
         viewModel.connect()
+
+        configureMainVideoView()
     }
     
     @IBAction func disableCameraButtonTapped(_ sender: Any) {
@@ -57,7 +59,9 @@ class RoomViewController: UIViewController {
     }
     
     func configureMainVideoView() {
-        
+        let participant = viewModel.data.mainParticipant
+        mainVideoView.configure(identity: participant.identity)
+        mainVideoView.configure(videoTrack: participant.cameraVideoTrack)
     }
 }
 
@@ -92,11 +96,11 @@ extension RoomViewController: RoomViewModelDelegate {
     }
     
     func didUpdateMainParticipant() {
-        // TODO:
+        configureMainVideoView()
     }
     
     func didUpdateMainParticipantVideoConfig() {
-        // TODO:
+        mainVideoView.configure(videoTrack: viewModel.data.mainParticipant.cameraVideoTrack)
     }
 }
 
