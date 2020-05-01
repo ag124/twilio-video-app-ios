@@ -130,6 +130,8 @@ class RoomViewModel {
                 delegate?.didUpdateParticipantAttributes(at: index)
             }
         }
+        
+        updateMainParticipant()
     }
 
     // Make sure this is done in all correct places
@@ -196,6 +198,7 @@ extension RoomViewModel: ParticipantDelegate {
         guard let index = allParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
         
         delegate?.didUpdateParticipantAttributes(at: index)
+        updateMainParticipant()
     }
     
     func didUpdateVideoConfig(participant: Participant) {
