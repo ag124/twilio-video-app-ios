@@ -23,6 +23,7 @@ struct RoomViewModelData {
         let isMicOn: Bool // TODO: Rename to isMicMuted
         let shouldMirrorVideo: Bool
         let cameraVideoTrack: VideoTrack?
+        let isPinned: Bool
     }
     
     let roomName: String
@@ -46,7 +47,8 @@ class RoomViewModel {
                 networkQualityLevel: $0.networkQualityLevel,
                 isMicOn: $0.isMicOn,
                 shouldMirrorVideo: false,
-                cameraVideoTrack: $0.cameraVideoTrack
+                cameraVideoTrack: $0.cameraVideoTrack,
+                isPinned: $0.identity == pinnedParticipant?.identity
             )
         }
         
@@ -66,7 +68,8 @@ class RoomViewModel {
     private let roomName: String
     private let room: Room
     private var allParticipants: [Participant] { [room.localParticipant] + room.remoteParticipants }
-
+    private var pinnedParticipant: RoomViewModelData.Participant?
+    
     init(roomName: String, room: Room) {
         self.roomName = roomName
         self.room = room
@@ -76,6 +79,45 @@ class RoomViewModel {
     
     func connect() {
         room.connect(roomName: roomName)
+    }
+    
+    // TODO: Use index instead? // Maybe move to Room.Participant
+    func togglePin(participant: RoomViewModelData.Participant) {
+        if let pinnedParticipant = pinnedParticipant {
+            if pinnedParticipant.identity == participant.identity {
+                self.pinnedParticipant = nil
+                
+                if let index = allParticipants.firstIndex(where: { $0.identity == pinnedParticipant.identity }) {
+                    delegate?.didUpdateParticipantAttributes(at: index)
+                }
+            } else {
+                self.pinnedParticipant = participant
+                
+                if let index = allParticipants.firstIndex(where: { $0.identity == participant.identity }) {
+                    delegate?.didUpdateParticipantAttributes(at: index)
+                }
+
+                if let index = allParticipants.firstIndex(where: { $0.identity == pinnedParticipant.identity }) {
+                    delegate?.didUpdateParticipantAttributes(at: index)
+                }
+            }
+        } else {
+            self.pinnedParticipant = participant
+            
+            if let index = allParticipants.firstIndex(where: { $0.identity == participant.identity }) {
+                delegate?.didUpdateParticipantAttributes(at: index)
+            }
+        }
+    }
+
+    // Make sure this is done in all correct places
+    func updatePin() {
+        guard let pinnedParticipant = pinnedParticipant else { return }
+
+        // Cooler way to do this I think
+        if allParticipants.first(where: { $0.identity == pinnedParticipant.identity }) == nil {
+            self.pinnedParticipant = nil
+        }
     }
 }
 
@@ -89,9 +131,11 @@ extension RoomViewModel: RoomDelegate {
     }
     
     func didDisconnect(error: Error?) {
+        updatePin()
         delegate?.didUpdateData()
     }
 
+    // What is this for?
     func didUpdate() {
         delegate?.didUpdateData()
     }
@@ -102,6 +146,7 @@ extension RoomViewModel: RoomDelegate {
     }
     
     func didRemoveRemoteParticipant(at index: Int) {
+        updatePin() // maybe easier way to do this
         delegate?.didRemoveParticipant(at: index + 1)
     }
 }

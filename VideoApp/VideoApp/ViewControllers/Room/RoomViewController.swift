@@ -106,7 +106,9 @@ extension RoomViewController: UICollectionViewDataSource {
 }
 
 extension RoomViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.togglePin(participant: viewModel.data.participants[indexPath.item])
+    }
 }
 
 private extension ParticipantCell.Status {
@@ -114,7 +116,8 @@ private extension ParticipantCell.Status {
         self.init(
             identity: participant.identity,
             isMicMuted: !participant.isMicOn,
-            networkQualityLevel: participant.networkQualityLevel
+            networkQualityLevel: participant.networkQualityLevel,
+            isPinned: participant.isPinned
         )
     }
 }

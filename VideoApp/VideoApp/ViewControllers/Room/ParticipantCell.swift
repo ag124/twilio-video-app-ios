@@ -22,11 +22,13 @@ class ParticipantCell: UICollectionViewCell {
         let identity: String
         let isMicMuted: Bool
         let networkQualityLevel: NetworkQualityLevel
+        let isPinned: Bool
     }
     
     @IBOutlet weak var videoView: VideoView!
     @IBOutlet weak var identityLabel: UILabel!
     @IBOutlet weak var networkQualityImage: UIImageView!
+    @IBOutlet weak var pinView: UIView!
     @IBOutlet weak var muteView: UIView!
     private var videoTrack: VideoTrack?
     
@@ -44,6 +46,7 @@ class ParticipantCell: UICollectionViewCell {
     func configure(status: Status) {
         identityLabel.text = status.identity
         muteView.isHidden = !status.isMicMuted
+        pinView.isHidden = !status.isPinned
         
         // This can be cleaner
         if let imageName = status.networkQualityLevel.imageName {
