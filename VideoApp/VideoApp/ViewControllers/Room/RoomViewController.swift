@@ -22,8 +22,8 @@ class RoomViewController: UIViewController {
     @IBOutlet weak var leaveButton: RoundButton!
     @IBOutlet weak var switchCameraButton: UIButton!
     @IBOutlet weak var roomNameLabel: UILabel!
-    @IBOutlet weak var mainVideoView: VideoView! // TODO: Abstract?
     @IBOutlet weak var participantCollectionView: UICollectionView!
+    @IBOutlet weak var testView: MainVideoView!
     
     var viewModel: RoomViewModel!
     
@@ -34,6 +34,8 @@ class RoomViewController: UIViewController {
         participantCollectionView.dataSource = self
         participantCollectionView.delegate = self
         disableMicButton.isSelected = !viewModel.isMicOn
+        
+        testView.configure(identity: "It worked!")
         
         viewModel.delegate = self
         viewModel.connect()
@@ -89,6 +91,14 @@ extension RoomViewController: RoomViewModelDelegate {
 
         let participant = viewModel.data.participants[index]
         cell.configure(videoTrack: participant.cameraVideoTrack, shouldMirror: participant.shouldMirrorVideo)
+    }
+    
+    func didUpdateMainParticipant() {
+        // TODO:
+    }
+    
+    func didUpdateMainParticipantVideoConfig() {
+        // TODO:
     }
 }
 

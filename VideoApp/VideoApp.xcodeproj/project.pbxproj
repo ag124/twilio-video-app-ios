@@ -267,6 +267,12 @@
 		DC9A5DD6245B7F8600E4B079 /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */; };
 		DC9A5DD7245B90BA00E4B079 /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */; };
 		DC9A5DD8245B90BB00E4B079 /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */; };
+		DC9A5DDA245C8AE600E4B079 /* MainVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD9245C8AE500E4B079 /* MainVideoView.swift */; };
+		DC9A5DDB245C8AE600E4B079 /* MainVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD9245C8AE500E4B079 /* MainVideoView.swift */; };
+		DC9A5DDC245C8AE600E4B079 /* MainVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD9245C8AE500E4B079 /* MainVideoView.swift */; };
+		DC9A5DDE245C8CA300E4B079 /* MainVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC9A5DDD245C8CA300E4B079 /* MainVideoView.xib */; };
+		DC9A5DDF245C8CA300E4B079 /* MainVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC9A5DDD245C8CA300E4B079 /* MainVideoView.xib */; };
+		DC9A5DE0245C8CA300E4B079 /* MainVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC9A5DDD245C8CA300E4B079 /* MainVideoView.xib */; };
 		DCA53948235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA53949235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA5394A235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
@@ -647,6 +653,8 @@
 		DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalParticipant.swift; sourceTree = "<group>"; };
 		DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipant.swift; sourceTree = "<group>"; };
 		DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCell.swift; sourceTree = "<group>"; };
+		DC9A5DD9245C8AE500E4B079 /* MainVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVideoView.swift; sourceTree = "<group>"; };
+		DC9A5DDD245C8CA300E4B079 /* MainVideoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainVideoView.xib; sourceTree = "<group>"; };
 		DCA53947235F53E700CA26FB /* InternalAuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAuthStore.swift; sourceTree = "<group>"; };
 		DCA5394B235F740200CA26FB /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		DCA5394F235F765D00CA26FB /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
@@ -1003,6 +1011,8 @@
 				DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */,
 				DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */,
 				DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */,
+				DC9A5DD9245C8AE500E4B079 /* MainVideoView.swift */,
+				DC9A5DDD245C8CA300E4B079 /* MainVideoView.xib */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -1758,6 +1768,7 @@
 				DCAEBF1F2383342C00141D2D /* DestructiveButtonCell.xib in Resources */,
 				2412824A1E36A6AB002198BE /* LaunchScreen.storyboard in Resources */,
 				DC85CA5F23CCDADB00BF016F /* GoogleService-Info.plist in Resources */,
+				DC9A5DDE245C8CA300E4B079 /* MainVideoView.xib in Resources */,
 				DCAEBF332383560500141D2D /* EditTextCell.xib in Resources */,
 				DC44C2C523870D0800205174 /* BasicCell.xib in Resources */,
 				241282471E36A6AB002198BE /* Assets.xcassets in Resources */,
@@ -1774,6 +1785,7 @@
 				DCAEBF202383342C00141D2D /* DestructiveButtonCell.xib in Resources */,
 				4B0012411FBA52C4004A587E /* LaunchScreen.storyboard in Resources */,
 				DCAEBF342383560500141D2D /* EditTextCell.xib in Resources */,
+				DC9A5DDF245C8CA300E4B079 /* MainVideoView.xib in Resources */,
 				DC44C2C623870D0800205174 /* BasicCell.xib in Resources */,
 				4B0012441FBA52C4004A587E /* Assets.xcassets in Resources */,
 				DC44C2BE238704FB00205174 /* RightDetailCell.xib in Resources */,
@@ -1793,6 +1805,7 @@
 				DC44C2C723870D0800205174 /* BasicCell.xib in Resources */,
 				4B0012811FBA52E5004A587E /* Assets.xcassets in Resources */,
 				DC44C2BF238704FB00205174 /* RightDetailCell.xib in Resources */,
+				DC9A5DE0245C8CA300E4B079 /* MainVideoView.xib in Resources */,
 				4B0012831FBA52E5004A587E /* Main.storyboard in Resources */,
 				DCAEBF19238331A800141D2D /* SwitchCell.xib in Resources */,
 			);
@@ -2413,6 +2426,7 @@
 				DC0446CB23A2EE340072F597 /* DeveloperSettingsViewModel.swift in Sources */,
 				24A5984D1ECCC4D4003466B4 /* LocalMediaController.m in Sources */,
 				DCD7675623DF554A00A2939C /* UserActivityStore.swift in Sources */,
+				DC9A5DDA245C8AE600E4B079 /* MainVideoView.swift in Sources */,
 				DCAEBF302383560500141D2D /* EditTextCell.swift in Sources */,
 				DC82A35C23FDB9420081578C /* SDKLogLevelSettingsViewModel.swift in Sources */,
 				DCAEBF14238331A800141D2D /* SwitchCell.swift in Sources */,
@@ -2549,6 +2563,7 @@
 				DC0446CC23A2EE340072F597 /* DeveloperSettingsViewModel.swift in Sources */,
 				4B0012251FBA52C4004A587E /* LocalMediaController.m in Sources */,
 				DCD7675723DF554A00A2939C /* UserActivityStore.swift in Sources */,
+				DC9A5DDB245C8AE600E4B079 /* MainVideoView.swift in Sources */,
 				DCAEBF312383560500141D2D /* EditTextCell.swift in Sources */,
 				DC82A35D23FDB9420081578C /* SDKLogLevelSettingsViewModel.swift in Sources */,
 				DCAEBF15238331A800141D2D /* SwitchCell.swift in Sources */,
@@ -2685,6 +2700,7 @@
 				DC0446CD23A2EE340072F597 /* DeveloperSettingsViewModel.swift in Sources */,
 				4B0012621FBA52E5004A587E /* LocalMediaController.m in Sources */,
 				DCD7675823DF554B00A2939C /* UserActivityStore.swift in Sources */,
+				DC9A5DDC245C8AE600E4B079 /* MainVideoView.swift in Sources */,
 				DCAEBF322383560500141D2D /* EditTextCell.swift in Sources */,
 				DC82A35E23FDB9420081578C /* SDKLogLevelSettingsViewModel.swift in Sources */,
 				DCAEBF16238331A800141D2D /* SwitchCell.swift in Sources */,

@@ -507,11 +507,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleAspectFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wHG-cY-R14" userLabel="Main Video" customClass="TVIVideoView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
                             <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zhb-7D-ZBf" userLabel="Container View">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -528,9 +523,47 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-video" translatesAutoresizingMaskIntoConstraints="NO" id="IAx-eZ-xI6" userLabel="No Video Image">
-                                <rect key="frame" x="152.5" y="393.5" width="109" height="109"/>
-                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RPn-5A-hlv" userLabel="Main Video" customClass="MainVideoView" customModule="VideoApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="twr-LA-nLP" userLabel="Placeholder">
+                                        <rect key="frame" x="0.0" y="241" width="414" height="414"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Identity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s6e-vs-ymB" userLabel="Identity">
+                                                <rect key="frame" x="41.5" y="185.5" width="331" height="43"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="s6e-vs-ymB" firstAttribute="width" secondItem="twr-LA-nLP" secondAttribute="width" multiplier="0.8" id="HxA-lx-tQG"/>
+                                            <constraint firstItem="s6e-vs-ymB" firstAttribute="centerY" secondItem="twr-LA-nLP" secondAttribute="centerY" id="SiD-ia-0jb"/>
+                                            <constraint firstItem="s6e-vs-ymB" firstAttribute="centerX" secondItem="twr-LA-nLP" secondAttribute="centerX" id="brm-Oa-Zvk"/>
+                                            <constraint firstAttribute="width" secondItem="twr-LA-nLP" secondAttribute="height" multiplier="1:1" id="rfw-G9-Uqr"/>
+                                        </constraints>
+                                    </view>
+                                    <view hidden="YES" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ta-da-1ai" userLabel="Video" customClass="TVIVideoView">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                        <color key="backgroundColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="9ta-da-1ai" firstAttribute="leading" secondItem="RPn-5A-hlv" secondAttribute="leading" id="24N-wP-Ru6"/>
+                                    <constraint firstItem="twr-LA-nLP" firstAttribute="leading" secondItem="RPn-5A-hlv" secondAttribute="leading" id="A8a-rB-PvX"/>
+                                    <constraint firstAttribute="bottom" secondItem="9ta-da-1ai" secondAttribute="bottom" id="AWI-jA-Yy0"/>
+                                    <constraint firstItem="9ta-da-1ai" firstAttribute="top" secondItem="RPn-5A-hlv" secondAttribute="top" id="ISe-jD-2Px"/>
+                                    <constraint firstItem="twr-LA-nLP" firstAttribute="centerY" secondItem="RPn-5A-hlv" secondAttribute="centerY" id="WDe-En-c0V"/>
+                                    <constraint firstAttribute="trailing" secondItem="9ta-da-1ai" secondAttribute="trailing" id="jrc-xP-Qrt"/>
+                                    <constraint firstAttribute="trailing" secondItem="twr-LA-nLP" secondAttribute="trailing" id="n4u-Ex-KjS"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wQq-n1-BV3" userLabel="Test" customClass="MainVideoView" customModule="VideoApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wU6-sZ-Ash">
                                 <rect key="frame" x="4" y="682" width="406" height="172"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -733,33 +766,6 @@
                                     <action selector="leaveButtonTapped:" destination="HNa-RJ-vcm" eventType="touchUpInside" id="zrw-lm-d4P"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joining..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dmD-RM-eiS">
-                                <rect key="frame" x="172.5" y="122" width="69" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Room Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hmh-by-K65">
-                                <rect key="frame" x="20" y="153" width="374" height="29"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recording may be enabled for quality assurance." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="Hs9-SA-WMf">
-                                <rect key="frame" x="79.5" y="191" width="255" height="14"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3KD-Ed-DiF" userLabel="No Video Participant Label">
-                                <rect key="frame" x="20" y="330.5" width="374" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="Qc2-oF-63k"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="recording" translatesAutoresizingMaskIntoConstraints="NO" id="bMv-zJ-vdD">
                                 <rect key="frame" x="329" y="32" width="25" height="25"/>
                                 <constraints>
@@ -782,37 +788,33 @@
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Rmp-3a-cAl" firstAttribute="bottom" secondItem="wU6-sZ-Ash" secondAttribute="bottom" constant="8" id="0uf-IV-VKq"/>
-                            <constraint firstItem="IAx-eZ-xI6" firstAttribute="top" secondItem="3KD-Ed-DiF" secondAttribute="bottom" constant="29" id="1gN-zU-6GO"/>
                             <constraint firstAttribute="leadingMargin" secondItem="LQi-P8-wlg" secondAttribute="leading" id="1pP-J4-W7H"/>
-                            <constraint firstItem="Hs9-SA-WMf" firstAttribute="centerX" secondItem="Rmp-3a-cAl" secondAttribute="centerX" id="2tD-Al-80y"/>
-                            <constraint firstItem="3KD-Ed-DiF" firstAttribute="leading" secondItem="Hmh-by-K65" secondAttribute="leading" id="3UT-3W-Jhv"/>
+                            <constraint firstItem="Rmp-3a-cAl" firstAttribute="bottom" secondItem="wQq-n1-BV3" secondAttribute="bottom" id="3cB-9F-ELi"/>
                             <constraint firstItem="sqN-Vg-1NI" firstAttribute="top" secondItem="xjQ-ct-136" secondAttribute="bottom" constant="8" id="4WW-4D-eRi"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dW2-aV-srT" secondAttribute="trailing" id="5wg-5S-wmQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wU6-sZ-Ash" secondAttribute="trailing" constant="-16" id="8p6-3i-Gxq"/>
+                            <constraint firstAttribute="bottom" secondItem="RPn-5A-hlv" secondAttribute="bottom" id="Cqc-pU-jYt"/>
+                            <constraint firstItem="RPn-5A-hlv" firstAttribute="leading" secondItem="5Nf-Ic-CeP" secondAttribute="leading" id="DL6-S0-fVQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xjQ-ct-136" secondAttribute="trailing" id="Eqn-D8-yVk"/>
-                            <constraint firstItem="IAx-eZ-xI6" firstAttribute="centerX" secondItem="Rmp-3a-cAl" secondAttribute="centerX" id="FHm-dj-Xh2"/>
-                            <constraint firstItem="dmD-RM-eiS" firstAttribute="centerX" secondItem="Rmp-3a-cAl" secondAttribute="centerX" id="HJv-HD-7gU"/>
-                            <constraint firstItem="dmD-RM-eiS" firstAttribute="top" secondItem="Zhb-7D-ZBf" secondAttribute="bottom" constant="58" id="KE6-Uc-Zjc"/>
+                            <constraint firstItem="Rmp-3a-cAl" firstAttribute="trailing" secondItem="wQq-n1-BV3" secondAttribute="trailing" id="Ije-Eu-Gcq"/>
                             <constraint firstItem="bMv-zJ-vdD" firstAttribute="centerY" secondItem="DEq-Qj-jWj" secondAttribute="centerY" id="O5j-xA-3sh"/>
+                            <constraint firstAttribute="trailing" secondItem="RPn-5A-hlv" secondAttribute="trailing" id="P0P-HZ-WYa"/>
+                            <constraint firstItem="RPn-5A-hlv" firstAttribute="top" secondItem="5Nf-Ic-CeP" secondAttribute="top" id="RBW-x7-QfU"/>
                             <constraint firstItem="LQi-P8-wlg" firstAttribute="top" secondItem="Zhb-7D-ZBf" secondAttribute="bottom" constant="-30" id="TQl-oe-xkh"/>
-                            <constraint firstItem="IAx-eZ-xI6" firstAttribute="centerY" secondItem="5Nf-Ic-CeP" secondAttribute="centerY" id="UjO-Eu-cgB"/>
-                            <constraint firstItem="Hs9-SA-WMf" firstAttribute="top" secondItem="Hmh-by-K65" secondAttribute="bottom" constant="9" id="XkR-31-UTx"/>
+                            <constraint firstItem="wQq-n1-BV3" firstAttribute="leading" secondItem="Rmp-3a-cAl" secondAttribute="leading" id="UdD-Fh-I6b"/>
+                            <constraint firstItem="wQq-n1-BV3" firstAttribute="top" secondItem="Rmp-3a-cAl" secondAttribute="top" id="VIc-vX-YQB"/>
                             <constraint firstItem="DEq-Qj-jWj" firstAttribute="centerY" secondItem="LQi-P8-wlg" secondAttribute="centerY" id="YCP-5P-gWy"/>
-                            <constraint firstItem="3KD-Ed-DiF" firstAttribute="trailing" secondItem="Hmh-by-K65" secondAttribute="trailing" id="bOK-oq-EyP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sqN-Vg-1NI" secondAttribute="trailing" id="cME-u7-t1h"/>
                             <constraint firstItem="wU6-sZ-Ash" firstAttribute="top" secondItem="xjQ-ct-136" secondAttribute="top" id="fqE-dQ-ddD"/>
                             <constraint firstItem="DEq-Qj-jWj" firstAttribute="leading" secondItem="bMv-zJ-vdD" secondAttribute="trailing" constant="3.5" id="hVm-gj-BWg"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="LQi-P8-wlg" secondAttribute="trailing" id="iNj-eg-MqR"/>
                             <constraint firstAttribute="leadingMargin" secondItem="wU6-sZ-Ash" secondAttribute="leading" constant="16" id="kxk-hP-0Bb"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Hmh-by-K65" secondAttribute="trailing" id="mn0-Qq-8En"/>
                             <constraint firstItem="DEq-Qj-jWj" firstAttribute="centerX" secondItem="xjQ-ct-136" secondAttribute="centerX" id="nv7-OT-p5A"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="Hmh-by-K65" secondAttribute="leading" id="ogB-fe-Alg"/>
                             <constraint firstItem="Zhb-7D-ZBf" firstAttribute="leading" secondItem="5Nf-Ic-CeP" secondAttribute="leading" id="qkQ-kH-ilJ"/>
                             <constraint firstItem="Rmp-3a-cAl" firstAttribute="bottom" secondItem="dW2-aV-srT" secondAttribute="bottom" constant="20" id="qvK-ep-6bG"/>
                             <constraint firstItem="Zhb-7D-ZBf" firstAttribute="top" secondItem="5Nf-Ic-CeP" secondAttribute="top" id="rWZ-8x-7dr"/>
                             <constraint firstAttribute="trailing" secondItem="Zhb-7D-ZBf" secondAttribute="trailing" id="sK5-vE-tjb"/>
                             <constraint firstItem="dW2-aV-srT" firstAttribute="top" secondItem="sqN-Vg-1NI" secondAttribute="bottom" constant="8" id="u6A-7Y-EAQ"/>
-                            <constraint firstItem="Hmh-by-K65" firstAttribute="top" secondItem="dmD-RM-eiS" secondAttribute="bottom" constant="10" id="vcM-K8-N0V"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Rmp-3a-cAl"/>
                     </view>
@@ -821,10 +823,10 @@
                         <outlet property="disableCameraButton" destination="sqN-Vg-1NI" id="y5T-Nf-psh"/>
                         <outlet property="disableMicButton" destination="xjQ-ct-136" id="Gjm-8P-1Sd"/>
                         <outlet property="leaveButton" destination="dW2-aV-srT" id="V6o-I0-16I"/>
-                        <outlet property="mainVideoView" destination="wHG-cY-R14" id="WrV-kq-Nam"/>
                         <outlet property="participantCollectionView" destination="wU6-sZ-Ash" id="1ue-Zg-5ps"/>
                         <outlet property="roomNameLabel" destination="LQi-P8-wlg" id="ysU-OB-NcB"/>
                         <outlet property="switchCameraButton" destination="DEq-Qj-jWj" id="4iu-kv-dUt"/>
+                        <outlet property="testView" destination="wQq-n1-BV3" id="ZP3-H5-2hd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PuS-AJ-Sbf" userLabel="First Responder" sceneMemberID="firstResponder"/>
