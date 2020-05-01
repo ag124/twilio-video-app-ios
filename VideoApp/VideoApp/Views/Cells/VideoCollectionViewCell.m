@@ -15,17 +15,13 @@
 //
 
 #import "VideoCollectionViewCell.h"
-#import "RemoteParticipantUIModel.h"
 #import "VideoApp-Swift.h"
 
 @import TwilioVideo;
 
 @interface VideoCollectionViewCell () <TVIVideoViewDelegate>
 
-@property (nonatomic, weak) TVILocalParticipant *localParticipant;
-@property (nonatomic, weak) RemoteParticipantUIModel *remoteParticipantUIModel;
 @property (nonatomic, weak) TVIVideoTrack *videoTrack;
-@property (nonatomic, assign, getter=isDominantSpeaker) BOOL dominantSpeaker;
 
 @property (nonatomic, weak) IBOutlet UIView *audioMutedImage;
 @property (nonatomic, weak) IBOutlet UIImageView *networkQualityLevelIndicator;
@@ -56,7 +52,6 @@
     self.networkQualityLevel = TVINetworkQualityLevelUnknown;
 
     [self updateUIForVideoTrack:NO];
-    [self updateUIForAudioState];
 }
 
 - (void)dealloc {
@@ -69,54 +64,14 @@
     [super prepareForReuse];
 
     self.videoTrack = nil;
-    self.audioMutedImage.hidden = NO;
-    self.dominantSpeaker = NO;
-    self.networkQualityLevel = TVINetworkQualityLevelUnknown;
-
-    _localParticipant = nil;
-    _remoteParticipantUIModel = nil;
 
     self.videoView.hidden = YES;
 }
 
-- (void)setLocalParticipant:(TVILocalParticipant *)localParticipant isCurrentlySelected:(BOOL)isCurrentlySelected {
-    if (localParticipant) {
-        _localParticipant = localParticipant;
-        _remoteParticipantUIModel = nil;
-        self.dominantSpeaker = NO;
-        self.networkQualityLevel = localParticipant.networkQualityLevel;
-
-        [self setIdentity:@"You"];
-        [self updateUIForAudioState];
-
-        if (!isCurrentlySelected && [_localParticipant.videoTracks count] > 0) {
-            self.videoTrack = _localParticipant.localVideoTracks[0].localTrack;
-        } else {
-            [self updateUIForVideoTrack:NO];
-        }
-    }
-}
-
-- (void)setRemoteParticipantUIModel:(RemoteParticipantUIModel *)remoteParticipantUIModel
-                  isDominantSpeaker:(BOOL)isDominantSpeaker {
-    if (remoteParticipantUIModel) {
-        _remoteParticipantUIModel = remoteParticipantUIModel;
-        _localParticipant = nil;
-        self.dominantSpeaker = isDominantSpeaker;
-        self.networkQualityLevel = remoteParticipantUIModel.remoteParticipant.networkQualityLevel;
-
-        TVIParticipant *remoteParticipant = _remoteParticipantUIModel.remoteParticipant;
-
-        [self setIdentity:remoteParticipant.identity];
-        [self updateUIForAudioState];
-
-        self.videoTrack = _remoteParticipantUIModel.remoteVideoTrack;
-    }
-}
-
 // TODO: Move to separate file?
-- (void)configureWithIdentity:(NSString *)identity {
+- (void)configureWithIdentity:(NSString *)identity isMicMuted:(BOOL)isMicMuted {
     [self setIdentity:identity];
+    self.audioMutedImage.hidden = !isMicMuted;
 }
 
 - (void)configureWithVideoTrack:(TVIVideoTrack *)videoTrack {
@@ -175,42 +130,11 @@
     [self sendSubviewToBack:self.videoView];
 }
 
-- (void)updateUIForAudioState {
-//    BOOL shouldHideDominantSpeakerIndicator = YES;
-//    BOOL shouldHideAudioMutedIndicator = YES;
-//
-//    if (self.localParticipant != nil) {
-//        shouldHideAudioMutedIndicator = [self.localParticipant.audioTracks count] > 0 && self.localParticipant.audioTracks[0].track.isEnabled;
-//    } else if (self.remoteParticipantUIModel.remoteParticipant != nil) {
-//        if (self.isDominantSpeaker) {
-//            shouldHideDominantSpeakerIndicator = NO;
-//        } else {
-//            TVIRemoteParticipant *remoteParticipant = self.remoteParticipantUIModel.remoteParticipant;
-//            shouldHideAudioMutedIndicator = [remoteParticipant.audioTracks count] > 0 && remoteParticipant.audioTracks[0].track.isEnabled;
-//        }
-//    }
-//
-//    self.dominantSpeakerIndicatorImage.hidden = shouldHideDominantSpeakerIndicator;
-//    self.audioMutedImage.hidden = shouldHideAudioMutedIndicator;
-}
-
-- (TVIParticipant *)getParticipant {
-    return self.localParticipant != nil ? self.localParticipant : self.remoteParticipantUIModel.remoteParticipant;
-}
-
 #pragma mark - TVIVideoViewDelegate
 - (void)videoViewDidReceiveData:(TVIVideoView *)view {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     self.videoView.hidden = NO;
     [self sendSubviewToBack:self.videoView];
-}
-
-- (void)videoView:(TVIVideoView *)view videoDimensionsDidChange:(CMVideoDimensions)dimensions {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-}
-
-- (void)videoView:(TVIVideoView *)view videoOrientationDidChange:(TVIVideoOrientation)orientation {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
 @end

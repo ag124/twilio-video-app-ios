@@ -22,6 +22,7 @@ class LocalParticipant: NSObject, Participant {
     var micAudioTrack: LocalAudioTrack? { localMediaController.localAudioTrack } // Use track name
     var cameraVideoTrack: VideoTrack? { localMediaController.localVideoTrack } // Use track name
     var localCameraVideoTrack: LocalVideoTrack? { localMediaController.localVideoTrack } // Use track name
+    var shouldMirrorVideo: Bool { true }
     var isMicOn: Bool {
         get {
             localMediaController.localAudioTrack != nil
@@ -73,6 +74,6 @@ extension LocalParticipant: LocalParticipantDelegate {
     }
     
     func localParticipantNetworkQualityLevelDidChange(participant: TwilioVideo.LocalParticipant, networkQualityLevel: NetworkQualityLevel) {
-        delegate?.didUpdateAttributes(participant: self)
+//        delegate?.didUpdateAttributes(participant: self)
     }
 }

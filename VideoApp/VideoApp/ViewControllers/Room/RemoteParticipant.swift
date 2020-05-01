@@ -19,7 +19,9 @@ import TwilioVideo
 class RemoteParticipant: NSObject, Participant {
     weak var delegate: ParticipantDelegate?
     var identity: String { participant.identity }
+    var isMicOn: Bool { participant.remoteAudioTracks.first?.isTrackEnabled == true } // TODO: Use correct track name
     var cameraVideoTrack: VideoTrack? { participant.remoteVideoTracks.first?.remoteTrack }
+    var shouldMirrorVideo: Bool { false }
     private let participant: TwilioVideo.RemoteParticipant
     
     init(participant: TwilioVideo.RemoteParticipant) {
@@ -71,6 +73,6 @@ extension RemoteParticipant: RemoteParticipantDelegate {
     }
 
     func remoteParticipantNetworkQualityLevelDidChange(participant: TwilioVideo.RemoteParticipant, networkQualityLevel: NetworkQualityLevel) {
-        delegate?.didUpdateAttributes(participant: self)
+//        delegate?.didUpdateAttributes(participant: self)
     }
 }

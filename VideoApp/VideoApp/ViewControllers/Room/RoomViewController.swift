@@ -72,18 +72,18 @@ extension RoomViewController: RoomViewModelDelegate {
     }
 
     func didUpdateParticipantAttributes(at index: Int) {
-        guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCollectionViewCell else { return }
+        guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ParticipantCell else { return }
         
         let participant = viewModel.data.participants[index]
-        cell.configure(withIdentity: participant.identity)
+        cell.configure(status: .init(identity: participant.identity, isMicMuted: !participant.isMicOn))
     }
     
     func didUpdateParticipantVideoConfig(at index: Int) {
         // TDOO: Make more DRY
-        guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VideoCollectionViewCell else { return }
-        
+        guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ParticipantCell else { return }
+
         let participant = viewModel.data.participants[index]
-        cell.configure(with: participant.cameraVideoTrack)
+        cell.configure(videoTrack: participant.cameraVideoTrack, shouldMirror: participant.shouldMirrorVideo)
     }
 }
 
@@ -93,11 +93,11 @@ extension RoomViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ParticipantCell", for: indexPath) as! ParticipantCell
 
         let participant = viewModel.data.participants[indexPath.item]
-        cell.configure(withIdentity: participant.identity)
-        cell.configure(with: participant.cameraVideoTrack)
+        cell.configure(status: .init(identity: participant.identity, isMicMuted: !participant.isMicOn))
+        cell.configure(videoTrack: participant.cameraVideoTrack, shouldMirror: participant.shouldMirrorVideo)
         
         return cell
     }

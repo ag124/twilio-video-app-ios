@@ -20,7 +20,7 @@ struct RoomViewModelData {
     struct Participant {
         let identity: String
         let networkQualityLevel: String // TODO: Enum
-        let isAudioMuted: Bool
+        let isMicOn: Bool // TODO: Rename to isMicMuted
         let shouldMirrorVideo: Bool
         let cameraVideoTrack: VideoTrack?
     }
@@ -45,7 +45,7 @@ class RoomViewModel {
             RoomViewModelData.Participant(
                 identity: $0.identity,
                 networkQualityLevel: "",
-                isAudioMuted: false,
+                isMicOn: $0.isMicOn,
                 shouldMirrorVideo: false,
                 cameraVideoTrack: $0.cameraVideoTrack
             )

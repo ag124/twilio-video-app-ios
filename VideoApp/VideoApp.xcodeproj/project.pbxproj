@@ -270,6 +270,9 @@
 		DC9A5DD2245B332D00E4B079 /* RemoteParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */; };
 		DC9A5DD3245B332D00E4B079 /* RemoteParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */; };
 		DC9A5DD4245B332D00E4B079 /* RemoteParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */; };
+		DC9A5DD6245B7F8600E4B079 /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */; };
+		DC9A5DD7245B90BA00E4B079 /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */; };
+		DC9A5DD8245B90BB00E4B079 /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */; };
 		DCA53948235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA53949235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA5394A235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
@@ -652,6 +655,7 @@
 		DC9A5DC9245A215000E4B079 /* RoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
 		DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalParticipant.swift; sourceTree = "<group>"; };
 		DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipant.swift; sourceTree = "<group>"; };
+		DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCell.swift; sourceTree = "<group>"; };
 		DCA53947235F53E700CA26FB /* InternalAuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAuthStore.swift; sourceTree = "<group>"; };
 		DCA5394B235F740200CA26FB /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		DCA5394F235F765D00CA26FB /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
@@ -1007,6 +1011,7 @@
 				DC9A5DBF2459F1D100E4B079 /* Participant.swift */,
 				DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */,
 				DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */,
+				DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -2424,6 +2429,7 @@
 				DC82A35C23FDB9420081578C /* SDKLogLevelSettingsViewModel.swift in Sources */,
 				DCAEBF14238331A800141D2D /* SwitchCell.swift in Sources */,
 				DC82A34F23FC9AAA0081578C /* JSONContainer.swift in Sources */,
+				DC9A5DD6245B7F8600E4B079 /* ParticipantCell.swift in Sources */,
 				DC3C32DC241812B400F56AFB /* APIURLFactory.swift in Sources */,
 				DC8EAE3F23BA926E0045018F /* VideoStore.swift in Sources */,
 				DC8EAE2F23BA5EC80045018F /* AppDelegate.swift in Sources */,
@@ -2561,6 +2567,7 @@
 				DC82A35D23FDB9420081578C /* SDKLogLevelSettingsViewModel.swift in Sources */,
 				DCAEBF15238331A800141D2D /* SwitchCell.swift in Sources */,
 				DC82A35023FC9AAA0081578C /* JSONContainer.swift in Sources */,
+				DC9A5DD7245B90BA00E4B079 /* ParticipantCell.swift in Sources */,
 				DC3C32DD241812B400F56AFB /* APIURLFactory.swift in Sources */,
 				DC8EAE4023BA926E0045018F /* VideoStore.swift in Sources */,
 				DC8EAE3023BA5EC80045018F /* AppDelegate.swift in Sources */,
@@ -2698,6 +2705,7 @@
 				DC82A35E23FDB9420081578C /* SDKLogLevelSettingsViewModel.swift in Sources */,
 				DCAEBF16238331A800141D2D /* SwitchCell.swift in Sources */,
 				DC82A35123FC9AAA0081578C /* JSONContainer.swift in Sources */,
+				DC9A5DD8245B90BB00E4B079 /* ParticipantCell.swift in Sources */,
 				DC3C32DE241812B400F56AFB /* APIURLFactory.swift in Sources */,
 				DC8EAE4123BA926E0045018F /* VideoStore.swift in Sources */,
 				DC8EAE3123BA5EC80045018F /* AppDelegate.swift in Sources */,

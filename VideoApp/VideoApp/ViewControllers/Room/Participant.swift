@@ -20,6 +20,8 @@ protocol Participant: AnyObject {
     var delegate: ParticipantDelegate? { get set }
     var identity: String { get }
     var cameraVideoTrack: VideoTrack? { get }
+    var isMicOn: Bool { get }
+    var shouldMirrorVideo: Bool { get }
     
     // Screen share track
     // Network quality
