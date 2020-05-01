@@ -55,6 +55,10 @@ class RoomViewController: UIViewController {
     @IBAction func switchCameraButtonTapped(_ sender: Any) {
         
     }
+    
+    func configureMainVideoView() {
+        
+    }
 }
 
 extension RoomViewController: RoomViewModelDelegate {

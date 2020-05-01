@@ -28,14 +28,17 @@ struct RoomViewModelData {
     
     let roomName: String
     let participants: [Participant]
+    let mainParticipant: Participant
 }
 
 protocol RoomViewModelDelegate: AnyObject {
     func didUpdateData() // TODO: Change to connection changes
     func didAddParticipants(at indexes: [Int])
     func didRemoveParticipant(at index: Int)
-    func didUpdateParticipantAttributes(at index: Int)
+    func didUpdateParticipantAttributes(at index: Int) // Observe each participant? No probably bad idea because then it isn't just data
     func didUpdateParticipantVideoConfig(at index: Int)
+    func didUpdateMainParticipant()
+    func didUpdateMainParticipantVideoConfig()
 }
 
 class RoomViewModel {
@@ -51,10 +54,19 @@ class RoomViewModel {
                 isPinned: $0.identity == pinnedParticipant?.identity
             )
         }
+
+        let mainParticipant = RoomViewModelData.Participant(
+            identity: self.mainParticipant.identity,
+            networkQualityLevel: self.mainParticipant.networkQualityLevel,
+            isMicOn: self.mainParticipant.isMicOn,
+            shouldMirrorVideo: self.mainParticipant.shouldMirrorVideo,
+            cameraVideoTrack: self.mainParticipant.cameraVideoTrack,
+            isPinned: self.mainParticipant.identity == pinnedParticipant?.identity)
         
         return RoomViewModelData(
             roomName: roomName,
-            participants: newParticipants
+            participants: newParticipants,
+            mainParticipant: mainParticipant
         )
     }
     var isMicOn: Bool {
@@ -69,12 +81,22 @@ class RoomViewModel {
     private let room: Room
     private var allParticipants: [Participant] { [room.localParticipant] + room.remoteParticipants }
     private var pinnedParticipant: RoomViewModelData.Participant?
-    
+    private var rawPinnedParticipant: Participant? {
+        guard let pinnedParticipant = pinnedParticipant else { return nil }
+        
+        return room.remoteParticipants.first(where: { $0.identity == pinnedParticipant.identity })
+    }
+    private var dominantSpeaker: Participant? {
+        room.remoteParticipants.first(where: { $0.isDominantSpeaker })
+    }
+    private var mainParticipant: Participant!
+
     init(roomName: String, room: Room) {
         self.roomName = roomName
         self.room = room
         room.delegate = self
         room.localParticipant.delegate = self
+        mainParticipant = calculcateMainParticipant()
     }
     
     func connect() {
@@ -119,10 +141,19 @@ class RoomViewModel {
             self.pinnedParticipant = nil
         }
     }
+    
+    private func calculcateMainParticipant() -> Participant {
+        rawPinnedParticipant ?? dominantSpeaker ?? room.remoteParticipants.first ?? room.localParticipant
+    }
+    
+    private func updateMainParticipant() {
+        
+    }
 }
 
 extension RoomViewModel: RoomDelegate {
     func didConnect() {
+        updateMainParticipant()
         delegate?.didUpdateData()
     }
     
@@ -132,6 +163,7 @@ extension RoomViewModel: RoomDelegate {
     
     func didDisconnect(error: Error?) {
         updatePin()
+        updateMainParticipant()
         delegate?.didUpdateData()
     }
 
@@ -140,14 +172,17 @@ extension RoomViewModel: RoomDelegate {
         delegate?.didUpdateData()
     }
 
+    // I don't think room should have to deal with indexes, oh wait maybe it should because connect is very basic
     func didAddRemoteParticipants(at indexes: [Int]) {
         room.remoteParticipants.forEach { $0.delegate = self }
         delegate?.didAddParticipants(at: indexes.map { $0 + 1 })
+        updateMainParticipant()
     }
     
     func didRemoveRemoteParticipant(at index: Int) {
         updatePin() // maybe easier way to do this
         delegate?.didRemoveParticipant(at: index + 1)
+        updateMainParticipant()
     }
 }
 
@@ -163,5 +198,9 @@ extension RoomViewModel: ParticipantDelegate {
         guard let index = allParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
 
         delegate?.didUpdateParticipantVideoConfig(at: index)
+        
+        if participant.identity == mainParticipant.identity {
+            delegate?.didUpdateMainParticipantVideoConfig()
+        }
     }
 }

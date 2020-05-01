@@ -100,7 +100,7 @@ extension Room: TwilioVideo.RoomDelegate {
         delegate?.didDisconnect(error: error)
         
         if oldIndices.count > 0 {
-            delegate?.didAddRemoteParticipants(at: [Int](oldIndices))
+            delegate?.didAddRemoteParticipants(at: [Int](oldIndices)) // TODO: Should be remove I think
         }
     }
     
