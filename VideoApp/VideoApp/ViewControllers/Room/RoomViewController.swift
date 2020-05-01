@@ -34,6 +34,7 @@ class RoomViewController: UIViewController {
         participantCollectionView.dataSource = self
         participantCollectionView.delegate = self
         disableMicButton.isSelected = !viewModel.isMicOn
+        disableCameraButton.isSelected = !viewModel.isCameraOn
         
         viewModel.delegate = self
         viewModel.connect()
@@ -42,7 +43,8 @@ class RoomViewController: UIViewController {
     }
     
     @IBAction func disableCameraButtonTapped(_ sender: Any) {
-        print("Disable camera tapped.")
+        disableCameraButton.isSelected = !disableCameraButton.isSelected
+        viewModel.isCameraOn = !disableCameraButton.isSelected
     }
     
     @IBAction func disableMicButtonTapped(_ sender: Any) {
@@ -55,7 +57,7 @@ class RoomViewController: UIViewController {
     }
     
     @IBAction func switchCameraButtonTapped(_ sender: Any) {
-        
+        viewModel.flipCamera()
     }
     
     func configureMainVideoView() {

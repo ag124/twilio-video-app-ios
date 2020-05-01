@@ -61,7 +61,8 @@ class RoomViewModel {
             isMicOn: self.mainParticipant.isMicOn,
             shouldMirrorVideo: self.mainParticipant.shouldMirrorVideo,
             cameraVideoTrack: self.mainParticipant.cameraVideoTrack,
-            isPinned: self.mainParticipant.identity == pinnedParticipant?.identity)
+            isPinned: self.mainParticipant.identity == pinnedParticipant?.identity
+        )
         
         return RoomViewModelData(
             roomName: roomName,
@@ -70,12 +71,12 @@ class RoomViewModel {
         )
     }
     var isMicOn: Bool {
-        get { room.localParticipant.isMicOn
-        }
-        set {
-            // TODO: Make sure the only gets called on a real change
-            room.localParticipant.isMicOn = newValue
-        }
+        get { room.localParticipant.isMicOn }
+        set { room.localParticipant.isMicOn = newValue } // TODO: Make sure the only gets called on a real change
+    }
+    var isCameraOn: Bool {
+        get { room.localParticipant.isCameraOn }
+        set { room.localParticipant.isCameraOn = newValue }
     }
     private let roomName: String
     private let room: Room
@@ -134,6 +135,10 @@ class RoomViewModel {
         updateMainParticipant()
     }
 
+    func flipCamera() {
+        room.localParticipant.flipCamera()
+    }
+    
     // Make sure this is done in all correct places
     func updatePin() {
         guard let pinnedParticipant = pinnedParticipant else { return }

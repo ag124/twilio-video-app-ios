@@ -45,6 +45,27 @@ class LocalParticipant: NSObject, Participant {
             delegate?.didUpdateAttributes(participant: self)
         }
     }
+    var isCameraOn: Bool {
+        get {
+            localMediaController.localVideoTrack?.isEnabled ?? false
+        }
+        set {
+            if newValue {
+                localMediaController.createLocalVideoTrack()
+                
+                if let localVideoTrack = localMediaController.localVideoTrack {
+                    participant?.publishVideoTrack(localVideoTrack)
+                }
+            } else {
+                guard let localVideoTrack = localMediaController.localVideoTrack else { return }
+                
+                participant?.unpublishVideoTrack(localVideoTrack)
+                localMediaController.destroyLocalVideoTrack()
+            }
+            
+            delegate?.didUpdateVideoConfig(participant: self)
+        }
+    }
     var participant: TwilioVideo.LocalParticipant? {
         didSet {
             participant?.delegate = self
@@ -56,6 +77,10 @@ class LocalParticipant: NSObject, Participant {
         self.identity = identity
         self.localMediaController = localMediaController
         super.init()
+    }
+    
+    func flipCamera() {
+        localMediaController.flipCamera()
     }
 }
 
