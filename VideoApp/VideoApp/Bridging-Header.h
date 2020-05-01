@@ -7,4 +7,3 @@
 #import "RemoteParticipantUIModel.h"
 #import "VariableAlphaToggleButton.h"
 #import "VideoAppCamera.h"
-#import "VideoCollectionViewCell.h"
