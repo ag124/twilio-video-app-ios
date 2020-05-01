@@ -16,28 +16,7 @@
 
 import UIKit
 
-@IBDesignable
-class MainVideoView: View {
-    @IBOutlet var contentView: UIView!
-    @IBOutlet weak var identityLabel: UILabel!
-
-    override func loadView() -> UIView {
-        contentView = loadViewFromNib()
-        return contentView
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        identityLabel.text = "Tim"
-    }
-    
-    func configure(identity: String) {
-        identityLabel.text = identity
-    }
-}
-
-class View: UIView {
+class CustomView: UIView {
     override init(frame: CGRect) {
      super.init(frame: frame)
      setup()
@@ -49,7 +28,7 @@ class View: UIView {
     }
     
     func loadView() -> UIView {
-        fatalError()
+        return loadViewFromNib()
     }
     
     func setup() {

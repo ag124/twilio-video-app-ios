@@ -9,7 +9,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainVideoView" customModule="VideoApp" customModuleProvider="target">
             <connections>
-                <outlet property="contentView" destination="iN0-l3-epB" id="stI-Q9-5uA"/>
                 <outlet property="identityLabel" destination="BnE-7D-TXr" id="q4k-53-ksO"/>
             </connections>
         </placeholder>
