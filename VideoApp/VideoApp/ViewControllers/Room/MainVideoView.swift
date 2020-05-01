@@ -17,11 +17,15 @@
 import UIKit
 
 @IBDesignable
-class MainVideoView: UIView {
+class MainVideoView: View {
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var identityLabel: UILabel!
-    
-    
+
+    override func loadView() -> UIView {
+        contentView = loadViewFromNib()
+        return contentView
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -31,32 +35,9 @@ class MainVideoView: UIView {
     func configure(identity: String) {
         identityLabel.text = identity
     }
-    
-    
-//    let nibName = "MainVideoView"
-//    var contentView:UIView?
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        commonInit()
-//    }
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        commonInit()
-//    }
-//    func commonInit() {
-//        guard let view = loadViewFromNib() else { return }
-//        view.frame = self.bounds
-//        self.addSubview(view)
-//        contentView = view
-//    }
-//    func loadViewFromNib() -> UIView? {
-//        let bundle = Bundle(for: type(of: self))
-//        let nib = UINib(nibName: nibName, bundle: bundle)
-//        return nib.instantiate(withOwner: self, options: nil).first as? UIView
-//    }
+}
 
-
+class View: UIView {
     override init(frame: CGRect) {
      super.init(frame: frame)
      setup()
@@ -67,13 +48,17 @@ class MainVideoView: UIView {
       setup()
     }
     
+    func loadView() -> UIView {
+        fatalError()
+    }
+    
     func setup() {
-      contentView = loadViewFromNib()
-      contentView.frame = bounds
-      
+        let contentView = loadView()
+        contentView.frame = bounds
+        
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-      
-      addSubview(contentView)
+        
+        addSubview(contentView)
     }
     
     func loadViewFromNib() -> UIView! {
