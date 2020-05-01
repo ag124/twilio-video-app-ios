@@ -128,6 +128,9 @@ extension Room: TwilioVideo.RoomDelegate {
     }
     
     func dominantSpeakerDidChange(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant?) {
-
+        guard let participant = participant else { return }
+        
+        remoteParticipants.forEach { $0.isDominantSpeaker = false }
+        remoteParticipants.first(where: { $0.identity == participant.identity })?.isDominantSpeaker = true
     }
 }

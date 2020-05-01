@@ -23,6 +23,13 @@ class RemoteParticipant: NSObject, Participant {
     var cameraVideoTrack: VideoTrack? { participant.remoteVideoTracks.first?.remoteTrack }
     var shouldMirrorVideo: Bool { false }
     var networkQualityLevel: NetworkQualityLevel { participant.networkQualityLevel }
+    var isDominantSpeaker = false {
+        didSet {
+            if isDominantSpeaker != oldValue {
+                delegate?.didUpdateAttributes(participant: self) // TODO: Make sure we really need to compare to old value
+            }
+        }
+    }
     private let participant: TwilioVideo.RemoteParticipant
     
     init(participant: TwilioVideo.RemoteParticipant) {
