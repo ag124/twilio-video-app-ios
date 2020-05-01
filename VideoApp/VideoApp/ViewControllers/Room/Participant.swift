@@ -16,15 +16,17 @@
 
 import TwilioVideo
 
+typealias NetworkQualityLevel = TwilioVideo.NetworkQualityLevel
+
 protocol Participant: AnyObject {
     var delegate: ParticipantDelegate? { get set }
     var identity: String { get }
     var cameraVideoTrack: VideoTrack? { get }
     var isMicOn: Bool { get }
     var shouldMirrorVideo: Bool { get }
+    var networkQualityLevel: NetworkQualityLevel { get }
     
     // Screen share track
-    // Network quality
 }
 
 protocol ParticipantDelegate: AnyObject {

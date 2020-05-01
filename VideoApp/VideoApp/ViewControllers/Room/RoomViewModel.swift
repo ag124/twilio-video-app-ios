@@ -14,12 +14,12 @@
 //  limitations under the License.
 //
 
-import TwilioVideo
+import TwilioVideo // TODO: Don't import
 
 struct RoomViewModelData {
     struct Participant {
         let identity: String
-        let networkQualityLevel: String // TODO: Enum
+        let networkQualityLevel: NetworkQualityLevel // TODO: Enum
         let isMicOn: Bool // TODO: Rename to isMicMuted
         let shouldMirrorVideo: Bool
         let cameraVideoTrack: VideoTrack?
@@ -40,11 +40,10 @@ protocol RoomViewModelDelegate: AnyObject {
 class RoomViewModel {
     weak var delegate: RoomViewModelDelegate?
     var data: RoomViewModelData {
-        let participants: [Participant] = [room.localParticipant] + room.remoteParticipants
-        let newParticipants = participants.map {
+        let newParticipants = allParticipants.map {
             RoomViewModelData.Participant(
                 identity: $0.identity,
-                networkQualityLevel: "",
+                networkQualityLevel: $0.networkQualityLevel,
                 isMicOn: $0.isMicOn,
                 shouldMirrorVideo: false,
                 cameraVideoTrack: $0.cameraVideoTrack
@@ -66,11 +65,13 @@ class RoomViewModel {
     }
     private let roomName: String
     private let room: Room
+    private var allParticipants: [Participant] { [room.localParticipant] + room.remoteParticipants }
 
     init(roomName: String, room: Room) {
         self.roomName = roomName
         self.room = room
         room.delegate = self
+        room.localParticipant.delegate = self
     }
     
     func connect() {
@@ -107,15 +108,15 @@ extension RoomViewModel: RoomDelegate {
 
 extension RoomViewModel: ParticipantDelegate {
     func didUpdateAttributes(participant: Participant) {
-        guard let index = room.remoteParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
+        guard let index = allParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
         
-        delegate?.didUpdateParticipantAttributes(at: index + 1)
+        delegate?.didUpdateParticipantAttributes(at: index)
     }
     
     func didUpdateVideoConfig(participant: Participant) {
         // TODO: Make more DRY
-        guard let index = room.remoteParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
+        guard let index = allParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
 
-        delegate?.didUpdateParticipantVideoConfig(at: index + 1)
+        delegate?.didUpdateParticipantVideoConfig(at: index)
     }
 }

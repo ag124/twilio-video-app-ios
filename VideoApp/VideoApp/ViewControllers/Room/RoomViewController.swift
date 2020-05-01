@@ -75,7 +75,8 @@ extension RoomViewController: RoomViewModelDelegate {
         guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ParticipantCell else { return }
         
         let participant = viewModel.data.participants[index]
-        cell.configure(status: .init(identity: participant.identity, isMicMuted: !participant.isMicOn))
+        let status = ParticipantCell.Status(participant: participant)
+        cell.configure(status: status)
     }
     
     func didUpdateParticipantVideoConfig(at index: Int) {
@@ -96,7 +97,8 @@ extension RoomViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ParticipantCell", for: indexPath) as! ParticipantCell
 
         let participant = viewModel.data.participants[indexPath.item]
-        cell.configure(status: .init(identity: participant.identity, isMicMuted: !participant.isMicOn))
+        let status = ParticipantCell.Status(participant: participant)
+        cell.configure(status: status)
         cell.configure(videoTrack: participant.cameraVideoTrack, shouldMirror: participant.shouldMirrorVideo)
         
         return cell
@@ -105,4 +107,14 @@ extension RoomViewController: UICollectionViewDataSource {
 
 extension RoomViewController: UICollectionViewDelegate {
     
+}
+
+private extension ParticipantCell.Status {
+    init(participant: RoomViewModelData.Participant) {
+        self.init(
+            identity: participant.identity,
+            isMicMuted: !participant.isMicOn,
+            networkQualityLevel: participant.networkQualityLevel
+        )
+    }
 }

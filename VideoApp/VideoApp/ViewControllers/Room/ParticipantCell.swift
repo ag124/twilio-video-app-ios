@@ -21,6 +21,7 @@ class ParticipantCell: UICollectionViewCell {
     struct Status {
         let identity: String
         let isMicMuted: Bool
+        let networkQualityLevel: NetworkQualityLevel
     }
     
     @IBOutlet weak var videoView: VideoView!
@@ -43,6 +44,13 @@ class ParticipantCell: UICollectionViewCell {
     func configure(status: Status) {
         identityLabel.text = status.identity
         muteView.isHidden = !status.isMicMuted
+        
+        // This can be cleaner
+        if let imageName = status.networkQualityLevel.imageName {
+            networkQualityImage.image = UIImage(named: imageName)
+        } else {
+            networkQualityImage.image = nil
+        }
     }
     
     func configure(videoTrack: VideoTrack?, shouldMirror: Bool) {
@@ -58,8 +66,24 @@ class ParticipantCell: UICollectionViewCell {
     }
 }
 
-extension ParticipantCell: VideoViewDelegate {
+extension ParticipantCell: VideoViewDelegate { // TODO: Make private?
     func videoViewDidReceiveData(view: VideoView) {
         videoView.isHidden = false
+    }
+}
+
+private extension NetworkQualityLevel {
+    var imageName: String? {
+        switch self {
+        case .unknown: return nil
+        case .zero: return "network-quality-level-0"
+        case .one: return "network-quality-level-1"
+        case .two: return "network-quality-level-2"
+        case .three: return "network-quality-level-3"
+        case .four: return "network-quality-level-4"
+        case .five: return "network-quality-level-5"
+        @unknown default:
+            return nil
+        }
     }
 }
