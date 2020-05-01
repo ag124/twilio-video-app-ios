@@ -17,15 +17,10 @@
 import UIKit
 
 @IBDesignable
-class MainVideoView: CustomView {
-    @IBOutlet weak var emptyVideoView: EmptyVideoView!
-    @IBOutlet weak var videoView: VideoView!
-    
-    func configure(identity: String) {
-        emptyVideoView.configure(identity: identity)
-    }
+class EmptyVideoView: CustomView {
+    @IBOutlet weak var identityLabel: UILabel!
 
-    func configure(videoTrack: VideoTrack?, shouldMirror: Bool = false) {
-        videoView.configure(videoTrack: videoTrack, shouldMirror: shouldMirror)
+    func configure(identity: String) {
+        identityLabel.text = identity
     }
 }

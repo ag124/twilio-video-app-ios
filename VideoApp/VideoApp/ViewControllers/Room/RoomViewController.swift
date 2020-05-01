@@ -35,8 +35,6 @@ class RoomViewController: UIViewController {
         participantCollectionView.delegate = self
         disableMicButton.isSelected = !viewModel.isMicOn
         
-//        testView.configure(identity: "It worked!")
-        
         viewModel.delegate = self
         viewModel.connect()
     }

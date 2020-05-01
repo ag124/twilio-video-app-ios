@@ -25,7 +25,7 @@ class ParticipantCell: UICollectionViewCell {
         let isPinned: Bool
     }
     
-    @IBOutlet weak var videoView: VideoView!
+    @IBOutlet weak var videoView: TwilioVideo.VideoView!
     @IBOutlet weak var identityLabel: UILabel!
     @IBOutlet weak var networkQualityImage: UIImageView!
     @IBOutlet weak var pinView: UIView!
@@ -70,7 +70,7 @@ class ParticipantCell: UICollectionViewCell {
 }
 
 extension ParticipantCell: VideoViewDelegate { // TODO: Make private?
-    func videoViewDidReceiveData(view: VideoView) {
+    func videoViewDidReceiveData(view: TwilioVideo.VideoView) {
         videoView.isHidden = false
     }
 }

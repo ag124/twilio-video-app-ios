@@ -3,35 +3,43 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainVideoView" customModule="VideoApp" customModuleProvider="target">
             <connections>
-                <outlet property="identityLabel" destination="BnE-7D-TXr" id="q4k-53-ksO"/>
+                <outlet property="emptyVideoView" destination="dPn-nF-Hy9" id="L6V-P9-NUX"/>
+                <outlet property="videoView" destination="kZs-me-AZy" id="kA0-kC-H0o"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="465" height="446"/>
+            <rect key="frame" x="0.0" y="0.0" width="401" height="540"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Identity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BnE-7D-TXr">
-                    <rect key="frame" x="46.5" y="212.5" width="372" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dPn-nF-Hy9" userLabel="Empty" customClass="EmptyVideoView" customModule="VideoApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="401" height="540"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZs-me-AZy" userLabel="Video" customClass="VideoView" customModule="VideoApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="401" height="540"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </view>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstItem="BnE-7D-TXr" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.8" id="3Xz-VL-TdI"/>
-                <constraint firstItem="BnE-7D-TXr" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="DYz-y1-FD6"/>
-                <constraint firstItem="BnE-7D-TXr" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Pi7-cn-4OR"/>
+                <constraint firstItem="dPn-nF-Hy9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="1fy-5r-xBa"/>
+                <constraint firstAttribute="bottom" secondItem="kZs-me-AZy" secondAttribute="bottom" id="TQi-ZZ-dnp"/>
+                <constraint firstAttribute="bottom" secondItem="dPn-nF-Hy9" secondAttribute="bottom" id="cXo-0E-YQV"/>
+                <constraint firstAttribute="trailing" secondItem="kZs-me-AZy" secondAttribute="trailing" id="dLt-2U-lbU"/>
+                <constraint firstItem="kZs-me-AZy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="jey-dw-t6b"/>
+                <constraint firstItem="kZs-me-AZy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="rpd-rN-yeS"/>
+                <constraint firstItem="dPn-nF-Hy9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tZh-ia-SNg"/>
+                <constraint firstAttribute="trailing" secondItem="dPn-nF-Hy9" secondAttribute="trailing" id="uY4-h1-rqc"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="174.63768115942031" y="44.196428571428569"/>
+            <point key="canvasLocation" x="128.2608695652174" y="75.669642857142847"/>
         </view>
     </objects>
 </document>
