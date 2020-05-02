@@ -18,10 +18,16 @@ import TwilioVideo
 
 typealias NetworkQualityLevel = TwilioVideo.NetworkQualityLevel
 
+enum VideoTrackSource: String {
+    case camera
+    case screen
+}
+
 protocol Participant: AnyObject {
     var delegate: ParticipantDelegate? { get set }
     var identity: String { get }
     var cameraVideoTrack: VideoTrack? { get }
+    var screenVideoTrack: VideoTrack? { get }
     var isMicOn: Bool { get }
     var shouldMirrorVideo: Bool { get }
     var networkQualityLevel: NetworkQualityLevel { get }
@@ -31,5 +37,5 @@ protocol Participant: AnyObject {
 
 protocol ParticipantDelegate: AnyObject {
     func didUpdateAttributes(participant: Participant)
-    func didUpdateVideoConfig(participant: Participant)
+    func didUpdateVideoConfig(participant: Participant, source: VideoTrackSource)
 }

@@ -21,6 +21,7 @@ class LocalParticipant: NSObject, Participant {
     weak var delegate: ParticipantDelegate?
     var micAudioTrack: LocalAudioTrack? { localMediaController.localAudioTrack } // Use track name
     var cameraVideoTrack: VideoTrack? { localMediaController.localVideoTrack } // Use track name
+    var screenVideoTrack: VideoTrack? { nil }
     var localCameraVideoTrack: LocalVideoTrack? { localMediaController.localVideoTrack } // Use track name
     var shouldMirrorVideo: Bool { true }
     var networkQualityLevel: NetworkQualityLevel { participant?.networkQualityLevel ?? .unknown }
@@ -63,7 +64,7 @@ class LocalParticipant: NSObject, Participant {
                 localMediaController.destroyLocalVideoTrack()
             }
             
-            delegate?.didUpdateVideoConfig(participant: self)
+            delegate?.didUpdateVideoConfig(participant: self, source: .camera)
         }
     }
     var participant: TwilioVideo.LocalParticipant? {

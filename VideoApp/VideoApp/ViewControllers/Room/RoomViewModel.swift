@@ -22,13 +22,19 @@ struct RoomViewModelData {
         let networkQualityLevel: NetworkQualityLevel // TODO: Enum
         let isMicOn: Bool // TODO: Rename to isMicMuted
         let shouldMirrorVideo: Bool
-        let cameraVideoTrack: VideoTrack?
+        let cameraVideoTrack: VideoTrack? // Rename to just videoTrack
         let isPinned: Bool
+    }
+    
+    struct MainParticipant {
+        let identity: String
+        let shouldMirrorVideo: Bool
+        let videoTrack: VideoTrack?
     }
     
     let roomName: String
     let participants: [Participant]
-    let mainParticipant: Participant
+    let mainParticipant: MainParticipant
 }
 
 protocol RoomViewModelDelegate: AnyObject {
@@ -55,13 +61,10 @@ class RoomViewModel {
             )
         }
 
-        let mainParticipant = RoomViewModelData.Participant(
+        let mainParticipant = RoomViewModelData.MainParticipant(
             identity: self.mainParticipant.identity,
-            networkQualityLevel: self.mainParticipant.networkQualityLevel,
-            isMicOn: self.mainParticipant.isMicOn,
             shouldMirrorVideo: self.mainParticipant.shouldMirrorVideo,
-            cameraVideoTrack: self.mainParticipant.cameraVideoTrack,
-            isPinned: self.mainParticipant.identity == pinnedParticipant?.identity
+            videoTrack: self.mainParticipant.screenVideoTrack ?? self.mainParticipant.cameraVideoTrack
         )
         
         return RoomViewModelData(
@@ -206,12 +209,19 @@ extension RoomViewModel: ParticipantDelegate {
         updateMainParticipant()
     }
     
-    func didUpdateVideoConfig(participant: Participant) {
+    func didUpdateVideoConfig(participant: Participant, source: VideoTrackSource) {
         // TODO: Make more DRY
-        guard let index = allParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
 
-        delegate?.didUpdateParticipantVideoConfig(at: index)
-        
+        switch source {
+        case .camera:
+            guard let index = allParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
+
+            delegate?.didUpdateParticipantVideoConfig(at: index)
+        case .screen:
+            break
+        }
+
+        // This needs to be smarter to avoid flashing
         if participant.identity == mainParticipant.identity {
             delegate?.didUpdateMainParticipantVideoConfig()
         }

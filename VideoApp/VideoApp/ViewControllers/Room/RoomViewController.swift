@@ -63,7 +63,7 @@ class RoomViewController: UIViewController {
     func configureMainVideoView() {
         let participant = viewModel.data.mainParticipant
         mainVideoView.configure(identity: participant.identity)
-        mainVideoView.configure(videoTrack: participant.cameraVideoTrack)
+        mainVideoView.configure(videoTrack: participant.videoTrack)
     }
 }
 
@@ -102,7 +102,7 @@ extension RoomViewController: RoomViewModelDelegate {
     }
     
     func didUpdateMainParticipantVideoConfig() {
-        mainVideoView.configure(videoTrack: viewModel.data.mainParticipant.cameraVideoTrack)
+        mainVideoView.configure(videoTrack: viewModel.data.mainParticipant.videoTrack)
     }
 }
 
