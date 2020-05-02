@@ -1290,7 +1290,7 @@
 		DC9A5DE6245CB15900E4B079 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */,
+				DC9A5E03245DC5FD00E4B079 /* ParticipantCell */,
 				DC9A5DE9245CB2A700E4B079 /* EmptyVideo */,
 				DC9A5DE8245CB1D600E4B079 /* Video */,
 				DC9A5DE7245CB1C400E4B079 /* MainVideo */,
@@ -1324,6 +1324,14 @@
 				DC9A5DF6245CB42C00E4B079 /* EmptyVideoView.xib */,
 			);
 			path = EmptyVideo;
+			sourceTree = "<group>";
+		};
+		DC9A5E03245DC5FD00E4B079 /* ParticipantCell */ = {
+			isa = PBXGroup;
+			children = (
+				DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */,
+			);
+			path = ParticipantCell;
 			sourceTree = "<group>";
 		};
 		DCA53946235F534400CA26FB /* Auth */ = {

@@ -19,17 +19,13 @@ import TwilioVideo // TODO: Don't import
 struct RoomViewModelData {
     struct Participant {
         let identity: String
-        let networkQualityLevel: NetworkQualityLevel // TODO: Enum
-        let isMicOn: Bool // TODO: Rename to isMicMuted
-        let shouldMirrorVideo: Bool
-        let cameraVideoTrack: VideoTrack? // Rename to just videoTrack
-        let isPinned: Bool
+        let status: ParticipantCell.Status
+        let videoConfig: VideoView.Config
     }
     
     struct MainParticipant {
         let identity: String
-        let shouldMirrorVideo: Bool
-        let videoTrack: VideoTrack?
+        let videoConfig: VideoView.Config
     }
     
     let roomName: String
@@ -53,18 +49,21 @@ class RoomViewModel {
         let newParticipants = allParticipants.map {
             RoomViewModelData.Participant(
                 identity: $0.identity,
-                networkQualityLevel: $0.networkQualityLevel,
-                isMicOn: $0.isMicOn,
-                shouldMirrorVideo: false,
-                cameraVideoTrack: $0.cameraVideoTrack,
-                isPinned: $0.identity == pinnedParticipant?.identity
+                status: .init(
+                    isMicMuted: $0.isMicOn,
+                    networkQualityLevel: $0.networkQualityLevel,
+                    isPinned: $0.identity == pinnedParticipant?.identity
+                ),
+                videoConfig: .init(videoTrack: $0.cameraVideoTrack, shouldMirror: false) // TODO: Mirror local participant
             )
         }
 
         let mainParticipant = RoomViewModelData.MainParticipant(
             identity: self.mainParticipant.identity,
-            shouldMirrorVideo: self.mainParticipant.shouldMirrorVideo,
-            videoTrack: self.mainParticipant.screenVideoTrack ?? self.mainParticipant.cameraVideoTrack
+            videoConfig: .init(
+                videoTrack: self.mainParticipant.screenVideoTrack ?? self.mainParticipant.cameraVideoTrack,
+                shouldMirror: self.mainParticipant.shouldMirrorVideo
+            )
         )
         
         return RoomViewModelData(

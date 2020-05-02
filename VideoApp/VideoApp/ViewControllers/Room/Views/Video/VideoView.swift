@@ -23,6 +23,11 @@ protocol VideoViewDelegate: AnyObject {
 
 @IBDesignable
 class VideoView: CustomView {
+    struct Config {
+        let videoTrack: VideoTrack?
+        let shouldMirror: Bool
+    }
+
     @IBOutlet weak var videoView: TwilioVideo.VideoView!
     weak var delegate: VideoViewDelegate?
     private var videoTrack: VideoTrack?
@@ -44,12 +49,8 @@ class VideoView: CustomView {
         isHidden = true
     }
 
-    func configure(
-        videoTrack: VideoTrack?,
-        shouldMirror: Bool = false,
-        contentMode: UIView.ContentMode = .scaleAspectFit
-    ) {
-        guard let videoTrack = videoTrack, videoTrack.isEnabled else {
+    func configure(config: Config, contentMode: UIView.ContentMode = .scaleAspectFit) {
+        guard let videoTrack = config.videoTrack, videoTrack.isEnabled else {
             self.videoTrack?.removeRenderer(videoView)
             isVideoOn = false
             return
@@ -58,7 +59,7 @@ class VideoView: CustomView {
         self.videoTrack?.removeRenderer(videoView)
         self.videoTrack = videoTrack
         videoTrack.addRenderer(videoView)
-        videoView.shouldMirror = shouldMirror
+        videoView.shouldMirror = config.shouldMirror
         isHidden = !videoView.hasVideoData
         videoView.contentMode = contentMode
     }

@@ -31,8 +31,9 @@ class MainVideoView: CustomView {
         emptyVideoView.configure(identity: identity)
     }
 
-    func configure(videoTrack: VideoTrack?, shouldMirror: Bool = false) {
-        videoView.configure(videoTrack: videoTrack, shouldMirror: shouldMirror)
+    // TODO: Maybe rename to just video
+    func configure(videoConfig: VideoView.Config) {
+        videoView.configure(config: videoConfig)
     }
 }
 

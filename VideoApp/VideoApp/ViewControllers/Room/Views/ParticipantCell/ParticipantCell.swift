@@ -19,7 +19,6 @@ import UIKit
 
 class ParticipantCell: UICollectionViewCell {
     struct Status {
-        let identity: String
         let isMicMuted: Bool
         let networkQualityLevel: NetworkQualityLevel
         let isPinned: Bool
@@ -43,8 +42,8 @@ class ParticipantCell: UICollectionViewCell {
         videoView.contentMode = .scaleAspectFill // TODO: Why doesn't this work from storyboard?
     }
     
-    func configure(status: Status) {
-        identityLabel.text = status.identity
+    func configure(identity: String, status: Status) {
+        identityLabel.text = identity
         muteView.isHidden = !status.isMicMuted
         pinView.isHidden = !status.isPinned
         
@@ -56,15 +55,15 @@ class ParticipantCell: UICollectionViewCell {
         }
     }
     
-    func configure(videoTrack: VideoTrack?, shouldMirror: Bool) {
-        guard let videoTrack = videoTrack, videoTrack.isEnabled else {
+    func configure(videoConfig: VideoView.Config) {
+        guard let videoTrack = videoConfig.videoTrack, videoTrack.isEnabled else {
             self.videoTrack?.removeRenderer(videoView)
             videoView.isHidden = true
             return
         }
 
         videoTrack.addRenderer(videoView)
-        videoView.shouldMirror = shouldMirror
+        videoView.shouldMirror = videoConfig.shouldMirror
         videoView.isHidden = !videoView.hasVideoData
     }
 }

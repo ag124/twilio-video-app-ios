@@ -63,7 +63,7 @@ class RoomViewController: UIViewController {
     func configureMainVideoView() {
         let participant = viewModel.data.mainParticipant
         mainVideoView.configure(identity: participant.identity)
-        mainVideoView.configure(videoTrack: participant.videoTrack)
+        mainVideoView.configure(videoConfig: participant.videoConfig)
     }
 }
 
@@ -85,8 +85,7 @@ extension RoomViewController: RoomViewModelDelegate {
         guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ParticipantCell else { return }
         
         let participant = viewModel.data.participants[index]
-        let status = ParticipantCell.Status(participant: participant)
-        cell.configure(status: status)
+        cell.configure(identity: participant.identity, status: participant.status)
     }
     
     func didUpdateParticipantVideoConfig(at index: Int) {
@@ -94,7 +93,7 @@ extension RoomViewController: RoomViewModelDelegate {
         guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ParticipantCell else { return }
 
         let participant = viewModel.data.participants[index]
-        cell.configure(videoTrack: participant.cameraVideoTrack, shouldMirror: participant.shouldMirrorVideo)
+        cell.configure(videoConfig: participant.videoConfig)
     }
     
     func didUpdateMainParticipant() {
@@ -102,7 +101,7 @@ extension RoomViewController: RoomViewModelDelegate {
     }
     
     func didUpdateMainParticipantVideoConfig() {
-        mainVideoView.configure(videoTrack: viewModel.data.mainParticipant.videoTrack)
+        mainVideoView.configure(videoConfig: viewModel.data.mainParticipant.videoConfig)
     }
 }
 
@@ -115,9 +114,8 @@ extension RoomViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ParticipantCell", for: indexPath) as! ParticipantCell
 
         let participant = viewModel.data.participants[indexPath.item]
-        let status = ParticipantCell.Status(participant: participant)
-        cell.configure(status: status)
-        cell.configure(videoTrack: participant.cameraVideoTrack, shouldMirror: participant.shouldMirrorVideo)
+        cell.configure(identity: participant.identity, status: participant.status)
+        cell.configure(videoConfig: participant.videoConfig)
         
         return cell
     }
@@ -126,16 +124,5 @@ extension RoomViewController: UICollectionViewDataSource {
 extension RoomViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.togglePin(participant: viewModel.data.participants[indexPath.item])
-    }
-}
-
-private extension ParticipantCell.Status {
-    init(participant: RoomViewModelData.Participant) {
-        self.init(
-            identity: participant.identity,
-            isMicMuted: !participant.isMicOn,
-            networkQualityLevel: participant.networkQualityLevel,
-            isPinned: participant.isPinned
-        )
     }
 }
