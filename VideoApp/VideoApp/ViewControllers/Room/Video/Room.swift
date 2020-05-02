@@ -30,7 +30,7 @@ class Room: NSObject {
     weak var delegate: RoomDelegate?
     var isRecording: Bool { room?.isRecording ?? false }
     let localParticipant: LocalParticipant
-    var remoteParticipants: [RemoteParticipant] = []
+    var remoteParticipants: [RemoteParticipant] = [] // Maybe I don't have to cache these anymore
     private let accessTokenStore: TwilioAccessTokenStoreReading
     private let connectOptionsFactory: ConnectOptionsFactory
     private var room: TwilioVideo.Room?

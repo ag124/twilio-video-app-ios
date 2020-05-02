@@ -40,6 +40,7 @@ class RemoteParticipant: NSObject, Participant {
         return nil
     }
     var shouldMirrorVideo: Bool { false }
+    var isRemote: Bool { true }
     var networkQualityLevel: NetworkQualityLevel { participant.networkQualityLevel }
     var isDominantSpeaker = false {
         didSet {

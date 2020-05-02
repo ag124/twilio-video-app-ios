@@ -16,23 +16,6 @@
 
 import TwilioVideo // TODO: Don't import
 
-struct RoomViewModelData {
-    struct Participant {
-        let identity: String
-        let status: ParticipantCell.Status
-        let videoConfig: VideoView.Config
-    }
-    
-    struct MainParticipant {
-        let identity: String
-        let videoConfig: VideoView.Config
-    }
-    
-    let roomName: String
-    let participants: [Participant]
-    let mainParticipant: MainParticipant
-}
-
 protocol RoomViewModelDelegate: AnyObject {
     func didUpdateData() // TODO: Change to connection changes
     func didAddParticipants(at indexes: [Int])
@@ -45,33 +28,9 @@ protocol RoomViewModelDelegate: AnyObject {
 
 class RoomViewModel {
     weak var delegate: RoomViewModelDelegate?
-    var data: RoomViewModelData {
-        let newParticipants = allParticipants.map {
-            RoomViewModelData.Participant(
-                identity: $0.identity,
-                status: .init(
-                    isMicMuted: $0.isMicOn,
-                    networkQualityLevel: $0.networkQualityLevel,
-                    isPinned: $0.identity == pinnedParticipant?.identity
-                ),
-                videoConfig: .init(videoTrack: $0.cameraVideoTrack, shouldMirror: false) // TODO: Mirror local participant
-            )
-        }
-
-        let mainParticipant = RoomViewModelData.MainParticipant(
-            identity: self.mainParticipant.identity,
-            videoConfig: .init(
-                videoTrack: self.mainParticipant.screenVideoTrack ?? self.mainParticipant.cameraVideoTrack,
-                shouldMirror: self.mainParticipant.shouldMirrorVideo
-            )
-        )
-        
-        return RoomViewModelData(
-            roomName: roomName,
-            participants: newParticipants,
-            mainParticipant: mainParticipant
-        )
-    }
+    private var participantsCache: [RoomViewModelData.Participant] = []
+    private var mainParticipantCache: RoomViewModelData.MainParticipant!
+    var data: RoomViewModelData!
     var isMicOn: Bool {
         get { room.localParticipant.isMicOn }
         set { room.localParticipant.isMicOn = newValue } // TODO: Make sure the only gets called on a real change
@@ -82,92 +41,74 @@ class RoomViewModel {
     }
     private let roomName: String
     private let room: Room
-    private var allParticipants: [Participant] { [room.localParticipant] + room.remoteParticipants }
-    private var pinnedParticipant: RoomViewModelData.Participant?
-    private var rawPinnedParticipant: Participant? {
-        guard let pinnedParticipant = pinnedParticipant else { return nil }
-        
-        return room.remoteParticipants.first(where: { $0.identity == pinnedParticipant.identity })
-    }
-    private var dominantSpeaker: Participant? {
-        room.remoteParticipants.first(where: { $0.isDominantSpeaker })
-    }
-    private var mainParticipant: Participant!
+    private var dominantSpeakerIdentity: String?
 
     init(roomName: String, room: Room) {
         self.roomName = roomName
         self.room = room
         room.delegate = self
         room.localParticipant.delegate = self
-        mainParticipant = calculcateMainParticipant()
+        participantsCache = [.init(participant: room.localParticipant, isPinned: false)]
+        // calculateMainParticipant()
     }
     
     func connect() {
         room.connect(roomName: roomName)
     }
     
-    // TODO: Use index instead? // Maybe move to Room.Participant
-    func togglePin(participant: RoomViewModelData.Participant) {
-        if let pinnedParticipant = pinnedParticipant {
-            if pinnedParticipant.identity == participant.identity {
-                self.pinnedParticipant = nil
-                
-                if let index = allParticipants.firstIndex(where: { $0.identity == pinnedParticipant.identity }) {
-                    delegate?.didUpdateParticipantAttributes(at: index)
-                }
-            } else {
-                self.pinnedParticipant = participant
-                
-                if let index = allParticipants.firstIndex(where: { $0.identity == participant.identity }) {
-                    delegate?.didUpdateParticipantAttributes(at: index)
-                }
-
-                if let index = allParticipants.firstIndex(where: { $0.identity == pinnedParticipant.identity }) {
-                    delegate?.didUpdateParticipantAttributes(at: index)
-                }
+    func togglePin(at index: Int) {
+        // Maybe there is an easier way to do this like use a class
+        updateParticipantsCache(
+            new: participantsCache.map {
+                RoomViewModelData.Participant(
+                    identity: $0.identity,
+                    status: .init(
+                        isMicMuted: $0.status.isMicMuted,
+                        networkQualityLevel: $0.status.networkQualityLevel,
+                        isPinned: participantsCache[index].identity == $0.identity),
+                    videoConfig: $0.videoConfig
+                )
             }
-        } else {
-            self.pinnedParticipant = participant
-            
-            if let index = allParticipants.firstIndex(where: { $0.identity == participant.identity }) {
-                delegate?.didUpdateParticipantAttributes(at: index)
-            }
-        }
-        
-        updateMainParticipant()
+        )
     }
 
     func flipCamera() {
         room.localParticipant.flipCamera()
     }
     
-    // Make sure this is done in all correct places
-    func updatePin() {
-        guard let pinnedParticipant = pinnedParticipant else { return }
-
-        // Cooler way to do this I think
-        if allParticipants.first(where: { $0.identity == pinnedParticipant.identity }) == nil {
-            self.pinnedParticipant = nil
+    private func calculateMainParticipant() -> RoomViewModelData.MainParticipant {
+        let pinnedParticipant = participantsCache.first(where: { $0.status.isPinned })
+        let dominantSpeaker = participantsCache.first(where: { $0.identity == dominantSpeakerIdentity })
+        
+        let firstRemoteParticipant: RoomViewModelData.Participant?
+        
+        // TODO: Probably need my own storage for this and to not couple participants and main participant data :(
+        if participantsCache.count > 1 {
+            firstRemoteParticipant = participantsCache[1]
+        } else {
+            firstRemoteParticipant = nil
         }
-    }
-    
-    private func calculcateMainParticipant() -> Participant {
-        rawPinnedParticipant ?? dominantSpeaker ?? room.remoteParticipants.first ?? room.localParticipant
+
+        return pinnedParticipant ?? dominantSpeaker ?? firstRemoteParticipant ?? participantsCache[0]
     }
     
     private func updateMainParticipant() {
-        let mainParticipant = calculcateMainParticipant()
+        // calculateMainParticipant()
         
-        if mainParticipant.identity != self.mainParticipant.identity {
-            self.mainParticipant = mainParticipant
-            delegate?.didUpdateMainParticipant()
-        }
+        // Diff, Save and call delegate
+    }
+    
+    private func updateParticipantsCache(new: [RoomViewModelData.Participant]) {
+        // TODO: Diff for insert, delete, move, update and call delegate
+        
+        // TODO: Calculate main participant, diff, save and call delegate
+        
+        participantsCache = new
     }
 }
 
 extension RoomViewModel: RoomDelegate {
     func didConnect() {
-        updateMainParticipant()
         delegate?.didUpdateData()
     }
     
@@ -176,8 +117,7 @@ extension RoomViewModel: RoomDelegate {
     }
     
     func didDisconnect(error: Error?) {
-        updatePin()
-        updateMainParticipant()
+        updateParticipantsCache(new: [participantsCache[0]])
         delegate?.didUpdateData()
     }
 
@@ -186,43 +126,30 @@ extension RoomViewModel: RoomDelegate {
         delegate?.didUpdateData()
     }
 
-    // I don't think room should have to deal with indexes, oh wait maybe it should because connect is very basic
-    func didAddRemoteParticipants(at indexes: [Int]) {
-        room.remoteParticipants.forEach { $0.delegate = self }
-        delegate?.didAddParticipants(at: indexes.map { $0 + 1 })
-        updateMainParticipant()
+    // Rename to remove remote?
+    func didAddRemoteParticipants(participants: [Participant]) {
+        // TODO: Sort for screen share
+        participants.forEach { $0.delegate = self }
+        updateParticipantsCache(new: participantsCache + participants.map { .init(participant: $0, isPinned: false) })
     }
     
-    func didRemoveRemoteParticipant(at index: Int) {
-        updatePin() // maybe easier way to do this
-        delegate?.didRemoveParticipant(at: index + 1)
-        updateMainParticipant()
+    func didRemoveRemoteParticipant(participant: Participant) {
+        // TODO: Sort
+        updateParticipantsCache(new: participantsCache.filter { $0.identity != participant.identity })
     }
 }
 
 extension RoomViewModel: ParticipantDelegate {
+    // TODO: Probably only need one of these functions now or maybe just use room delegate
     func didUpdateAttributes(participant: Participant) {
-        guard let index = allParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
+        guard let index = participantsCache.firstIndex(where: { $0.identity == participant.identity }) else { return }
         
-        delegate?.didUpdateParticipantAttributes(at: index)
-        updateMainParticipant()
+        participantsCache[index] = .init(participant: participant, isPinned: false) // TODO: Make pin work
     }
     
     func didUpdateVideoConfig(participant: Participant, source: VideoTrackSource) {
-        // TODO: Make more DRY
-
-        switch source {
-        case .camera:
-            guard let index = allParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
-
-            delegate?.didUpdateParticipantVideoConfig(at: index)
-        case .screen:
-            break
-        }
-
-        // This needs to be smarter to avoid flashing
-        if participant.identity == mainParticipant.identity {
-            delegate?.didUpdateMainParticipantVideoConfig()
-        }
+        guard let index = participantsCache.firstIndex(where: { $0.identity == participant.identity }) else { return }
+        
+        participantsCache[index] = .init(participant: participant, isPinned: false) // TODO: Make pin work
     }
 }
