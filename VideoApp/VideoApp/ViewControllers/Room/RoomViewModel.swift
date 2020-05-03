@@ -97,7 +97,6 @@ extension RoomViewModel: RoomDelegate {
     }
     
     func didDisconnect(error: Error?) {
-        participantList.deleteParticipants(participants: participantList.participants.filter { $0.isRemote })
         delegate?.didUpdateData()
     }
 
