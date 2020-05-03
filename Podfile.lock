@@ -10,6 +10,7 @@ PODS:
     - AppCenter/Core
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
+  - DeepDiff (2.3.1)
   - Fabric (1.10.2)
   - Firebase/Analytics (6.14.0):
     - Firebase/Core
@@ -113,6 +114,7 @@ DEPENDENCIES:
   - Alamofire (= 5.0.2)
   - AppCenter/Distribute (= 2.5.3)
   - Crashlytics (= 3.14.0)
+  - DeepDiff
   - Firebase/Analytics (= 6.14.0)
   - FirebaseUI/Auth (= 8.4.0)
   - FirebaseUI/Google (= 8.4.0)
@@ -127,6 +129,7 @@ SPEC REPOS:
     - AppAuth
     - AppCenter
     - Crashlytics
+    - DeepDiff
     - Fabric
     - Firebase
     - FirebaseAnalytics
@@ -155,6 +158,7 @@ SPEC CHECKSUMS:
   AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
   AppCenter: 765ff38c4d360fc5ec61b61a8be24d74cd6d4d83
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  DeepDiff: e5ae6c50d0321568e4508cec5930b9f10bb293fc
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 0219bb4782eb1406f1b9b0628a2e625484ce910d
   FirebaseAnalytics: f68b9f3f1241385129ae0a83b63627fc420c05e5
@@ -178,6 +182,6 @@ SPEC CHECKSUMS:
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   TwilioVideo: 996f6c2b06f7d3d49f5d4e7cd80a19b0d07f4625
 
-PODFILE CHECKSUM: d922c034a0992e722444cf2a0977772142697d9b
+PODFILE CHECKSUM: e4649afe934b0040dac8a227a9fd83506efe1809
 
 COCOAPODS: 1.8.4

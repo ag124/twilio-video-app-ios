@@ -22,12 +22,6 @@ struct RoomViewModelData {
         let status: ParticipantCell.Status
         let videoConfig: VideoView.Config
 
-        init(identity: String, status: ParticipantCell.Status, videoConfig: VideoView.Config) {
-            self.identity = identity
-            self.status = status
-            self.videoConfig = videoConfig
-        }
-        
         init(participant: VideoApp.Participant, isPinned: Bool) {
             identity = participant.identity
             status = .init(

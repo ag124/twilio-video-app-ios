@@ -77,8 +77,12 @@ extension RoomViewController: RoomViewModelDelegate {
         participantCollectionView.insertItems(at: indexes.map { IndexPath(item: $0, section: 0) })
     }
     
-    func didRemoveParticipant(at index: Int) {
-        participantCollectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
+    func didRemoveParticipants(at indices: [Int]) {
+        participantCollectionView.deleteItems(at: indices.map { IndexPath(item: $0, section: 0) }) // Maybe make Int to Index path extension
+    }
+
+    func didMoveParticipant(at index: Int, to newIndex: Int) {
+        participantCollectionView.moveItem(at: IndexPath(item: index, section: 0), to: IndexPath(item: newIndex, section: 0))
     }
 
     func didUpdateParticipantAttributes(at index: Int) {
@@ -123,6 +127,6 @@ extension RoomViewController: UICollectionViewDataSource {
 
 extension RoomViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.togglePin(participant: viewModel.data.participants[indexPath.item])
+        viewModel.togglePin(at: indexPath.item)
     }
 }

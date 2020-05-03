@@ -14,9 +14,10 @@
 //  limitations under the License.
 //
 
+import DeepDiff
 import TwilioVideo
 
-class RemoteParticipant: NSObject, Participant {
+class RemoteParticipant: NSObject, Participant, DiffAware {
     weak var delegate: ParticipantDelegate?
     var identity: String { participant.identity }
     var isMicOn: Bool { participant.remoteAudioTracks.first?.isTrackEnabled == true } // TODO: Use correct track name

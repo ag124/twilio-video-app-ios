@@ -21,14 +21,14 @@ protocol RoomDelegate: AnyObject {
     func didFailToConnect(error: Error)
     func didDisconnect(error: Error?)
     func didUpdate()
-    func didAddRemoteParticipants(at indexes: [Int])
-    func didRemoveRemoteParticipant(at index: Int)
+    func didAddRemoteParticipants(participants: [Participant])
+    func didRemoveRemoteParticipants(participants: [Participant])
 }
 
+// TODO: Maybe make stateless? Probably not
 // TODO: Rename to RoomStore?
 class Room: NSObject {
     weak var delegate: RoomDelegate?
-    var isRecording: Bool { room?.isRecording ?? false }
     let localParticipant: LocalParticipant
     var remoteParticipants: [RemoteParticipant] = [] // Maybe I don't have to cache these anymore
     private let accessTokenStore: TwilioAccessTokenStoreReading
@@ -83,8 +83,8 @@ extension Room: TwilioVideo.RoomDelegate {
         updateRemoteParticipants()
         delegate?.didConnect()
         
-        if remoteParticipants.count > 0 {
-            delegate?.didAddRemoteParticipants(at: [Int](remoteParticipants.indices))
+        if !remoteParticipants.isEmpty {
+            delegate?.didAddRemoteParticipants(participants: remoteParticipants)
         }
     }
     
@@ -95,36 +95,26 @@ extension Room: TwilioVideo.RoomDelegate {
     
     func roomDidDisconnect(room: TwilioVideo.Room, error: Error?) {
         self.room = nil
-        let oldIndices = remoteParticipants.indices
+        let participants = remoteParticipants
         updateRemoteParticipants()
         delegate?.didDisconnect(error: error)
         
-        if oldIndices.count > 0 {
-            delegate?.didAddRemoteParticipants(at: [Int](oldIndices)) // TODO: Should be remove I think
+        if !participants.isEmpty {
+            delegate?.didRemoveRemoteParticipants(participants: participants)
         }
     }
     
     func participantDidConnect(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant) {
-        print("Participant did connect participant count: \(room.remoteParticipants.count)")
         updateRemoteParticipants()
-        delegate?.didAddRemoteParticipants(at: [remoteParticipants.count - 1])
+        
+        delegate?.didAddRemoteParticipants(participants: [remoteParticipants[remoteParticipants.count - 1]])
     }
     
     func participantDidDisconnect(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant) {
-        print("Participant did disconnect participant count: \(room.remoteParticipants.count)")
-        // TODO: Log error
-        guard let index = remoteParticipants.firstIndex(where: { $0.identity == participant.identity }) else { return }
+        guard let participant = remoteParticipants.first(where: { $0.identity == participant.identity }) else { return }
         
         updateRemoteParticipants()
-        delegate?.didRemoveRemoteParticipant(at: index)
-    }
-    
-    func roomDidStartRecording(room: TwilioVideo.Room) {
-        // Do nothing
-    }
-    
-    func roomDidStopRecording(room: TwilioVideo.Room) {
-        // Do nothing
+        delegate?.didRemoveRemoteParticipants(participants: [participant])
     }
     
     func dominantSpeakerDidChange(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant?) {

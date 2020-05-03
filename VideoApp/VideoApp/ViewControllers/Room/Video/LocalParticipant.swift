@@ -25,6 +25,7 @@ class LocalParticipant: NSObject, Participant {
     var localCameraVideoTrack: LocalVideoTrack? { localMediaController.localVideoTrack } // Use track name
     var shouldMirrorVideo: Bool { true }
     var isRemote: Bool { false }
+    var isDominantSpeaker: Bool { false }
     var networkQualityLevel: NetworkQualityLevel { participant?.networkQualityLevel ?? .unknown }
     var isMicOn: Bool {
         get {
