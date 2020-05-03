@@ -27,14 +27,55 @@ protocol ParticipanListDelegate: AnyObject {
 class ParticipantList {
     weak var delegate: ParticipanListDelegate?
     private(set) var participants: [Participant] = []
-    // Dominant speaker
+    private let room: Room
+    private let notificationCenter = NotificationCenter.default
     // Pinned participant
-    // Main participant
     
-    func insertParticipants(participants: [Participant]) {
-        participants.forEach { participant in
-            participant.delegate = self
+    init(room: Room) {
+        self.room = room
+        insertParticipants(participants: [room.localParticipant] + room.remoteParticipants)
+        
+        notificationCenter.addObserver(self, selector: #selector(handleRoomDidChangeNotification(_:)), name: .roomDidChange, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(handleParticipantDidChangeNotification(_:)), name: .participantDidChange, object: nil)
+    }
+
+    @objc func handleRoomDidChangeNotification(_ notification:Notification) {
+        guard let change = notification.userInfo?["key"] as? RoomChange else { return }
+        
+        switch change {
+        case .didConnect, .didFailToConnect, .didDisconnect, .dominantSpeakerDidChange:
+            break
+        case let .didAddRemoteParticipants(participants):
+            insertParticipants(participants: participants)
+        case let .didRemoveRemoteParticipants(participants):
+            deleteParticipants(participants: participants)
+        }
+    }
+
+    @objc func handleParticipantDidChangeNotification(_ notification:Notification) {
+        guard let change = notification.userInfo?["key"] as? ParticipantUpdate else { return }
+        
+        switch change {
+        case let .didUpdateAttributes(participant):
+            guard let index = participants.index(of: participant) else { return }
             
+            delegate?.didUpdateStatus(for: index)
+        case let .didUpdateVideoConfig(participant, _): // TODO: Need to use source?
+            guard let index = participants.index(of: participant) else { return }
+
+            delegate?.didUpdateVideoConfig(for: index)
+            
+            if participant.screenVideoTrack != nil {
+                participants.remove(at: index)
+                let newIndex = participants.newScreenIndex
+                participants.insert(participant, at: newIndex)
+                delegate?.didMoveParticipant(at: index, to: newIndex)
+            }
+        }
+    }
+
+    private func insertParticipants(participants: [Participant]) {
+        participants.forEach { participant in
             let index: Int
             
             if !participant.isRemote {
@@ -59,7 +100,7 @@ class ParticipantList {
         delegate?.didInsertParticipants(at: indices)
     }
     
-    func deleteParticipants(participants: [Participant]) {
+    private func deleteParticipants(participants: [Participant]) {
         var indices: [Int] = []
 
         participants.forEach { participant in
@@ -76,27 +117,7 @@ class ParticipantList {
     }
 }
 
-extension ParticipantList: ParticipantDelegate {
-    func didUpdateAttributes(participant: Participant) {
-        guard let index = participants.index(of: participant) else { return }
-        
-        delegate?.didUpdateStatus(for: index)
-    }
-    
-    func didUpdateVideoConfig(participant: Participant, source: VideoTrackSource) {
-        guard let index = participants.index(of: participant) else { return }
-
-        delegate?.didUpdateVideoConfig(for: index)
-        
-        if participant.screenVideoTrack != nil {
-            participants.remove(at: index)
-            let newIndex = participants.newScreenIndex
-            participants.insert(participant, at: newIndex)
-            delegate?.didMoveParticipant(at: index, to: newIndex)
-        }
-    }
-}
-
+// TODO: Move
 private extension Array where Element == Participant {
     var newScreenIndex: Int { firstIndex(where: { $0.isRemote }) ?? endIndex }
     func index(of participant: Participant) -> Int? { firstIndex(where: { $0 === participant }) }

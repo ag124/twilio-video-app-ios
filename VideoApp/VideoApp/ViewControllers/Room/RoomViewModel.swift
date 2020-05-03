@@ -33,7 +33,7 @@ class RoomViewModel {
         .init(
             roomName: roomName,
             participants: participantList.participants.map { .init(participant: $0, isPinned: false) }, // Make pin work
-            mainParticipant: .init(participant: mainParticipant)
+            mainParticipant: .init(participant: mainParticipantStore.mainParticipant)
         )
     }
     var isMicOn: Bool {
@@ -46,16 +46,18 @@ class RoomViewModel {
     }
     private let roomName: String
     private let room: Room
-    private let participantList = ParticipantList()
-    private var mainParticipant: Participant!
+    private let participantList: ParticipantList!
+    private let mainParticipantStore: MainParticipantStore!
+    private let notificationCenter = NotificationCenter.default
 
     init(roomName: String, room: Room) {
         self.roomName = roomName
         self.room = room
-        room.delegate = self
-        participantList.insertParticipants(participants: [room.localParticipant]) // use abstracted type
+        participantList = ParticipantList(room: room)
+        mainParticipantStore = MainParticipantStore(room: room, participantList: participantList)
         participantList.delegate = self // Must be after initial insert so we don't get called during init
-        mainParticipant = calculateMainParticipant()
+        mainParticipantStore.delegate = self
+        notificationCenter.addObserver(self, selector: #selector(handleRoomDidChangeNotification(_:)), name: .roomDidChange, object: nil)
     }
     
     func connect() {
@@ -63,67 +65,40 @@ class RoomViewModel {
     }
     
     func togglePin(at index: Int) {
-
+        if mainParticipantStore.pinnedParticipant === participantList.participants[index] {
+            mainParticipantStore.pinnedParticipant = nil
+        } else {
+            mainParticipantStore.pinnedParticipant = participantList.participants[index]
+        }
     }
 
     func flipCamera() {
         room.localParticipant.flipCamera()
     }
     
-    private func calculateMainParticipant() -> Participant {
-        // TODO: Move to extension or something
-        // TODO: Pin
-        let screenSharingParticipant = participantList.participants.first(where: { $0.screenVideoTrack != nil })
-        let dominantSpeaker = participantList.participants.first(where: { $0.isDominantSpeaker })
-        let firstRemoteParticipant = participantList.participants.first(where: { $0.isRemote })
-
+    @objc func handleRoomDidChangeNotification(_ notification:Notification) {
+        guard let change = notification.userInfo?["key"] as? RoomChange else { return }
         
-        return screenSharingParticipant ?? dominantSpeaker ?? firstRemoteParticipant ?? room.localParticipant
-    }
-    
-    private func updateMainParticipant() {
-        mainParticipant = calculateMainParticipant()
-        // TODO: Call delegate
-    }
-}
-
-extension RoomViewModel: RoomDelegate {
-    func didConnect() {
-        delegate?.didUpdateData()
-    }
-    
-    func didFailToConnect(error: Error) {
-        
-    }
-    
-    func didDisconnect(error: Error?) {
-        delegate?.didUpdateData()
-    }
-
-    // What is this for?
-    func didUpdate() {
-        delegate?.didUpdateData()
-    }
-
-    // Rename to remove remote?
-    func didAddRemoteParticipants(participants: [Participant]) {
-        participantList.insertParticipants(participants: participants)
-    }
-    
-    func didRemoveRemoteParticipants(participants: [Participant]) {
-        participantList.deleteParticipants(participants: participants)
+        switch change {
+        case .didConnect:
+            delegate?.didUpdateData()
+        case .didFailToConnect: // TODO: Handle error
+            break
+        case .didDisconnect: // TODO: Handle error
+            delegate?.didUpdateData()
+        case .didAddRemoteParticipants, .didRemoveRemoteParticipants, .dominantSpeakerDidChange:
+            break
+        }
     }
 }
 
 extension RoomViewModel: ParticipanListDelegate {
     func didInsertParticipants(at indices: [Int]) {
         delegate?.didAddParticipants(at: indices)
-        updateMainParticipant()
     }
     
     func didDeleteParticipants(at indices: [Int]) {
         delegate?.didRemoveParticipants(at: indices)
-        updateMainParticipant()
     }
     
     func didMoveParticipant(at index: Int, to newIndex: Int) {
@@ -136,5 +111,15 @@ extension RoomViewModel: ParticipanListDelegate {
     
     func didUpdateVideoConfig(for index: Int) {
         delegate?.didUpdateParticipantVideoConfig(at: index)
+    }
+}
+
+extension RoomViewModel: MainParticipantStoreDelegate {
+    func didUpdateMainParticipant() {
+        delegate?.didUpdateMainParticipant()
+    }
+    
+    func didUpdateStatus() {
+        delegate?.didUpdateMainParticipantVideoConfig() // TODO: Just use status
     }
 }

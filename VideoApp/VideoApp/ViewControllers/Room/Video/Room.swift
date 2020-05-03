@@ -16,13 +16,13 @@
 
 import TwilioVideo
 
-protocol RoomDelegate: AnyObject {
-    func didConnect()
-    func didFailToConnect(error: Error)
-    func didDisconnect(error: Error?)
-    func didUpdate()
-    func didAddRemoteParticipants(participants: [Participant])
-    func didRemoveRemoteParticipants(participants: [Participant])
+enum RoomChange {
+    case didConnect
+    case didFailToConnect(error: Error)
+    case didDisconnect(error:Error?)
+    case didAddRemoteParticipants(participants: [Participant])
+    case didRemoveRemoteParticipants(participants: [Participant])
+    case dominantSpeakerDidChange(participant: Participant)
 }
 
 // TODO: Maybe make stateless? Probably not
@@ -30,9 +30,11 @@ protocol RoomDelegate: AnyObject {
 class Room: NSObject {
     weak var delegate: RoomDelegate?
     let localParticipant: LocalParticipant
-    var remoteParticipants: [RemoteParticipant] = [] // Maybe I don't have to cache these anymore
+    private(set) var remoteParticipants: [RemoteParticipant] = [] // Maybe I don't have to cache these anymore
+    private(set) var dominantSpeaker: RemoteParticipant?
     private let accessTokenStore: TwilioAccessTokenStoreReading
     private let connectOptionsFactory: ConnectOptionsFactory
+    private let notificationCenter = NotificationCenter.default
     private var room: TwilioVideo.Room?
     
     init(
@@ -64,7 +66,7 @@ class Room: NSObject {
                 // TODO: Inject
                 self.room = TwilioVideoSDK.connect(options: options, delegate: self)
             case let .failure(error):
-                self.delegate?.didFailToConnect(error: error)
+                self.sendRoomUpdate(change: .didFailToConnect(error: error))
             }
         }
     }
@@ -74,6 +76,10 @@ class Room: NSObject {
         
         remoteParticipants = room.remoteParticipants.map { RemoteParticipant(participant: $0) }
     }
+    
+    private func sendRoomUpdate(change: RoomChange) {
+        self.notificationCenter.post(name: .roomDidChange, object: self, userInfo: ["key": change])
+    }
 }
 
 extension Room: TwilioVideo.RoomDelegate {
@@ -81,46 +87,46 @@ extension Room: TwilioVideo.RoomDelegate {
         print("Connect remote participant count: \(room.remoteParticipants.count)")
         localParticipant.participant = room.localParticipant
         updateRemoteParticipants()
-        delegate?.didConnect()
+        sendRoomUpdate(change: .didConnect)
         
         if !remoteParticipants.isEmpty {
-            delegate?.didAddRemoteParticipants(participants: remoteParticipants)
+            sendRoomUpdate(change: .didAddRemoteParticipants(participants: remoteParticipants))
         }
     }
     
     func roomDidFailToConnect(room: TwilioVideo.Room, error: Error) {
         self.room = nil
-        delegate?.didFailToConnect(error: error)
+        sendRoomUpdate(change: .didFailToConnect(error: error))
     }
     
     func roomDidDisconnect(room: TwilioVideo.Room, error: Error?) {
         self.room = nil
         let participants = remoteParticipants
         updateRemoteParticipants()
-        delegate?.didDisconnect(error: error)
+        sendRoomUpdate(change: .didDisconnect(error: error))
         
         if !participants.isEmpty {
-            delegate?.didRemoveRemoteParticipants(participants: participants)
+            sendRoomUpdate(change: .didRemoveRemoteParticipants(participants: participants))
         }
     }
     
     func participantDidConnect(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant) {
         updateRemoteParticipants()
-        
-        delegate?.didAddRemoteParticipants(participants: [remoteParticipants[remoteParticipants.count - 1]])
+    
+        sendRoomUpdate(change: .didAddRemoteParticipants(participants: [remoteParticipants[remoteParticipants.count - 1]]))
     }
     
     func participantDidDisconnect(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant) {
         guard let participant = remoteParticipants.first(where: { $0.identity == participant.identity }) else { return }
         
         updateRemoteParticipants()
-        delegate?.didRemoveRemoteParticipants(participants: [participant])
+        sendRoomUpdate(change: .didRemoveRemoteParticipants(participants: [participant]))
     }
     
     func dominantSpeakerDidChange(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant?) {
-        guard let participant = participant else { return }
-        
-        remoteParticipants.forEach { $0.isDominantSpeaker = false }
-        remoteParticipants.first(where: { $0.identity == participant.identity })?.isDominantSpeaker = true
+        guard let participant = remoteParticipants.first(where: { $0.identity == participant?.identity }) else { return }
+
+        dominantSpeaker = participant
+        sendRoomUpdate(change: .dominantSpeakerDidChange(participant: participant))
     }
 }

@@ -18,7 +18,6 @@ import TwilioVideo
 
 class LocalParticipant: NSObject, Participant {
     let identity: String
-    weak var delegate: ParticipantDelegate?
     var micAudioTrack: LocalAudioTrack? { localMediaController.localAudioTrack } // Use track name
     var cameraVideoTrack: VideoTrack? { localMediaController.localVideoTrack } // Use track name
     var screenVideoTrack: VideoTrack? { nil }
@@ -45,7 +44,7 @@ class LocalParticipant: NSObject, Participant {
                 localMediaController.destroyLocalAudioTrack()
             }
             
-            delegate?.didUpdateAttributes(participant: self)
+            postChange(.didUpdateAttributes(participant: self))
         }
     }
     var isCameraOn: Bool {
@@ -65,8 +64,8 @@ class LocalParticipant: NSObject, Participant {
                 participant?.unpublishVideoTrack(localVideoTrack)
                 localMediaController.destroyLocalVideoTrack()
             }
-            
-            delegate?.didUpdateVideoConfig(participant: self, source: .camera)
+
+            postChange(.didUpdateVideoConfig(participant: self, source: .camera))
         }
     }
     var participant: TwilioVideo.LocalParticipant? {
@@ -75,6 +74,7 @@ class LocalParticipant: NSObject, Participant {
         }
     }
     private let localMediaController: LocalMediaController
+    private let notificationCenter = NotificationCenter.default
     
     init(identity: String, localMediaController: LocalMediaController) {
         self.identity = identity
@@ -84,6 +84,10 @@ class LocalParticipant: NSObject, Participant {
     
     func flipCamera() {
         localMediaController.flipCamera()
+    }
+
+    private func postChange(_ change: ParticipantUpdate) {
+        self.notificationCenter.post(name: .participantDidChange, object: self, userInfo: ["key": change])
     }
 }
 
@@ -105,6 +109,6 @@ extension LocalParticipant: LocalParticipantDelegate {
     }
     
     func localParticipantNetworkQualityLevelDidChange(participant: TwilioVideo.LocalParticipant, networkQualityLevel: NetworkQualityLevel) {
-        delegate?.didUpdateAttributes(participant: self)
+        postChange(.didUpdateAttributes(participant: self))
     }
 }

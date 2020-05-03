@@ -23,8 +23,12 @@ enum VideoTrackSource: String {
     case screen
 }
 
+enum ParticipantUpdate {
+    case didUpdateAttributes(participant: Participant)
+    case didUpdateVideoConfig(participant: Participant, source: VideoTrackSource)
+}
+
 protocol Participant: AnyObject {
-    var delegate: ParticipantDelegate? { get set }
     var identity: String { get }
     var cameraVideoTrack: VideoTrack? { get }
     var screenVideoTrack: VideoTrack? { get }
@@ -32,10 +36,4 @@ protocol Participant: AnyObject {
     var shouldMirrorVideo: Bool { get } // Rename to should mirror camera, might be able to remove this or implement in extension
     var networkQualityLevel: NetworkQualityLevel { get }
     var isRemote: Bool { get }
-    var isDominantSpeaker: Bool { get }
-}
-
-protocol ParticipantDelegate: AnyObject {
-    func didUpdateAttributes(participant: Participant)
-    func didUpdateVideoConfig(participant: Participant, source: VideoTrackSource)
 }

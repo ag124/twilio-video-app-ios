@@ -18,7 +18,6 @@ import DeepDiff
 import TwilioVideo
 
 class RemoteParticipant: NSObject, Participant, DiffAware {
-    weak var delegate: ParticipantDelegate?
     var identity: String { participant.identity }
     var isMicOn: Bool { participant.remoteAudioTracks.first?.isTrackEnabled == true } // TODO: Use correct track name
 //    var cameraVideoTrack: VideoTrack? { participant.remoteVideoTracks.first?.remoteTrack }
@@ -43,19 +42,19 @@ class RemoteParticipant: NSObject, Participant, DiffAware {
     var shouldMirrorVideo: Bool { false }
     var isRemote: Bool { true }
     var networkQualityLevel: NetworkQualityLevel { participant.networkQualityLevel }
-    var isDominantSpeaker = false {
-        didSet {
-            if isDominantSpeaker != oldValue {
-                delegate?.didUpdateAttributes(participant: self) // TODO: Make sure we really need to compare to old value
-            }
-        }
-    }
     private let participant: TwilioVideo.RemoteParticipant
+    private let notificationCenter = NotificationCenter.default
     
     init(participant: TwilioVideo.RemoteParticipant) {
         self.participant = participant
         super.init()
         participant.delegate = self
+        
+        
+    }
+    
+    private func postChange(_ change: ParticipantUpdate) {
+        self.notificationCenter.post(name: .participantDidChange, object: self, userInfo: ["key": change])
     }
 }
 
@@ -70,41 +69,45 @@ extension RemoteParticipant: RemoteParticipantDelegate {
 
     func remoteParticipantDidEnableVideoTrack(participant: TwilioVideo.RemoteParticipant, publication: RemoteVideoTrackPublication) {
         guard let source = VideoTrackSource(rawValue: publication.trackName) else { return }
-        delegate?.didUpdateVideoConfig(participant: self, source: source)
+        
+        postChange(.didUpdateVideoConfig(participant: self, source: source))
     }
     
     func remoteParticipantDidDisableVideoTrack(participant: TwilioVideo.RemoteParticipant, publication: RemoteVideoTrackPublication) {
         guard let source = VideoTrackSource(rawValue: publication.trackName) else { return }
-        delegate?.didUpdateVideoConfig(participant: self, source: source)
+
+        postChange(.didUpdateVideoConfig(participant: self, source: source))
     }
     
     func didSubscribeToVideoTrack(videoTrack: RemoteVideoTrack, publication: RemoteVideoTrackPublication, participant: TwilioVideo.RemoteParticipant) {
         guard let source = VideoTrackSource(rawValue: publication.trackName) else { return }
-        delegate?.didUpdateVideoConfig(participant: self, source: source)
+
+        postChange(.didUpdateVideoConfig(participant: self, source: source))
     }
     
     func didUnsubscribeFromVideoTrack(videoTrack: RemoteVideoTrack, publication: RemoteVideoTrackPublication, participant: TwilioVideo.RemoteParticipant) {
         guard let source = VideoTrackSource(rawValue: publication.trackName) else { return } // TODO: Make more dry
-        delegate?.didUpdateVideoConfig(participant: self, source: source)
+
+        postChange(.didUpdateVideoConfig(participant: self, source: source))
     }
     
     func remoteParticipantDidEnableAudioTrack(participant: TwilioVideo.RemoteParticipant, publication: RemoteAudioTrackPublication) {
-        delegate?.didUpdateAttributes(participant: self)
+        postChange(.didUpdateAttributes(participant: self))
     }
     
     func remoteParticipantDidDisableAudioTrack(participant: TwilioVideo.RemoteParticipant, publication: RemoteAudioTrackPublication) {
-        delegate?.didUpdateAttributes(participant: self)
+        postChange(.didUpdateAttributes(participant: self))
     }
     
     func didSubscribeToAudioTrack(audioTrack: RemoteAudioTrack, publication: RemoteAudioTrackPublication, participant: TwilioVideo.RemoteParticipant) {
-        delegate?.didUpdateAttributes(participant: self)
+        postChange(.didUpdateAttributes(participant: self))
     }
     
     func didUnsubscribeFromAudioTrack(audioTrack: RemoteAudioTrack, publication: RemoteAudioTrackPublication, participant: TwilioVideo.RemoteParticipant) {
-        delegate?.didUpdateAttributes(participant: self)
+        postChange(.didUpdateAttributes(participant: self))
     }
 
     func remoteParticipantNetworkQualityLevelDidChange(participant: TwilioVideo.RemoteParticipant, networkQualityLevel: NetworkQualityLevel) {
-        delegate?.didUpdateAttributes(participant: self)
+        postChange(.didUpdateAttributes(participant: self))
     }
 }

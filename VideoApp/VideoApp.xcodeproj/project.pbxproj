@@ -294,6 +294,9 @@
 		DC9A5E09245DFFC100E4B079 /* ParticipantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E08245DFFC100E4B079 /* ParticipantList.swift */; };
 		DC9A5E0A245DFFC100E4B079 /* ParticipantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E08245DFFC100E4B079 /* ParticipantList.swift */; };
 		DC9A5E0B245DFFC100E4B079 /* ParticipantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E08245DFFC100E4B079 /* ParticipantList.swift */; };
+		DC9A5E0D245F611D00E4B079 /* MainParticipantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */; };
+		DC9A5E0E245F611D00E4B079 /* MainParticipantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */; };
+		DC9A5E0F245F611D00E4B079 /* MainParticipantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */; };
 		DCA53948235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA53949235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA5394A235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
@@ -683,6 +686,7 @@
 		DC9A5DFF245CB67600E4B079 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		DC9A5E04245DDC1000E4B079 /* RoomViewModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewModelData.swift; sourceTree = "<group>"; };
 		DC9A5E08245DFFC100E4B079 /* ParticipantList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantList.swift; sourceTree = "<group>"; };
+		DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainParticipantStore.swift; sourceTree = "<group>"; };
 		DCA53947235F53E700CA26FB /* InternalAuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAuthStore.swift; sourceTree = "<group>"; };
 		DCA5394B235F740200CA26FB /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		DCA5394F235F765D00CA26FB /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
@@ -1035,6 +1039,7 @@
 				DC386DD02458DC05009E994A /* RoomViewModel.swift */,
 				DC9A5E04245DDC1000E4B079 /* RoomViewModelData.swift */,
 				DC9A5E08245DFFC100E4B079 /* ParticipantList.swift */,
+				DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */,
 				DC9A5DE5245CB15200E4B079 /* Video */,
 				DC9A5DE6245CB15900E4B079 /* Views */,
 			);
@@ -2608,6 +2613,7 @@
 				24A723ED1ECE1D2A00486E7A /* HeaderTableViewCell.m in Sources */,
 				24A598531ECCE069003466B4 /* RoundButton.m in Sources */,
 				DCEC3D1723861D3700EBDEBF /* SelectTopologyViewModelFactory.swift in Sources */,
+				DC9A5E0D245F611D00E4B079 /* MainParticipantStore.swift in Sources */,
 				DCC7E37624085BE200431AC3 /* APIErrorResponse.swift in Sources */,
 				DCEC3CF82385F8CA00EBDEBF /* EditTextViewModel.swift in Sources */,
 				DC9A5DE2245CA2E000E4B079 /* CustomView.swift in Sources */,
@@ -2750,6 +2756,7 @@
 				4B00122F1FBA52C4004A587E /* HeaderTableViewCell.m in Sources */,
 				4B0012301FBA52C4004A587E /* RoundButton.m in Sources */,
 				DCEC3D1823861D3700EBDEBF /* SelectTopologyViewModelFactory.swift in Sources */,
+				DC9A5E0E245F611D00E4B079 /* MainParticipantStore.swift in Sources */,
 				DCC7E37724085BE200431AC3 /* APIErrorResponse.swift in Sources */,
 				DCEC3CF92385F8CA00EBDEBF /* EditTextViewModel.swift in Sources */,
 				DC9A5DE3245CA2E000E4B079 /* CustomView.swift in Sources */,
@@ -2892,6 +2899,7 @@
 				4B00126C1FBA52E5004A587E /* HeaderTableViewCell.m in Sources */,
 				4B00126D1FBA52E5004A587E /* RoundButton.m in Sources */,
 				DCEC3D1923861D3700EBDEBF /* SelectTopologyViewModelFactory.swift in Sources */,
+				DC9A5E0F245F611D00E4B079 /* MainParticipantStore.swift in Sources */,
 				DCC7E37824085BE200431AC3 /* APIErrorResponse.swift in Sources */,
 				DCEC3CFA2385F8CA00EBDEBF /* EditTextViewModel.swift in Sources */,
 				DC9A5DE4245CA2E000E4B079 /* CustomView.swift in Sources */,
