@@ -297,6 +297,9 @@
 		DC9A5E0D245F611D00E4B079 /* MainParticipantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */; };
 		DC9A5E0E245F611D00E4B079 /* MainParticipantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */; };
 		DC9A5E0F245F611D00E4B079 /* MainParticipantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */; };
+		DC9A5E112460CE9800E4B079 /* ParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC9A5E102460CE9800E4B079 /* ParticipantCell.xib */; };
+		DC9A5E122460CE9800E4B079 /* ParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC9A5E102460CE9800E4B079 /* ParticipantCell.xib */; };
+		DC9A5E132460CE9800E4B079 /* ParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC9A5E102460CE9800E4B079 /* ParticipantCell.xib */; };
 		DCA53948235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA53949235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA5394A235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
@@ -687,6 +690,7 @@
 		DC9A5E04245DDC1000E4B079 /* RoomViewModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewModelData.swift; sourceTree = "<group>"; };
 		DC9A5E08245DFFC100E4B079 /* ParticipantList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantList.swift; sourceTree = "<group>"; };
 		DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainParticipantStore.swift; sourceTree = "<group>"; };
+		DC9A5E102460CE9800E4B079 /* ParticipantCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParticipantCell.xib; sourceTree = "<group>"; };
 		DCA53947235F53E700CA26FB /* InternalAuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAuthStore.swift; sourceTree = "<group>"; };
 		DCA5394B235F740200CA26FB /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		DCA5394F235F765D00CA26FB /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
@@ -1345,6 +1349,7 @@
 			isa = PBXGroup;
 			children = (
 				DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */,
+				DC9A5E102460CE9800E4B079 /* ParticipantCell.xib */,
 			);
 			path = ParticipantCell;
 			sourceTree = "<group>";
@@ -1859,6 +1864,7 @@
 				DC9A5DDE245C8CA300E4B079 /* MainVideoView.xib in Resources */,
 				DCAEBF332383560500141D2D /* EditTextCell.xib in Resources */,
 				DC44C2C523870D0800205174 /* BasicCell.xib in Resources */,
+				DC9A5E112460CE9800E4B079 /* ParticipantCell.xib in Resources */,
 				241282471E36A6AB002198BE /* Assets.xcassets in Resources */,
 				DC9A5DF7245CB42C00E4B079 /* EmptyVideoView.xib in Resources */,
 				DC9A5DFC245CB66800E4B079 /* VideoView.xib in Resources */,
@@ -1878,6 +1884,7 @@
 				DC9A5DDF245C8CA300E4B079 /* MainVideoView.xib in Resources */,
 				DC44C2C623870D0800205174 /* BasicCell.xib in Resources */,
 				4B0012441FBA52C4004A587E /* Assets.xcassets in Resources */,
+				DC9A5E122460CE9800E4B079 /* ParticipantCell.xib in Resources */,
 				DC44C2BE238704FB00205174 /* RightDetailCell.xib in Resources */,
 				DC9A5DF8245CB42C00E4B079 /* EmptyVideoView.xib in Resources */,
 				DC9A5DFD245CB66800E4B079 /* VideoView.xib in Resources */,
@@ -1898,6 +1905,7 @@
 				DC44C2C723870D0800205174 /* BasicCell.xib in Resources */,
 				4B0012811FBA52E5004A587E /* Assets.xcassets in Resources */,
 				DC44C2BF238704FB00205174 /* RightDetailCell.xib in Resources */,
+				DC9A5E132460CE9800E4B079 /* ParticipantCell.xib in Resources */,
 				DC9A5DE0245C8CA300E4B079 /* MainVideoView.xib in Resources */,
 				4B0012831FBA52E5004A587E /* Main.storyboard in Resources */,
 				DC9A5DF9245CB42C00E4B079 /* EmptyVideoView.xib in Resources */,

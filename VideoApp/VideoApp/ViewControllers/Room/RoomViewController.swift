@@ -35,6 +35,11 @@ class RoomViewController: UIViewController {
         participantCollectionView.delegate = self
         disableMicButton.isSelected = !viewModel.isMicOn
         disableCameraButton.isSelected = !viewModel.isCameraOn
+
+        participantCollectionView.register(
+            UINib(nibName: "ParticipantCell", bundle: nil),
+            forCellWithReuseIdentifier: "ParticipantCell"
+        )
         
         viewModel.delegate = self
         viewModel.connect()

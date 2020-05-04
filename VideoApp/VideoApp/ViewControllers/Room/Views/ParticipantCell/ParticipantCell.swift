@@ -14,7 +14,6 @@
 //  limitations under the License.
 //
 
-import TwilioVideo // TODO: Don't import
 import UIKit
 
 class ParticipantCell: UICollectionViewCell {
@@ -24,23 +23,11 @@ class ParticipantCell: UICollectionViewCell {
         let isPinned: Bool
     }
     
-    @IBOutlet weak var videoView: TwilioVideo.VideoView!
+    @IBOutlet weak var videoView: VideoView!
     @IBOutlet weak var identityLabel: UILabel!
     @IBOutlet weak var networkQualityImage: UIImageView!
     @IBOutlet weak var pinView: UIView!
     @IBOutlet weak var muteView: UIView!
-    private var videoTrack: VideoTrack?
-    
-    deinit {
-        videoTrack?.removeRenderer(videoView) // TODO: Really needed?
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        videoView.delegate = self
-        videoView.contentMode = .scaleAspectFill // TODO: Why doesn't this work from storyboard?
-    }
     
     func configure(identity: String, status: Status) {
         identityLabel.text = identity
@@ -56,21 +43,7 @@ class ParticipantCell: UICollectionViewCell {
     }
     
     func configure(videoConfig: VideoView.Config) {
-        guard let videoTrack = videoConfig.videoTrack, videoTrack.isEnabled else {
-            self.videoTrack?.removeRenderer(videoView)
-            videoView.isHidden = true
-            return
-        }
-
-        videoTrack.addRenderer(videoView)
-        videoView.shouldMirror = videoConfig.shouldMirror
-        videoView.isHidden = !videoView.hasVideoData
-    }
-}
-
-extension ParticipantCell: TwilioVideo.VideoViewDelegate { // TODO: Make private?
-    func videoViewDidReceiveData(view: TwilioVideo.VideoView) {
-        videoView.isHidden = false
+        videoView.configure(config: videoConfig, contentMode: .scaleAspectFill)
     }
 }
 
