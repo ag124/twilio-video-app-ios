@@ -65,11 +65,7 @@ class RoomViewModel {
     }
     
     func togglePin(at index: Int) {
-        if mainParticipantStore.pinnedParticipant === participantList.participants[index] {
-            mainParticipantStore.pinnedParticipant = nil
-        } else {
-            mainParticipantStore.pinnedParticipant = participantList.participants[index]
-        }
+        participantList.togglePin(at: index)
     }
 
     func flipCamera() {

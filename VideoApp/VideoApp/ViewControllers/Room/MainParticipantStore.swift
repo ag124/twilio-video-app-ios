@@ -23,9 +23,6 @@ protocol MainParticipantStoreDelegate: AnyObject {
 
 class MainParticipantStore {
     weak var delegate: MainParticipantStoreDelegate?
-    var pinnedParticipant: Participant? { // TODO: Maybe move this to list
-        didSet { updateMainParticipant() }
-    }
     private(set) var mainParticipant: Participant!
     private let room: Room
     private let participantList: ParticipantList
@@ -37,6 +34,7 @@ class MainParticipantStore {
         updateMainParticipant()
         notificationCenter.addObserver(self, selector: #selector(roomDidChange(_:)), name: .roomDidChange, object: nil)
         notificationCenter.addObserver(self, selector: #selector(participantDidChange(_:)), name: .participantDidChange, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(participanListDidChange(_:)), name: .participantListDidChange, object: nil)
     }
 
     @objc func roomDidChange(_ notification:Notification) {
@@ -60,10 +58,14 @@ class MainParticipantStore {
             }
         }
     }
+
+    @objc func participanListDidChange(_ notification:Notification) {
+        updateMainParticipant()
+    }
     
     @discardableResult private func updateMainParticipant() -> Bool {
         let new =
-            pinnedParticipant ??
+            participantList.pinnedParticipant ??
             room.remoteParticipants.screenPresenter ??
             room.dominantSpeaker ??
             participantList.firstRemoteParticipant ??

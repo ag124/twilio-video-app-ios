@@ -20,4 +20,5 @@ extension Notification.Name {
     static let appSettingDidChange = Notification.Name("AppSettingDidChange")
     static let roomDidChange = Notification.Name("RoomDidChange")
     static let participantDidChange = Notification.Name("ParticipantDidChange")
+    static let participantListDidChange = Notification.Name("ParticipantListDidChange")
 }

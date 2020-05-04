@@ -27,6 +27,7 @@ protocol ParticipanListDelegate: AnyObject {
 class ParticipantList {
     weak var delegate: ParticipanListDelegate?
     private(set) var participants: [Participant] = []
+    private(set) var pinnedParticipant: Participant?
     private let room: Room
     private let notificationCenter = NotificationCenter.default
     // Pinned participant
@@ -74,6 +75,13 @@ class ParticipantList {
         }
     }
 
+    func togglePin(at index: Int) {
+        let participant = participants[index]
+        pinnedParticipant = pinnedParticipant === participant ? nil : participant
+        notificationCenter.post(name: .participantListDidChange, object: self) // TODO: Post for other changes?
+        // TODO: Post update to delegate for old and new pin
+    }
+    
     private func insertParticipants(participants: [Participant]) {
         participants.forEach { participant in
             let index: Int
