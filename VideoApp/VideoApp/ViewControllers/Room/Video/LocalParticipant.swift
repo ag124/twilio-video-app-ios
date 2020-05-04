@@ -44,7 +44,7 @@ class LocalParticipant: NSObject, Participant {
                 localMediaController.destroyLocalAudioTrack()
             }
             
-            postChange(.didUpdateAttributes(participant: self))
+            postChange(.didUpdate(participant: self))
         }
     }
     var isCameraOn: Bool {
@@ -65,7 +65,7 @@ class LocalParticipant: NSObject, Participant {
                 localMediaController.destroyLocalVideoTrack()
             }
 
-            postChange(.didUpdateVideoConfig(participant: self, source: .camera))
+            postChange(.didUpdate(participant: self))
         }
     }
     var participant: TwilioVideo.LocalParticipant? {
@@ -109,6 +109,6 @@ extension LocalParticipant: LocalParticipantDelegate {
     }
     
     func localParticipantNetworkQualityLevelDidChange(participant: TwilioVideo.LocalParticipant, networkQualityLevel: NetworkQualityLevel) {
-        postChange(.didUpdateAttributes(participant: self))
+        postChange(.didUpdate(participant: self))
     }
 }

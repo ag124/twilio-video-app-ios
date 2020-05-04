@@ -36,8 +36,7 @@ enum VideoTrackSource: String {
 }
 
 enum ParticipantUpdate {
-    case didUpdateAttributes(participant: Participant)
-    case didUpdateVideoConfig(participant: Participant, source: VideoTrackSource)
+    case didUpdate(participant: Participant)
 }
 
 protocol Participant: AnyObject {

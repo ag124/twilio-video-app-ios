@@ -95,13 +95,6 @@ extension RoomViewController: RoomViewModelDelegate {
         
         let participant = viewModel.data.participants[index]
         cell.configure(identity: participant.identity, status: participant.status)
-    }
-    
-    func didUpdateParticipantVideoConfig(at index: Int) {
-        // TDOO: Make more DRY
-        guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ParticipantCell else { return }
-
-        let participant = viewModel.data.participants[index]
         cell.configure(videoConfig: participant.videoConfig)
     }
     

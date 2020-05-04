@@ -22,7 +22,6 @@ protocol RoomViewModelDelegate: AnyObject {
     func didRemoveParticipants(at indices: [Int])
     func didMoveParticipant(at index: Int, to newIndex: Int)
     func didUpdateParticipantAttributes(at index: Int) // Observe each participant? No probably bad idea because then it isn't just data
-    func didUpdateParticipantVideoConfig(at index: Int)
     func didUpdateMainParticipant()
     func didUpdateMainParticipantVideoConfig()
 }
@@ -103,10 +102,8 @@ class RoomViewModel {
             delegate?.didRemoveParticipants(at: indices)
         case let .didMoveParticipant(oldIndex, newIndex):
             delegate?.didMoveParticipant(at: oldIndex, to: newIndex)
-        case let .didUpdateStatus(index):
+        case let .didUpdateParticipant(index):
             delegate?.didUpdateParticipantAttributes(at: index)
-        case let .didUpdateVideoConfig(index):
-            delegate?.didUpdateParticipantVideoConfig(at: index)
         }
     }
     
@@ -117,7 +114,7 @@ class RoomViewModel {
         case .didUpdateMainParticipant:
             delegate?.didUpdateMainParticipant()
         case .didUpdateStatus:
-            delegate?.didUpdateMainParticipantVideoConfig() // TODO: Just use status
+            delegate?.didUpdateMainParticipantVideoConfig()
         }
     }
 }

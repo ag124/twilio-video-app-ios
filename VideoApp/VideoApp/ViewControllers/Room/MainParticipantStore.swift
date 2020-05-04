@@ -52,7 +52,7 @@ class MainParticipantStore {
         guard let change = notification.userInfo?["key"] as? ParticipantUpdate else { return }
         
         switch change {
-        case let .didUpdateAttributes(participant), let .didUpdateVideoConfig(participant, _):
+        case let .didUpdate(participant):
             if participant === mainParticipant {
                 post(change: .didUpdateStatus)
             }

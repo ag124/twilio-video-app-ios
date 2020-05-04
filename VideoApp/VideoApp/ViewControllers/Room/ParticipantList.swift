@@ -20,8 +20,7 @@ enum ParticipantListChange {
     case didInsertParticipants(indices: [Int])
     case didDeleteParticipants(indices: [Int])
     case didMoveParticipant(oldIndex: Int, newIndex: Int)
-    case didUpdateStatus(index: Int)
-    case didUpdateVideoConfig(index: Int)
+    case didUpdateParticipant(index: Int)
 }
 
 class ParticipantList {
@@ -55,16 +54,12 @@ class ParticipantList {
         guard let change = notification.userInfo?["key"] as? ParticipantUpdate else { return }
         
         switch change {
-        case let .didUpdateAttributes(participant):
+        case let .didUpdate(participant):
             guard let index = participants.index(of: participant) else { return }
             
-            post(change: .didUpdateStatus(index: index))
-        case let .didUpdateVideoConfig(participant, _): // TODO: Need to use source?
-            guard let index = participants.index(of: participant) else { return }
-
-            post(change: .didUpdateVideoConfig(index: index))
+            post(change: .didUpdateParticipant(index: index))
             
-            if participant.screenVideoTrack != nil {
+            if participant.screenVideoTrack != nil && index != participants.newScreenIndex {
                 participants.remove(at: index)
                 let newIndex = participants.newScreenIndex
                 participants.insert(participant, at: newIndex)
@@ -83,11 +78,11 @@ class ParticipantList {
             pinnedParticipant = participants[index]
             
             if let oldPinnedParticipant = oldPinnedParticipant, let oldIndex = participants.index(of: oldPinnedParticipant) {
-                post(change: .didUpdateStatus(index: oldIndex))
+                post(change: .didUpdateParticipant(index: oldIndex))
             }
         }
         
-        post(change: .didUpdateStatus(index: index))
+        post(change: .didUpdateParticipant(index: index))
     }
     
     private func insertParticipants(participants: [Participant]) {

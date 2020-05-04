@@ -11,45 +11,45 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="ParticipantCell" id="4VZ-A2-wJN" customClass="ParticipantCell" customModule="VideoApp" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="377" height="500"/>
+            <rect key="frame" x="0.0" y="0.0" width="212" height="260"/>
             <autoresizingMask key="autoresizingMask"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="6KL-cz-VSR">
-                <rect key="frame" x="0.0" y="0.0" width="377" height="500"/>
+                <rect key="frame" x="0.0" y="0.0" width="212" height="260"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tbX-CK-db2" userLabel="Empty">
-                        <rect key="frame" x="0.0" y="0.0" width="377" height="500"/>
+                        <rect key="frame" x="0.0" y="0.0" width="212" height="260"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bw6-zp-Gby" userLabel="Video" customClass="VideoView" customModule="VideoApp" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="377" height="500"/>
+                        <rect key="frame" x="0.0" y="0.0" width="212" height="260"/>
                         <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dQx-04-Sus" userLabel="Status">
-                        <rect key="frame" x="0.0" y="0.0" width="377" height="500"/>
+                        <rect key="frame" x="0.0" y="0.0" width="212" height="260"/>
                         <subviews>
                             <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LmV-ib-xQp" userLabel="Identity Background">
-                                <rect key="frame" x="0.0" y="0.0" width="377" height="25"/>
+                                <rect key="frame" x="0.0" y="0.0" width="212" height="25"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="NQ0-fg-tyx"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Identity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OjW-eP-3v0" userLabel="Identity">
-                                <rect key="frame" x="0.0" y="0.0" width="377" height="25"/>
+                                <rect key="frame" x="0.0" y="0.0" width="212" height="25"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="network-quality-level-0" translatesAutoresizingMaskIntoConstraints="NO" id="Cn0-bb-Mwd" userLabel="Network Quality">
-                                <rect key="frame" x="5" y="473" width="20" height="20"/>
+                                <rect key="frame" x="5" y="233" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Cn0-bb-Mwd" secondAttribute="height" multiplier="1:1" id="YoV-0P-PER"/>
                                     <constraint firstAttribute="width" constant="20" id="lhX-Yv-fM0"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ETL-jY-hzU" userLabel="Pin">
-                                <rect key="frame" x="178.5" y="473" width="20" height="20"/>
+                                <rect key="frame" x="96" y="233" width="20" height="20"/>
                                 <subviews>
                                     <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z1i-tH-ccy" userLabel="Pin Background">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
@@ -75,7 +75,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hnM-Fj-Yoc" userLabel="Mute">
-                                <rect key="frame" x="350" y="473" width="20" height="20"/>
+                                <rect key="frame" x="185" y="233" width="20" height="20"/>
                                 <subviews>
                                     <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vDN-Z7-7iL" userLabel="Mute Background">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
@@ -133,7 +133,7 @@
                     <constraint firstItem="dQx-04-Sus" firstAttribute="width" secondItem="Bw6-zp-Gby" secondAttribute="width" id="ybq-wc-qkd"/>
                 </constraints>
             </collectionViewCellContentView>
-            <size key="customSize" width="377" height="500"/>
+            <size key="customSize" width="212" height="260"/>
             <connections>
                 <outlet property="identityLabel" destination="OjW-eP-3v0" id="szV-XJ-V0L"/>
                 <outlet property="muteView" destination="hnM-Fj-Yoc" id="Mnk-8m-qSI"/>
@@ -141,7 +141,7 @@
                 <outlet property="pinView" destination="ETL-jY-hzU" id="GHj-6I-Phb"/>
                 <outlet property="videoView" destination="Bw6-zp-Gby" id="Co3-ZJ-dxR"/>
             </connections>
-            <point key="canvasLocation" x="113.768115942029" y="112.5"/>
+            <point key="canvasLocation" x="-5.7971014492753632" y="32.142857142857139"/>
         </collectionViewCell>
     </objects>
     <resources>
