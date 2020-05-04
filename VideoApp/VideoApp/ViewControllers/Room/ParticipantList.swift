@@ -108,7 +108,7 @@ class ParticipantList {
         var indices: [Int] = []
 
         participants.forEach { participant in
-            if let index = participants.index(of: participant) {
+            if let index = self.participants.index(of: participant) {
                 indices.append(index)
             }
         }

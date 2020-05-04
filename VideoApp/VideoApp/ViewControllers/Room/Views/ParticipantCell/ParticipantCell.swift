@@ -19,7 +19,7 @@ import UIKit
 
 class ParticipantCell: UICollectionViewCell {
     struct Status {
-        let isMicMuted: Bool
+        let isMicOn: Bool
         let networkQualityLevel: NetworkQualityLevel
         let isPinned: Bool
     }
@@ -44,7 +44,7 @@ class ParticipantCell: UICollectionViewCell {
     
     func configure(identity: String, status: Status) {
         identityLabel.text = identity
-        muteView.isHidden = !status.isMicMuted
+        muteView.isHidden = status.isMicOn
         pinView.isHidden = !status.isPinned
         
         // This can be cleaner

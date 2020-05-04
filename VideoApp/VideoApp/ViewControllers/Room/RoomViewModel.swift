@@ -32,7 +32,12 @@ class RoomViewModel {
     var data: RoomViewModelData {
         .init(
             roomName: roomName,
-            participants: participantList.participants.map { .init(participant: $0, isPinned: false) }, // Make pin work
+            participants: participantList.participants.map {
+                .init(
+                    participant: $0,
+                    isPinned: $0 === participantList.pinnedParticipant
+                )
+            },
             mainParticipant: .init(participant: mainParticipantStore.mainParticipant)
         )
     }

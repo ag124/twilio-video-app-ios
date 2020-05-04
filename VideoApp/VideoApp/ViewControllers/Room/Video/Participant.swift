@@ -21,6 +21,18 @@ typealias NetworkQualityLevel = TwilioVideo.NetworkQualityLevel
 enum VideoTrackSource: String {
     case camera
     case screen
+    
+    init?(trackName: String) {
+        if trackName.contains("camera") {
+            self = .camera
+            return
+        } else if trackName.contains("screen") {
+            self = .screen
+            return
+        }
+        
+        return nil
+    }
 }
 
 enum ParticipantUpdate {

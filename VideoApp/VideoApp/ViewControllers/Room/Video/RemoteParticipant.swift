@@ -22,7 +22,7 @@ class RemoteParticipant: NSObject, Participant, DiffAware {
     var isMicOn: Bool { participant.remoteAudioTracks.first?.isTrackEnabled == true } // TODO: Use correct track name
     var cameraVideoTrack: VideoTrack? {
         for track in participant.remoteVideoTracks {
-            if track.trackName == "camera" {
+            if track.trackName.contains("camera") {
                 return track.remoteTrack
             }
         }
@@ -48,8 +48,6 @@ class RemoteParticipant: NSObject, Participant, DiffAware {
         self.participant = participant
         super.init()
         participant.delegate = self
-        
-        
     }
     
     private func postChange(_ change: ParticipantUpdate) {
@@ -79,7 +77,7 @@ extension RemoteParticipant: RemoteParticipantDelegate {
     }
     
     func didSubscribeToVideoTrack(videoTrack: RemoteVideoTrack, publication: RemoteVideoTrackPublication, participant: TwilioVideo.RemoteParticipant) {
-        guard let source = VideoTrackSource(rawValue: publication.trackName) else { return }
+        guard let source = VideoTrackSource(trackName: publication.trackName) else { return }
 
         postChange(.didUpdateVideoConfig(participant: self, source: source))
     }

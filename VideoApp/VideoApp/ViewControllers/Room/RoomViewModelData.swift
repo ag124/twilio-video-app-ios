@@ -25,7 +25,7 @@ struct RoomViewModelData {
         init(participant: VideoApp.Participant, isPinned: Bool) {
             identity = participant.identity
             status = .init(
-                isMicMuted: participant.isMicOn,
+                isMicOn: participant.isMicOn,
                 networkQualityLevel: participant.networkQualityLevel,
                 isPinned: isPinned
             )

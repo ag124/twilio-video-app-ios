@@ -55,12 +55,15 @@ class VideoView: CustomView {
             isVideoOn = false
             return
         }
-
+        guard !videoTrack.isRendered(by: videoView) else {
+            return // Don't thrash rendering because it causes empty frames to flash
+        }
+        
         self.videoTrack?.removeRenderer(videoView)
         self.videoTrack = videoTrack
         videoTrack.addRenderer(videoView)
         videoView.shouldMirror = config.shouldMirror
-        isHidden = !videoView.hasVideoData
+        isVideoOn = videoView.hasVideoData
         videoView.contentMode = contentMode
     }
 }
@@ -69,5 +72,11 @@ class VideoView: CustomView {
 extension VideoView: TwilioVideo.VideoViewDelegate {
     func videoViewDidReceiveData(view: TwilioVideo.VideoView) {
         isVideoOn = true
+    }
+}
+
+private extension VideoTrack {
+    func isRendered(by renderer: VideoRenderer) -> Bool {
+        renderers.first(where: { $0 === renderer }) != nil
     }
 }

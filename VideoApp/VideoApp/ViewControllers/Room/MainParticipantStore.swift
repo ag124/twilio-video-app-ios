@@ -22,7 +22,7 @@ enum MainParticipantStoreChange {
 }
 
 class MainParticipantStore {
-    private(set) var mainParticipant: Participant!
+    private(set) var mainParticipant: Participant
     private let room: Room
     private let participantList: ParticipantList
     private let notificationCenter = NotificationCenter.default
@@ -30,6 +30,7 @@ class MainParticipantStore {
     init(room: Room, participantList: ParticipantList) {
         self.room = room
         self.participantList = participantList
+        self.mainParticipant = room.localParticipant // Maybe make this cleaner
         updateMainParticipant()
         notificationCenter.addObserver(self, selector: #selector(roomDidChange(_:)), name: .roomDidChange, object: nil)
         notificationCenter.addObserver(self, selector: #selector(participantDidChange(_:)), name: .participantDidChange, object: nil)
@@ -52,9 +53,10 @@ class MainParticipantStore {
         
         switch change {
         case let .didUpdateAttributes(participant), let .didUpdateVideoConfig(participant, _):
-            if !updateMainParticipant() && participant.identity == mainParticipant.identity {
+            if participant === mainParticipant {
                 post(change: .didUpdateStatus)
             }
+            updateMainParticipant()
         }
     }
 
@@ -63,12 +65,7 @@ class MainParticipantStore {
     }
     
     @discardableResult private func updateMainParticipant() -> Bool {
-        let new =
-            participantList.pinnedParticipant ??
-            room.remoteParticipants.screenPresenter ??
-            room.dominantSpeaker ??
-            participantList.firstRemoteParticipant ??
-            room.localParticipant
+        let new = findMainParticipant()
 
         if new.identity != mainParticipant.identity {
             mainParticipant = new
@@ -78,7 +75,15 @@ class MainParticipantStore {
             return false
         }
     }
-
+    
+    private func findMainParticipant() -> Participant {
+        participantList.pinnedParticipant ??
+            room.remoteParticipants.screenPresenter ??
+            room.dominantSpeaker ??
+            participantList.firstRemoteParticipant ??
+            room.localParticipant
+    }
+    
     private func post(change: MainParticipantStoreChange) {
         self.notificationCenter.post(name: .mainParticipantStoreChange, object: self, userInfo: ["key": change])
     }
