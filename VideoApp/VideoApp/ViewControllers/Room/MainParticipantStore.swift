@@ -16,13 +16,12 @@
 
 import Foundation
 
-protocol MainParticipantStoreDelegate: AnyObject {
-    func didUpdateMainParticipant()
-    func didUpdateStatus()
+enum MainParticipantStoreChange {
+    case didUpdateMainParticipant
+    case didUpdateStatus
 }
 
 class MainParticipantStore {
-    weak var delegate: MainParticipantStoreDelegate?
     private(set) var mainParticipant: Participant!
     private let room: Room
     private let participantList: ParticipantList
@@ -34,7 +33,7 @@ class MainParticipantStore {
         updateMainParticipant()
         notificationCenter.addObserver(self, selector: #selector(roomDidChange(_:)), name: .roomDidChange, object: nil)
         notificationCenter.addObserver(self, selector: #selector(participantDidChange(_:)), name: .participantDidChange, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(participanListDidChange(_:)), name: .participantListDidChange, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(participanListDidChange(_:)), name: .participantListChange, object: nil)
     }
 
     @objc func roomDidChange(_ notification:Notification) {
@@ -54,13 +53,13 @@ class MainParticipantStore {
         switch change {
         case let .didUpdateAttributes(participant), let .didUpdateVideoConfig(participant, _):
             if !updateMainParticipant() && participant.identity == mainParticipant.identity {
-                delegate?.didUpdateStatus()
+                post(change: .didUpdateStatus)
             }
         }
     }
 
     @objc func participanListDidChange(_ notification:Notification) {
-        updateMainParticipant()
+        updateMainParticipant() // Check for pin change
     }
     
     @discardableResult private func updateMainParticipant() -> Bool {
@@ -73,11 +72,15 @@ class MainParticipantStore {
 
         if new.identity != mainParticipant.identity {
             mainParticipant = new
-            delegate?.didUpdateMainParticipant()
+            post(change: .didUpdateMainParticipant)
             return true
         } else {
             return false
         }
+    }
+
+    private func post(change: MainParticipantStoreChange) {
+        self.notificationCenter.post(name: .mainParticipantStoreChange, object: self, userInfo: ["key": change])
     }
 }
 

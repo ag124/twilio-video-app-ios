@@ -14,7 +14,7 @@
 //  limitations under the License.
 //
 
-import TwilioVideo // TODO: Don't import
+import Foundation
 
 protocol RoomViewModelDelegate: AnyObject {
     func didUpdateData() // TODO: Change to connection changes
@@ -55,9 +55,9 @@ class RoomViewModel {
         self.room = room
         participantList = ParticipantList(room: room)
         mainParticipantStore = MainParticipantStore(room: room, participantList: participantList)
-        participantList.delegate = self // Must be after initial insert so we don't get called during init
-        mainParticipantStore.delegate = self
         notificationCenter.addObserver(self, selector: #selector(handleRoomDidChangeNotification(_:)), name: .roomDidChange, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(participantListChange(_:)), name: .participantListChange, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(mainParticipantChange(_:)), name: .mainParticipantStoreChange, object: nil)
     }
     
     func connect() {
@@ -72,7 +72,7 @@ class RoomViewModel {
         room.localParticipant.flipCamera()
     }
     
-    @objc func handleRoomDidChangeNotification(_ notification:Notification) {
+    @objc func handleRoomDidChangeNotification(_ notification: Notification) {
         guard let change = notification.userInfo?["key"] as? RoomChange else { return }
         
         switch change {
@@ -86,36 +86,33 @@ class RoomViewModel {
             break
         }
     }
-}
 
-extension RoomViewModel: ParticipanListDelegate {
-    func didInsertParticipants(at indices: [Int]) {
-        delegate?.didAddParticipants(at: indices)
-    }
-    
-    func didDeleteParticipants(at indices: [Int]) {
-        delegate?.didRemoveParticipants(at: indices)
-    }
-    
-    func didMoveParticipant(at index: Int, to newIndex: Int) {
-        delegate?.didMoveParticipant(at: index, to: newIndex)
-    }
-    
-    func didUpdateStatus(for index: Int) {
-        delegate?.didUpdateParticipantAttributes(at: index)
-    }
-    
-    func didUpdateVideoConfig(for index: Int) {
-        delegate?.didUpdateParticipantVideoConfig(at: index)
-    }
-}
+    // TODO: Maybe have data source observe directly
+    @objc func participantListChange(_ notification: Notification) {
+        guard let change = notification.userInfo?["key"] as? ParticipantListChange else { return }
 
-extension RoomViewModel: MainParticipantStoreDelegate {
-    func didUpdateMainParticipant() {
-        delegate?.didUpdateMainParticipant()
+        switch change {
+        case let .didInsertParticipants(indices):
+            delegate?.didAddParticipants(at: indices)
+        case let .didDeleteParticipants(indices):
+            delegate?.didRemoveParticipants(at: indices)
+        case let .didMoveParticipant(oldIndex, newIndex):
+            delegate?.didMoveParticipant(at: oldIndex, to: newIndex)
+        case let .didUpdateStatus(index):
+            delegate?.didUpdateParticipantAttributes(at: index)
+        case let .didUpdateVideoConfig(index):
+            delegate?.didUpdateParticipantVideoConfig(at: index)
+        }
     }
     
-    func didUpdateStatus() {
-        delegate?.didUpdateMainParticipantVideoConfig() // TODO: Just use status
+    @objc func mainParticipantChange(_ notification: Notification) {
+        guard let change = notification.userInfo?["key"] as? MainParticipantStoreChange else { return }
+
+        switch change {
+        case .didUpdateMainParticipant:
+            delegate?.didUpdateMainParticipant()
+        case .didUpdateStatus:
+            delegate?.didUpdateMainParticipantVideoConfig() // TODO: Just use status
+        }
     }
 }

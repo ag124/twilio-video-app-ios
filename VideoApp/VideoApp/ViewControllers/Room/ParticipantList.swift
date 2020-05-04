@@ -16,21 +16,19 @@
 
 import Foundation
 
-protocol ParticipanListDelegate: AnyObject {
-    func didInsertParticipants(at indices: [Int])
-    func didDeleteParticipants(at indices: [Int])
-    func didMoveParticipant(at index: Int, to newIndex: Int)
-    func didUpdateStatus(for index: Int)
-    func didUpdateVideoConfig(for index: Int)
+enum ParticipantListChange {
+    case didInsertParticipants(indices: [Int])
+    case didDeleteParticipants(indices: [Int])
+    case didMoveParticipant(oldIndex: Int, newIndex: Int)
+    case didUpdateStatus(index: Int)
+    case didUpdateVideoConfig(index: Int)
 }
 
 class ParticipantList {
-    weak var delegate: ParticipanListDelegate?
     private(set) var participants: [Participant] = []
-    private(set) var pinnedParticipant: Participant?
+    private(set) var pinnedParticipant: Participant? // TODO: maybe add pin to Participant object
     private let room: Room
     private let notificationCenter = NotificationCenter.default
-    // Pinned participant
     
     init(room: Room) {
         self.room = room
@@ -60,26 +58,36 @@ class ParticipantList {
         case let .didUpdateAttributes(participant):
             guard let index = participants.index(of: participant) else { return }
             
-            delegate?.didUpdateStatus(for: index)
+            post(change: .didUpdateStatus(index: index))
         case let .didUpdateVideoConfig(participant, _): // TODO: Need to use source?
             guard let index = participants.index(of: participant) else { return }
 
-            delegate?.didUpdateVideoConfig(for: index)
+            post(change: .didUpdateVideoConfig(index: index))
             
             if participant.screenVideoTrack != nil {
                 participants.remove(at: index)
                 let newIndex = participants.newScreenIndex
                 participants.insert(participant, at: newIndex)
-                delegate?.didMoveParticipant(at: index, to: newIndex)
+                post(change: .didMoveParticipant(oldIndex: index, newIndex: newIndex))
             }
         }
     }
 
     func togglePin(at index: Int) {
         let participant = participants[index]
-        pinnedParticipant = pinnedParticipant === participant ? nil : participant
-        notificationCenter.post(name: .participantListDidChange, object: self) // TODO: Post for other changes?
-        // TODO: Post update to delegate for old and new pin
+        
+        if participant === pinnedParticipant {
+            pinnedParticipant = nil
+        } else {
+            let oldPinnedParticipant = pinnedParticipant
+            pinnedParticipant = participants[index]
+            
+            if let oldPinnedParticipant = oldPinnedParticipant, let oldIndex = participants.index(of: oldPinnedParticipant) {
+                post(change: .didUpdateStatus(index: oldIndex))
+            }
+        }
+        
+        post(change: .didUpdateStatus(index: index))
     }
     
     private func insertParticipants(participants: [Participant]) {
@@ -105,7 +113,7 @@ class ParticipantList {
             }
         }
 
-        delegate?.didInsertParticipants(at: indices)
+        post(change: .didInsertParticipants(indices: indices))
     }
     
     private func deleteParticipants(participants: [Participant]) {
@@ -121,7 +129,11 @@ class ParticipantList {
             self.participants.removeAll(where: { participant === $0 }) // TODO: Maybe this can be even cleaner
         }
 
-        delegate?.didDeleteParticipants(at: indices)
+        post(change: .didDeleteParticipants(indices: indices))
+    }
+    
+    private func post(change: ParticipantListChange) {
+        self.notificationCenter.post(name: .participantListChange, object: self, userInfo: ["key": change])
     }
 }
 

@@ -20,7 +20,6 @@ import TwilioVideo
 class RemoteParticipant: NSObject, Participant, DiffAware {
     var identity: String { participant.identity }
     var isMicOn: Bool { participant.remoteAudioTracks.first?.isTrackEnabled == true } // TODO: Use correct track name
-//    var cameraVideoTrack: VideoTrack? { participant.remoteVideoTracks.first?.remoteTrack }
     var cameraVideoTrack: VideoTrack? {
         for track in participant.remoteVideoTracks {
             if track.trackName == "camera" {

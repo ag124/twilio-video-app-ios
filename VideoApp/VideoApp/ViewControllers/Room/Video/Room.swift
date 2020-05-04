@@ -25,12 +25,10 @@ enum RoomChange {
     case dominantSpeakerDidChange(participant: Participant)
 }
 
-// TODO: Maybe make stateless? Probably not
-// TODO: Rename to RoomStore?
 class Room: NSObject {
     weak var delegate: RoomDelegate?
     let localParticipant: LocalParticipant
-    private(set) var remoteParticipants: [RemoteParticipant] = [] // Maybe I don't have to cache these anymore
+    private(set) var remoteParticipants: [RemoteParticipant] = []
     private(set) var dominantSpeaker: RemoteParticipant?
     private let accessTokenStore: TwilioAccessTokenStoreReading
     private let connectOptionsFactory: ConnectOptionsFactory
@@ -56,7 +54,6 @@ class Room: NSObject {
             
             switch result {
             case let .success(accessToken):
-                // TODO: Why would audio or video track be nil?
                 let options = self.connectOptionsFactory.makeConnectOptions(
                     accessToken: accessToken,
                     roomName: roomName,
