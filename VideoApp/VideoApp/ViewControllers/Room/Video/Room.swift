@@ -22,14 +22,12 @@ enum RoomChange {
     case didDisconnect(error:Error?)
     case didAddRemoteParticipants(participants: [Participant])
     case didRemoveRemoteParticipants(participants: [Participant])
-    case dominantSpeakerDidChange(participant: Participant)
 }
 
 class Room: NSObject {
     weak var delegate: RoomDelegate?
     let localParticipant: LocalParticipant
     private(set) var remoteParticipants: [RemoteParticipant] = []
-    private(set) var dominantSpeaker: RemoteParticipant?
     private let accessTokenStore: TwilioAccessTokenStoreReading
     private let connectOptionsFactory: ConnectOptionsFactory
     private let notificationCenter = NotificationCenter.default
@@ -123,7 +121,10 @@ extension Room: TwilioVideo.RoomDelegate {
     func dominantSpeakerDidChange(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant?) {
         guard let participant = remoteParticipants.first(where: { $0.identity == participant?.identity }) else { return }
 
-        dominantSpeaker = participant
-        sendRoomUpdate(change: .dominantSpeakerDidChange(participant: participant))
+        if let old = remoteParticipants.first(where: { $0.isDominantSpeaker }) {
+            old.isDominantSpeaker = false
+        }
+
+        participant.isDominantSpeaker = true
     }
 }

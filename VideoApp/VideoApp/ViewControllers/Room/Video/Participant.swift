@@ -48,4 +48,5 @@ protocol Participant: AnyObject {
     var networkQualityLevel: NetworkQualityLevel { get }
     var isRemote: Bool { get }
     var isPinned: Bool { get set }
+    var isDominantSpeaker: Bool { get }
 }

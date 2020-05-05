@@ -40,10 +40,8 @@ class MainParticipantStore {
         guard let change = notification.userInfo?["key"] as? RoomChange else { return }
         
         switch change {
-        case .didConnect, .didFailToConnect, .didDisconnect:
-            break
-        case .dominantSpeakerDidChange, .didAddRemoteParticipants, .didRemoveRemoteParticipants:
-            updateMainParticipant()
+        case .didConnect, .didFailToConnect, .didDisconnect: break
+        case .didAddRemoteParticipants, .didRemoveRemoteParticipants: updateMainParticipant()
         }
     }
     
@@ -78,7 +76,7 @@ class MainParticipantStore {
     private func findMainParticipant() -> Participant {
         participantList.pinnedParticipant ??
             room.remoteParticipants.screenPresenter ??
-            room.dominantSpeaker ??
+            room.remoteParticipants.first(where: { $0.isDominantSpeaker }) ??
             participantList.firstRemoteParticipant ??
             room.localParticipant
     }
@@ -94,5 +92,5 @@ extension Array where Element == RemoteParticipant {
 
 private extension ParticipantList {
     var firstRemoteParticipant: Participant? { participants.first(where: { $0.isRemote })}
-    var pinnedParticipant: Participant? { participants.first(where: { $0.isPinned })}
+    var pinnedParticipant: Participant? { participants.first(where: { $0.isPinned })} // Probably can use room
 }

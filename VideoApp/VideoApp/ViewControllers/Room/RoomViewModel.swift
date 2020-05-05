@@ -80,7 +80,7 @@ class RoomViewModel {
             break
         case .didDisconnect: // TODO: Handle error
             delegate?.didUpdateData()
-        case .didAddRemoteParticipants, .didRemoveRemoteParticipants, .dominantSpeakerDidChange:
+        case .didAddRemoteParticipants, .didRemoveRemoteParticipants:
             break
         }
     }

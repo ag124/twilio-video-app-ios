@@ -38,9 +38,10 @@ class RemoteParticipant: NSObject, Participant, DiffAware {
         
         return nil
     }
-    var shouldMirrorVideo: Bool { false }
-    var isRemote: Bool { true }
+    let shouldMirrorVideo = false
+    let isRemote = true
     var isPinned = false
+    var isDominantSpeaker = false { didSet { postChange(.didUpdate(participant: self)) } }
     var networkQualityLevel: NetworkQualityLevel { participant.networkQualityLevel }
     private let participant: TwilioVideo.RemoteParticipant
     private let notificationCenter = NotificationCenter.default

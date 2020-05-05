@@ -40,12 +40,9 @@ class ParticipantList {
         guard let change = notification.userInfo?["key"] as? RoomChange else { return }
         
         switch change {
-        case .didConnect, .didFailToConnect, .didDisconnect, .dominantSpeakerDidChange:
-            break
-        case let .didAddRemoteParticipants(participants):
-            insertParticipants(participants: participants)
-        case let .didRemoveRemoteParticipants(participants):
-            deleteParticipants(participants: participants)
+        case .didConnect, .didFailToConnect, .didDisconnect: break
+        case let .didAddRemoteParticipants(participants): insertParticipants(participants: participants)
+        case let .didRemoveRemoteParticipants(participants): deleteParticipants(participants: participants)
         }
     }
 
