@@ -16,8 +16,8 @@
 
 import TwilioVideo
 
-class LocalMicTrackFactory {
-    func makeLocalMicTrac() -> LocalAudioTrack? {
+class MicTrackFactory {
+    func makeMicTrack() -> LocalAudioTrack? {
         let options = AudioOptions() // TODO: Why pass in options when I'm using default?
         return LocalAudioTrack(options: options, enabled: true, name: "microphone")
     }

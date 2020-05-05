@@ -60,7 +60,8 @@ import Foundation
         let localParticipant = LocalParticipant(
             identity: identity,
             localMediaController: localMediaController,
-            micTrackFactory: LocalMicTrackFactory()
+            micTrackFactory: MicTrackFactory(),
+            cameraFactory: CameraFactory()
         )
         let room = Room(
             localParticipant: localParticipant,

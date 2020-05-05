@@ -33,37 +33,36 @@ class LocalParticipant: NSObject, Participant {
         }
         set {
             if newValue {
-                micTrack = micTrackFactory.makeLocalMicTrac()
+                guard let micTrack = micTrackFactory.makeMicTrack() else { return } // TODO: Make sure these aren't called mutliple times
                 
-                if let micTrack = micTrack {
-                    participant?.publishAudioTrack(micTrack)
-                    postChange(.didUpdate(participant: self))
-                }
+                self.micTrack = micTrack
+                participant?.publishAudioTrack(micTrack)
             } else {
                 guard let micTrack = micTrack else { return }
                 
                 participant?.unpublishAudioTrack(micTrack)
                 self.micTrack = nil
-                postChange(.didUpdate(participant: self))
             }
+
+            postChange(.didUpdate(participant: self))
         }
     }
     var isCameraOn: Bool {
         get {
-            localMediaController.localVideoTrack?.isEnabled ?? false
+            camera?.track.isEnabled ?? false
         }
         set {
             if newValue {
-                localMediaController.createLocalVideoTrack()
+                guard let camera = cameraFactory.makeCamera() else { return }
                 
-                if let localVideoTrack = localMediaController.localVideoTrack {
-                    participant?.publishVideoTrack(localVideoTrack)
-                }
+                self.camera = camera
+                camera.delegate = self
+                participant?.publishVideoTrack(camera.track)
             } else {
-                guard let localVideoTrack = localMediaController.localVideoTrack else { return }
+                guard let camera = camera else { return }
                 
-                participant?.unpublishVideoTrack(localVideoTrack)
-                localMediaController.destroyLocalVideoTrack()
+                participant?.unpublishVideoTrack(camera.track)
+                self.camera = nil
             }
 
             postChange(.didUpdate(participant: self))
@@ -76,13 +75,22 @@ class LocalParticipant: NSObject, Participant {
     }
     private let localMediaController: LocalMediaController
     private let notificationCenter = NotificationCenter.default
-    private let micTrackFactory: LocalMicTrackFactory
+    private let micTrackFactory: MicTrackFactory
+    private let cameraFactory: CameraFactory
     private var micTrack: LocalAudioTrack?
+    private var camera: Camera?
     
-    init(identity: String, localMediaController: LocalMediaController, micTrackFactory: LocalMicTrackFactory) {
+
+    init(
+        identity: String,
+        localMediaController: LocalMediaController,
+        micTrackFactory: MicTrackFactory,
+        cameraFactory: CameraFactory
+    ) {
         self.identity = identity
         self.localMediaController = localMediaController
         self.micTrackFactory = micTrackFactory
+        self.cameraFactory = cameraFactory
         super.init()
     }
     
@@ -114,5 +122,15 @@ extension LocalParticipant: LocalParticipantDelegate {
     
     func localParticipantNetworkQualityLevelDidChange(participant: TwilioVideo.LocalParticipant, networkQualityLevel: NetworkQualityLevel) {
         postChange(.didUpdate(participant: self))
+    }
+}
+
+extension LocalParticipant: CameraDelegate {
+    func cameraSourceWasInterrupted(camera: Camera) {
+        participant?.unpublishVideoTrack(camera.track)
+    }
+    
+    func cameraSourceInterruptionEnded(camera: Camera) {
+        participant?.publishVideoTrack(camera.track)
     }
 }
