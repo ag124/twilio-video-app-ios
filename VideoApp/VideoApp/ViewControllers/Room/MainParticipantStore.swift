@@ -23,12 +23,12 @@ enum MainParticipantStoreChange {
 class MainParticipantStore {
     private(set) var mainParticipant: Participant
     private let room: Room
-    private let participantList: ParticipantList
+    private let participantsStore: ParticipantsStore
     private let notificationCenter = NotificationCenter.default
     
-    init(room: Room, participantList: ParticipantList) {
+    init(room: Room, participantsStore: ParticipantsStore) {
         self.room = room
-        self.participantList = participantList
+        self.participantsStore = participantsStore
         self.mainParticipant = room.localParticipant // Maybe make this cleaner
         updateMainParticipant()
         notificationCenter.addObserver(self, selector: #selector(roomDidChange(_:)), name: .roomDidChange, object: nil)
@@ -74,10 +74,10 @@ class MainParticipantStore {
     }
     
     private func findMainParticipant() -> Participant {
-        participantList.pinnedParticipant ??
+        participantsStore.pinnedParticipant ??
             room.remoteParticipants.screenPresenter ??
             room.remoteParticipants.first(where: { $0.isDominantSpeaker }) ??
-            participantList.firstRemoteParticipant ??
+            participantsStore.firstRemoteParticipant ??
             room.localParticipant
     }
     
@@ -90,7 +90,7 @@ extension Array where Element == RemoteParticipant {
     var screenPresenter: Participant? { first(where: { $0.screenVideoTrack != nil }) }
 }
 
-private extension ParticipantList {
+private extension ParticipantsStore {
     var firstRemoteParticipant: Participant? { participants.first(where: { $0.isRemote })}
     var pinnedParticipant: Participant? { participants.first(where: { $0.isPinned })} // Probably can use room
 }

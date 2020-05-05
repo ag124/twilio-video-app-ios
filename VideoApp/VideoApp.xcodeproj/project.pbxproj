@@ -291,9 +291,9 @@
 		DC9A5E05245DDC1000E4B079 /* RoomViewModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E04245DDC1000E4B079 /* RoomViewModelData.swift */; };
 		DC9A5E06245DDC1000E4B079 /* RoomViewModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E04245DDC1000E4B079 /* RoomViewModelData.swift */; };
 		DC9A5E07245DDC1000E4B079 /* RoomViewModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E04245DDC1000E4B079 /* RoomViewModelData.swift */; };
-		DC9A5E09245DFFC100E4B079 /* ParticipantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E08245DFFC100E4B079 /* ParticipantList.swift */; };
-		DC9A5E0A245DFFC100E4B079 /* ParticipantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E08245DFFC100E4B079 /* ParticipantList.swift */; };
-		DC9A5E0B245DFFC100E4B079 /* ParticipantList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E08245DFFC100E4B079 /* ParticipantList.swift */; };
+		DC9A5E09245DFFC100E4B079 /* ParticipantsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E08245DFFC100E4B079 /* ParticipantsStore.swift */; };
+		DC9A5E0A245DFFC100E4B079 /* ParticipantsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E08245DFFC100E4B079 /* ParticipantsStore.swift */; };
+		DC9A5E0B245DFFC100E4B079 /* ParticipantsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E08245DFFC100E4B079 /* ParticipantsStore.swift */; };
 		DC9A5E0D245F611D00E4B079 /* MainParticipantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */; };
 		DC9A5E0E245F611D00E4B079 /* MainParticipantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */; };
 		DC9A5E0F245F611D00E4B079 /* MainParticipantStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */; };
@@ -688,7 +688,7 @@
 		DC9A5DFB245CB66800E4B079 /* VideoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoView.xib; sourceTree = "<group>"; };
 		DC9A5DFF245CB67600E4B079 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		DC9A5E04245DDC1000E4B079 /* RoomViewModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewModelData.swift; sourceTree = "<group>"; };
-		DC9A5E08245DFFC100E4B079 /* ParticipantList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantList.swift; sourceTree = "<group>"; };
+		DC9A5E08245DFFC100E4B079 /* ParticipantsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsStore.swift; sourceTree = "<group>"; };
 		DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainParticipantStore.swift; sourceTree = "<group>"; };
 		DC9A5E102460CE9800E4B079 /* ParticipantCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParticipantCell.xib; sourceTree = "<group>"; };
 		DCA53947235F53E700CA26FB /* InternalAuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAuthStore.swift; sourceTree = "<group>"; };
@@ -1042,7 +1042,7 @@
 				DC9A5DC9245A215000E4B079 /* RoomViewController.swift */,
 				DC386DD02458DC05009E994A /* RoomViewModel.swift */,
 				DC9A5E04245DDC1000E4B079 /* RoomViewModelData.swift */,
-				DC9A5E08245DFFC100E4B079 /* ParticipantList.swift */,
+				DC9A5E08245DFFC100E4B079 /* ParticipantsStore.swift */,
 				DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */,
 				DC9A5DE5245CB15200E4B079 /* Video */,
 				DC9A5DE6245CB15900E4B079 /* Views */,
@@ -2545,7 +2545,7 @@
 				DC9A5E05245DDC1000E4B079 /* RoomViewModelData.swift in Sources */,
 				DC82A35C23FDB9420081578C /* SDKLogLevelSettingsViewModel.swift in Sources */,
 				DCAEBF14238331A800141D2D /* SwitchCell.swift in Sources */,
-				DC9A5E09245DFFC100E4B079 /* ParticipantList.swift in Sources */,
+				DC9A5E09245DFFC100E4B079 /* ParticipantsStore.swift in Sources */,
 				DC82A34F23FC9AAA0081578C /* JSONContainer.swift in Sources */,
 				DC9A5DD6245B7F8600E4B079 /* ParticipantCell.swift in Sources */,
 				DC3C32DC241812B400F56AFB /* APIURLFactory.swift in Sources */,
@@ -2688,7 +2688,7 @@
 				DC9A5E06245DDC1000E4B079 /* RoomViewModelData.swift in Sources */,
 				DC82A35D23FDB9420081578C /* SDKLogLevelSettingsViewModel.swift in Sources */,
 				DCAEBF15238331A800141D2D /* SwitchCell.swift in Sources */,
-				DC9A5E0A245DFFC100E4B079 /* ParticipantList.swift in Sources */,
+				DC9A5E0A245DFFC100E4B079 /* ParticipantsStore.swift in Sources */,
 				DC82A35023FC9AAA0081578C /* JSONContainer.swift in Sources */,
 				DC9A5DD7245B90BA00E4B079 /* ParticipantCell.swift in Sources */,
 				DC3C32DD241812B400F56AFB /* APIURLFactory.swift in Sources */,
@@ -2831,7 +2831,7 @@
 				DC9A5E07245DDC1000E4B079 /* RoomViewModelData.swift in Sources */,
 				DC82A35E23FDB9420081578C /* SDKLogLevelSettingsViewModel.swift in Sources */,
 				DCAEBF16238331A800141D2D /* SwitchCell.swift in Sources */,
-				DC9A5E0B245DFFC100E4B079 /* ParticipantList.swift in Sources */,
+				DC9A5E0B245DFFC100E4B079 /* ParticipantsStore.swift in Sources */,
 				DC82A35123FC9AAA0081578C /* JSONContainer.swift in Sources */,
 				DC9A5DD8245B90BB00E4B079 /* ParticipantCell.swift in Sources */,
 				DC3C32DE241812B400F56AFB /* APIURLFactory.swift in Sources */,

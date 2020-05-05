@@ -25,7 +25,6 @@ enum RoomChange {
 }
 
 class Room: NSObject {
-    weak var delegate: RoomDelegate?
     let localParticipant: LocalParticipant
     private(set) var remoteParticipants: [RemoteParticipant] = []
     private let accessTokenStore: TwilioAccessTokenStoreReading

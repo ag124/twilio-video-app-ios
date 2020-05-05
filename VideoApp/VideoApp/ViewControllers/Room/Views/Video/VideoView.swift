@@ -39,7 +39,7 @@ class VideoView: CustomView {
     }
     
     deinit {
-        videoTrack?.removeRenderer(videoView) // TODO: Really needed?
+        videoTrack?.removeRenderer(videoView)
     }
 
     override func awakeFromNib() {
@@ -68,7 +68,6 @@ class VideoView: CustomView {
     }
 }
 
-// TODO: Make private?
 extension VideoView: TwilioVideo.VideoViewDelegate {
     func videoViewDidReceiveData(view: TwilioVideo.VideoView) {
         isVideoOn = true

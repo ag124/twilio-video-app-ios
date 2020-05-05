@@ -21,7 +21,7 @@ protocol RoomViewModelDelegate: AnyObject {
     func didAddParticipants(at indexes: [Int])
     func didRemoveParticipants(at indices: [Int])
     func didMoveParticipant(at index: Int, to newIndex: Int)
-    func didUpdateParticipantAttributes(at index: Int) // Observe each participant? No probably bad idea because then it isn't just data
+    func didUpdateParticipantAttributes(at index: Int)
     func didUpdateMainParticipant()
 }
 
@@ -30,7 +30,7 @@ class RoomViewModel {
     var data: RoomViewModelData {
         .init(
             roomName: roomName,
-            participants: participantList.participants.map { .init(participant: $0) },
+            participants: participantsStore.participants.map { .init(participant: $0) },
             mainParticipant: .init(participant: mainParticipantStore.mainParticipant)
         )
     }
@@ -44,15 +44,15 @@ class RoomViewModel {
     }
     private let roomName: String
     private let room: Room
-    private let participantList: ParticipantList!
+    private let participantsStore: ParticipantsStore!
     private let mainParticipantStore: MainParticipantStore!
     private let notificationCenter = NotificationCenter.default
 
     init(roomName: String, room: Room) {
         self.roomName = roomName
         self.room = room
-        participantList = ParticipantList(room: room)
-        mainParticipantStore = MainParticipantStore(room: room, participantList: participantList)
+        participantsStore = ParticipantsStore(room: room)
+        mainParticipantStore = MainParticipantStore(room: room, participantsStore: participantsStore)
         notificationCenter.addObserver(self, selector: #selector(handleRoomDidChangeNotification(_:)), name: .roomDidChange, object: nil)
         notificationCenter.addObserver(self, selector: #selector(participantListChange(_:)), name: .participantListChange, object: nil)
         notificationCenter.addObserver(self, selector: #selector(mainParticipantChange(_:)), name: .mainParticipantStoreChange, object: nil)
@@ -63,7 +63,7 @@ class RoomViewModel {
     }
     
     func togglePin(at index: Int) {
-        participantList.togglePin(at: index)
+        participantsStore.togglePin(at: index)
     }
 
     func flipCamera() {

@@ -23,7 +23,7 @@ enum ParticipantListChange {
     case didUpdateParticipant(index: Int)
 }
 
-class ParticipantList {
+class ParticipantsStore {
     private(set) var participants: [Participant] = []
     private let room: Room
     private let notificationCenter = NotificationCenter.default

@@ -14,30 +14,13 @@
 //  limitations under the License.
 //
 
-import DeepDiff
 import TwilioVideo
 
-class RemoteParticipant: NSObject, Participant, DiffAware {
+class RemoteParticipant: NSObject, Participant {
     var identity: String { participant.identity }
     var isMicOn: Bool { participant.remoteAudioTracks.first?.isTrackEnabled == true } // TODO: Use correct track name
-    var cameraVideoTrack: VideoTrack? {
-        for track in participant.remoteVideoTracks {
-            if track.trackName.contains("camera") {
-                return track.remoteTrack
-            }
-        }
-        
-        return nil
-    }
-    var screenVideoTrack: VideoTrack? {
-        for track in participant.remoteVideoTracks {
-            if track.trackName == "screen" {
-                return track.remoteTrack
-            }
-        }
-        
-        return nil
-    }
+    var cameraVideoTrack: VideoTrack? { participant.remoteVideoTracks.first(where: { $0.trackName.contains("camera") })?.remoteTrack }
+    var screenVideoTrack: VideoTrack? { participant.remoteVideoTracks.first(where: { $0.trackName.contains("screen") })?.remoteTrack }
     let shouldMirrorVideo = false
     let isRemote = true
     var isPinned = false
