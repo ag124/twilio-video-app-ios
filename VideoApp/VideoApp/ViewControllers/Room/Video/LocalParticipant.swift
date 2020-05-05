@@ -29,23 +29,23 @@ class LocalParticipant: NSObject, Participant {
     var networkQualityLevel: NetworkQualityLevel { participant?.networkQualityLevel ?? .unknown }
     var isMicOn: Bool {
         get {
-            localMediaController.localAudioTrack?.isEnabled ?? false // TODO: Use mic track name
+            micTrack?.isEnabled ?? false
         }
         set {
             if newValue {
-                localMediaController.createLocalAudioTrack()
+                micTrack = micTrackFactory.makeLocalMicTrac()
                 
-                if let localAudioTrack = localMediaController.localAudioTrack {
-                    participant?.publishAudioTrack(localAudioTrack)
+                if let micTrack = micTrack {
+                    participant?.publishAudioTrack(micTrack)
+                    postChange(.didUpdate(participant: self))
                 }
             } else {
-                guard let localAudioTrack = localMediaController.localAudioTrack else { return }
+                guard let micTrack = micTrack else { return }
                 
-                participant?.unpublishAudioTrack(localAudioTrack) // TODO: Rename this to mic
-                localMediaController.destroyLocalAudioTrack()
+                participant?.unpublishAudioTrack(micTrack)
+                self.micTrack = nil
+                postChange(.didUpdate(participant: self))
             }
-            
-            postChange(.didUpdate(participant: self))
         }
     }
     var isCameraOn: Bool {
@@ -76,10 +76,13 @@ class LocalParticipant: NSObject, Participant {
     }
     private let localMediaController: LocalMediaController
     private let notificationCenter = NotificationCenter.default
+    private let micTrackFactory: LocalMicTrackFactory
+    private var micTrack: LocalAudioTrack?
     
-    init(identity: String, localMediaController: LocalMediaController) {
+    init(identity: String, localMediaController: LocalMediaController, micTrackFactory: LocalMicTrackFactory) {
         self.identity = identity
         self.localMediaController = localMediaController
+        self.micTrackFactory = micTrackFactory
         super.init()
     }
     

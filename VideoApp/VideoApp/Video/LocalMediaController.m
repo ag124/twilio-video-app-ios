@@ -69,28 +69,6 @@
     }
 }
 
-#pragma mark - Audio Management
-- (void)createLocalAudioTrack {
-    if (self.localAudioTrack == nil) {
-        self.localAudioTrack = [TVILocalAudioTrack trackWithOptions:[TVIAudioOptions options] enabled:YES name:@"microphone"];
-
-        if (!self.localAudioTrack) {
-            NSLog(@"Failed to create audio track");
-        } else if (self.localParticipant) {
-            [self.localParticipant publishAudioTrack:self.localAudioTrack];
-        }
-    }
-}
-
-- (void)destroyLocalAudioTrack {
-    if (self.localAudioTrack != nil) {
-        [self.localParticipant unpublishAudioTrack:self.localAudioTrack];
-        self.localAudioTrack = nil;
-    } else {
-        NSLog(@"No local audio track to remove");
-    }
-}
-
 #pragma mark - Video Management
 - (void)createLocalVideoTrack {
     if (self.localVideoTrack == nil) {

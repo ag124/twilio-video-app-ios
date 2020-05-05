@@ -300,6 +300,9 @@
 		DC9A5E112460CE9800E4B079 /* ParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC9A5E102460CE9800E4B079 /* ParticipantCell.xib */; };
 		DC9A5E122460CE9800E4B079 /* ParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC9A5E102460CE9800E4B079 /* ParticipantCell.xib */; };
 		DC9A5E132460CE9800E4B079 /* ParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC9A5E102460CE9800E4B079 /* ParticipantCell.xib */; };
+		DC9A5E1D2461C0A100E4B079 /* LocalMicTrackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E1C2461C0A100E4B079 /* LocalMicTrackFactory.swift */; };
+		DC9A5E1E2461C0A100E4B079 /* LocalMicTrackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E1C2461C0A100E4B079 /* LocalMicTrackFactory.swift */; };
+		DC9A5E1F2461C0A100E4B079 /* LocalMicTrackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E1C2461C0A100E4B079 /* LocalMicTrackFactory.swift */; };
 		DCA53948235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA53949235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA5394A235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
@@ -691,6 +694,7 @@
 		DC9A5E08245DFFC100E4B079 /* ParticipantsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsStore.swift; sourceTree = "<group>"; };
 		DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainParticipantStore.swift; sourceTree = "<group>"; };
 		DC9A5E102460CE9800E4B079 /* ParticipantCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParticipantCell.xib; sourceTree = "<group>"; };
+		DC9A5E1C2461C0A100E4B079 /* LocalMicTrackFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMicTrackFactory.swift; sourceTree = "<group>"; };
 		DCA53947235F53E700CA26FB /* InternalAuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAuthStore.swift; sourceTree = "<group>"; };
 		DCA5394B235F740200CA26FB /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		DCA5394F235F765D00CA26FB /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
@@ -1302,6 +1306,7 @@
 				DC9A5DBF2459F1D100E4B079 /* Participant.swift */,
 				DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */,
 				DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */,
+				DC9A5E1C2461C0A100E4B079 /* LocalMicTrackFactory.swift */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -2608,6 +2613,7 @@
 				DCC7E3592407081F00431AC3 /* SignInSegueIdentifierFactory.swift in Sources */,
 				DC85CA4C23CCD39400BF016F /* AppCenterStore.swift in Sources */,
 				DCB64B4F2409976F00E090BE /* APIRequest.swift in Sources */,
+				DC9A5E1D2461C0A100E4B079 /* LocalMicTrackFactory.swift in Sources */,
 				DCB7C1812405BD2C009DEA70 /* PasscodeComponents.swift in Sources */,
 				DC3C32D02417E6C400F56AFB /* CommunityAPIErrorResponseDecoder.swift in Sources */,
 				DC9A5DCE245B0E6100E4B079 /* LocalParticipant.swift in Sources */,
@@ -2751,6 +2757,7 @@
 				DCC7E35A2407081F00431AC3 /* SignInSegueIdentifierFactory.swift in Sources */,
 				DC85CA4D23CCD39400BF016F /* AppCenterStore.swift in Sources */,
 				DCB64B502409976F00E090BE /* APIRequest.swift in Sources */,
+				DC9A5E1E2461C0A100E4B079 /* LocalMicTrackFactory.swift in Sources */,
 				DCB7C1822405BD2C009DEA70 /* PasscodeComponents.swift in Sources */,
 				DC3C32D12417E6C400F56AFB /* CommunityAPIErrorResponseDecoder.swift in Sources */,
 				DC9A5DCF245B0E6100E4B079 /* LocalParticipant.swift in Sources */,
@@ -2894,6 +2901,7 @@
 				DCC7E35B2407081F00431AC3 /* SignInSegueIdentifierFactory.swift in Sources */,
 				DC85CA4E23CCD39400BF016F /* AppCenterStore.swift in Sources */,
 				DCB64B512409976F00E090BE /* APIRequest.swift in Sources */,
+				DC9A5E1F2461C0A100E4B079 /* LocalMicTrackFactory.swift in Sources */,
 				DCB7C1832405BD2C009DEA70 /* PasscodeComponents.swift in Sources */,
 				DC3C32D22417E6C400F56AFB /* CommunityAPIErrorResponseDecoder.swift in Sources */,
 				DC9A5DD0245B0E6100E4B079 /* LocalParticipant.swift in Sources */,

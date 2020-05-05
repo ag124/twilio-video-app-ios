@@ -29,10 +29,6 @@
 - (void)addDelegate:(nonnull id <LocalMediaControllerDelegate>)delegate;
 - (void)removeDelegate:(nonnull id <LocalMediaControllerDelegate>)delegate;
 
-// Audio Management
-- (void)createLocalAudioTrack;
-- (void)destroyLocalAudioTrack;
-
 // Video Management
 - (void)createLocalVideoTrack;
 - (void)destroyLocalVideoTrack;

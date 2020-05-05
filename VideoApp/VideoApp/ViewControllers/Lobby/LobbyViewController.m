@@ -68,7 +68,7 @@
 
     self.localMediaController = [LocalMediaController new];
     [self.localMediaController addDelegate:self];
-    [self.localMediaController createLocalAudioTrack];
+//    [self.localMediaController createLocalAudioTrack];
     [self.localMediaController createLocalVideoTrack];
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleSettingChange) name:SwiftToObjc.appSettingsStoreDidChangeNotificationName object:nil];
@@ -134,9 +134,9 @@
 
 - (IBAction)toggleAudioPressed:(id)sender {
     if (self.localMediaController.localAudioTrack) {
-        [self.localMediaController destroyLocalAudioTrack];
+//        [self.localMediaController destroyLocalAudioTrack];
     } else {
-        [self.localMediaController createLocalAudioTrack];
+//        [self.localMediaController createLocalAudioTrack];
     }
 
     self.audioToggleButton.selected = !self.localMediaController.localAudioTrack;
