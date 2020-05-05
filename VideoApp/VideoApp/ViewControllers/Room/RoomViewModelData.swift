@@ -22,12 +22,12 @@ struct RoomViewModelData {
         let status: ParticipantCell.Status
         let videoConfig: VideoView.Config
 
-        init(participant: VideoApp.Participant, isPinned: Bool) {
+        init(participant: VideoApp.Participant) {
             identity = participant.identity
             status = .init(
                 isMicOn: participant.isMicOn,
                 networkQualityLevel: participant.networkQualityLevel,
-                isPinned: isPinned
+                isPinned: participant.isPinned
             )
             videoConfig = .init(videoTrack: participant.cameraVideoTrack, shouldMirror: participant.shouldMirrorVideo)
         }

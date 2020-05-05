@@ -47,4 +47,5 @@ protocol Participant: AnyObject {
     var shouldMirrorVideo: Bool { get } // Rename to should mirror camera, might be able to remove this or implement in extension
     var networkQualityLevel: NetworkQualityLevel { get }
     var isRemote: Bool { get }
+    var isPinned: Bool { get set }
 }

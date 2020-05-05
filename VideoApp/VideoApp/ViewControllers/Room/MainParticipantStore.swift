@@ -94,4 +94,5 @@ extension Array where Element == RemoteParticipant {
 
 private extension ParticipantList {
     var firstRemoteParticipant: Participant? { participants.first(where: { $0.isRemote })}
+    var pinnedParticipant: Participant? { participants.first(where: { $0.isPinned })}
 }

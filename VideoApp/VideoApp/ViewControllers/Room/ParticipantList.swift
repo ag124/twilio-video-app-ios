@@ -25,7 +25,6 @@ enum ParticipantListChange {
 
 class ParticipantList {
     private(set) var participants: [Participant] = []
-    private(set) var pinnedParticipant: Participant? // TODO: maybe add pin to Participant object
     private let room: Room
     private let notificationCenter = NotificationCenter.default
     
@@ -69,19 +68,12 @@ class ParticipantList {
     }
 
     func togglePin(at index: Int) {
-        let participant = participants[index]
-        
-        if participant === pinnedParticipant {
-            pinnedParticipant = nil
-        } else {
-            let oldPinnedParticipant = pinnedParticipant
-            pinnedParticipant = participants[index]
-            
-            if let oldPinnedParticipant = oldPinnedParticipant, let oldIndex = participants.index(of: oldPinnedParticipant) {
-                post(change: .didUpdateParticipant(index: oldIndex))
-            }
+        if let oldPinIndex = participants.firstIndex(where: { $0.isPinned }), oldPinIndex != index {
+            participants[oldPinIndex].isPinned = false
+            post(change: .didUpdateParticipant(index: oldPinIndex))
         }
         
+        participants[index].isPinned = !participants[index].isPinned
         post(change: .didUpdateParticipant(index: index))
     }
     
@@ -122,10 +114,6 @@ class ParticipantList {
         
         participants.forEach { participant in
             self.participants.removeAll(where: { participant === $0 }) // TODO: Maybe this can be even cleaner
-        }
-        
-        if participants.first(where: { $0 === pinnedParticipant }) != nil {
-            pinnedParticipant = nil
         }
 
         post(change: .didDeleteParticipants(indices: indices))
