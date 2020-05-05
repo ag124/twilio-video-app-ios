@@ -29,7 +29,7 @@ class ParticipantCell: UICollectionViewCell {
     @IBOutlet weak var pinView: UIView!
     @IBOutlet weak var muteView: UIView!
     
-    func configure(identity: String, status: Status) {
+    func configure(identity: String, status: Status, videoConfig: VideoView.Config) {
         identityLabel.text = identity
         muteView.isHidden = status.isMicOn
         pinView.isHidden = !status.isPinned
@@ -40,9 +40,7 @@ class ParticipantCell: UICollectionViewCell {
         } else {
             networkQualityImage.image = nil
         }
-    }
-    
-    func configure(videoConfig: VideoView.Config) {
+
         videoView.configure(config: videoConfig, contentMode: .scaleAspectFill)
     }
 }

@@ -123,6 +123,10 @@ class ParticipantList {
         participants.forEach { participant in
             self.participants.removeAll(where: { participant === $0 }) // TODO: Maybe this can be even cleaner
         }
+        
+        if participants.first(where: { $0 === pinnedParticipant }) != nil {
+            pinnedParticipant = nil
+        }
 
         post(change: .didDeleteParticipants(indices: indices))
     }

@@ -18,7 +18,6 @@ import Foundation
 
 enum MainParticipantStoreChange {
     case didUpdateMainParticipant
-    case didUpdateStatus
 }
 
 class MainParticipantStore {
@@ -54,7 +53,7 @@ class MainParticipantStore {
         switch change {
         case let .didUpdate(participant):
             if participant === mainParticipant {
-                post(change: .didUpdateStatus)
+                post(change: .didUpdateMainParticipant)
             }
             updateMainParticipant()
         }

@@ -27,12 +27,8 @@ class MainVideoView: CustomView {
         videoView.delegate = self
     }
     
-    func configure(identity: String) {
+    func configure(identity: String, videoConfig: VideoView.Config) {
         emptyVideoView.configure(identity: identity)
-    }
-
-    // TODO: Maybe rename to just video
-    func configure(videoConfig: VideoView.Config) {
         videoView.configure(config: videoConfig)
     }
 }

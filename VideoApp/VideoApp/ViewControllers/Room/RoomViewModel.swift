@@ -23,7 +23,6 @@ protocol RoomViewModelDelegate: AnyObject {
     func didMoveParticipant(at index: Int, to newIndex: Int)
     func didUpdateParticipantAttributes(at index: Int) // Observe each participant? No probably bad idea because then it isn't just data
     func didUpdateMainParticipant()
-    func didUpdateMainParticipantVideoConfig()
 }
 
 class RoomViewModel {
@@ -113,8 +112,6 @@ class RoomViewModel {
         switch change {
         case .didUpdateMainParticipant:
             delegate?.didUpdateMainParticipant()
-        case .didUpdateStatus:
-            delegate?.didUpdateMainParticipantVideoConfig()
         }
     }
 }

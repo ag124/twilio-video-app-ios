@@ -44,7 +44,8 @@ class RoomViewController: UIViewController {
         viewModel.delegate = self
         viewModel.connect()
 
-        configureMainVideoView()
+        let participant = viewModel.data.mainParticipant
+        mainVideoView.configure(identity: participant.identity, videoConfig: participant.videoConfig)
     }
     
     @IBAction func disableCameraButtonTapped(_ sender: Any) {
@@ -63,12 +64,6 @@ class RoomViewController: UIViewController {
     
     @IBAction func switchCameraButtonTapped(_ sender: Any) {
         viewModel.flipCamera()
-    }
-    
-    func configureMainVideoView() {
-        let participant = viewModel.data.mainParticipant
-        mainVideoView.configure(identity: participant.identity)
-        mainVideoView.configure(videoConfig: participant.videoConfig)
     }
 }
 
@@ -94,16 +89,12 @@ extension RoomViewController: RoomViewModelDelegate {
         guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ParticipantCell else { return }
         
         let participant = viewModel.data.participants[index]
-        cell.configure(identity: participant.identity, status: participant.status)
-        cell.configure(videoConfig: participant.videoConfig)
+        cell.configure(identity: participant.identity, status: participant.status, videoConfig: participant.videoConfig)
     }
     
     func didUpdateMainParticipant() {
-        configureMainVideoView()
-    }
-    
-    func didUpdateMainParticipantVideoConfig() {
-        mainVideoView.configure(videoConfig: viewModel.data.mainParticipant.videoConfig)
+        let participant = viewModel.data.mainParticipant
+        mainVideoView.configure(identity: participant.identity, videoConfig: participant.videoConfig)
     }
 }
 
@@ -116,8 +107,7 @@ extension RoomViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ParticipantCell", for: indexPath) as! ParticipantCell
 
         let participant = viewModel.data.participants[indexPath.item]
-        cell.configure(identity: participant.identity, status: participant.status)
-        cell.configure(videoConfig: participant.videoConfig)
+        cell.configure(identity: participant.identity, status: participant.status, videoConfig: participant.videoConfig)
         
         return cell
     }
