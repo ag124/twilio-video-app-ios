@@ -21,6 +21,7 @@ protocol CameraDelegate: AnyObject {
     func cameraSourceWasInterrupted(camera: Camera)
 }
 
+// TODO: Rename to CameraManager?
 class Camera: NSObject {
     weak var delegate: CameraDelegate?
     let track: LocalVideoTrack

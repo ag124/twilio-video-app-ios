@@ -95,23 +95,26 @@ class LocalParticipant: NSObject, Participant {
 }
 
 extension LocalParticipant: LocalParticipantDelegate {
-    func localParticipantDidPublishVideoTrack(participant: TwilioVideo.LocalParticipant, videoTrackPublication: LocalVideoTrackPublication) {
-        // TODO: notify delegate somehow
-    }
-    
-    func localParticipantDidFailToPublishVideoTrack(participant: TwilioVideo.LocalParticipant, videoTrack: LocalVideoTrack, error: Error) {
+    func localParticipantDidFailToPublishVideoTrack(
+        participant: TwilioVideo.LocalParticipant,
+        videoTrack: LocalVideoTrack,
+        error: Error
+    ) {
 
     }
     
-    func localParticipantDidPublishAudioTrack(participant: TwilioVideo.LocalParticipant, audioTrackPublication: LocalAudioTrackPublication) {
+    func localParticipantDidFailToPublishAudioTrack(
+        participant: TwilioVideo.LocalParticipant,
+        audioTrack: LocalAudioTrack,
+        error: Error
+    ) {
 
     }
     
-    func localParticipantDidFailToPublishAudioTrack(participant: TwilioVideo.LocalParticipant, audioTrack: LocalAudioTrack, error: Error) {
-
-    }
-    
-    func localParticipantNetworkQualityLevelDidChange(participant: TwilioVideo.LocalParticipant, networkQualityLevel: NetworkQualityLevel) {
+    func localParticipantNetworkQualityLevelDidChange(
+        participant: TwilioVideo.LocalParticipant,
+        networkQualityLevel: NetworkQualityLevel
+    ) {
         postChange(.didUpdate(participant: self))
     }
 }

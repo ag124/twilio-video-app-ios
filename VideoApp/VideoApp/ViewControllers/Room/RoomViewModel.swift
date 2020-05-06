@@ -99,8 +99,7 @@ class RoomViewModel {
         guard let change = notification.userInfo?["key"] as? MainParticipantStoreChange else { return }
 
         switch change {
-        case .didUpdateMainParticipant:
-            delegate?.didUpdateMainParticipant()
+        case .didUpdateMainParticipant: delegate?.didUpdateMainParticipant()
         }
     }
 }
