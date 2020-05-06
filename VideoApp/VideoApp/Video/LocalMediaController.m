@@ -40,116 +40,118 @@
 
 #pragma mark - Local Participant Management
 - (void)setLocalParticipant:(TVILocalParticipant *)localParticipant {
-    _localParticipant = localParticipant;
-
-    // There is the potential for a race condition when we destroy the audio/video track after it has
-    // been added to the connect options but before the Room connects and the local participant has been set here. The
-    // similar issue can happen if you initially join the room with no audio track and then add one before the local
-    // participant has been set here.
-    if (localParticipant != nil) {
-        if (self.localAudioTrack == nil &&
-            [localParticipant.localAudioTracks count] > 0) {
-            for (TVILocalAudioTrackPublication *trackPublication in localParticipant.localAudioTracks) {
-                [localParticipant unpublishAudioTrack:trackPublication.localTrack];
-            }
-        } else if (self.localAudioTrack != nil &&
-                   [localParticipant.localAudioTracks count] == 0) {
-            [localParticipant publishAudioTrack:self.localAudioTrack];
-        }
-
-        if (self.localVideoTrack == nil &&
-            [localParticipant.localVideoTracks count] > 0) {
-            for (TVILocalVideoTrackPublication *trackPublication in localParticipant.localVideoTracks) {
-                [localParticipant unpublishVideoTrack:trackPublication.localTrack];
-            }
-        } else if (self.localVideoTrack != nil &&
-                   [localParticipant.localVideoTracks count] == 0) {
-            [localParticipant publishVideoTrack:self.localVideoTrack];
-        }
-    }
+//    _localParticipant = localParticipant;
+//
+//    // There is the potential for a race condition when we destroy the audio/video track after it has
+//    // been added to the connect options but before the Room connects and the local participant has been set here. The
+//    // similar issue can happen if you initially join the room with no audio track and then add one before the local
+//    // participant has been set here.
+//    if (localParticipant != nil) {
+//        if (self.localAudioTrack == nil &&
+//            [localParticipant.localAudioTracks count] > 0) {
+//            for (TVILocalAudioTrackPublication *trackPublication in localParticipant.localAudioTracks) {
+//                [localParticipant unpublishAudioTrack:trackPublication.localTrack];
+//            }
+//        } else if (self.localAudioTrack != nil &&
+//                   [localParticipant.localAudioTracks count] == 0) {
+//            [localParticipant publishAudioTrack:self.localAudioTrack];
+//        }
+//
+//        if (self.localVideoTrack == nil &&
+//            [localParticipant.localVideoTracks count] > 0) {
+//            for (TVILocalVideoTrackPublication *trackPublication in localParticipant.localVideoTracks) {
+//                [localParticipant unpublishVideoTrack:trackPublication.localTrack];
+//            }
+//        } else if (self.localVideoTrack != nil &&
+//                   [localParticipant.localVideoTracks count] == 0) {
+//            [localParticipant publishVideoTrack:self.localVideoTrack];
+//        }
+//    }
 }
 
 #pragma mark - Video Management
 - (void)createLocalVideoTrack {
-    if (self.localVideoTrack == nil) {
-        self.camera = [[VideoAppCameraSource alloc] initWithLocalMediaController:self];
-    }
-
-    if (!self.localVideoTrack) {
-        NSLog(@"Failed to create video track");
-    } else if (self.localParticipant) {
-        [self.localParticipant publishVideoTrack:self.camera.localVideoTrack];
-    }
+//    if (self.localVideoTrack == nil) {
+//        self.camera = [[VideoAppCameraSource alloc] initWithLocalMediaController:self];
+//    }
+//
+//    if (!self.localVideoTrack) {
+//        NSLog(@"Failed to create video track");
+//    } else if (self.localParticipant) {
+//        [self.localParticipant publishVideoTrack:self.camera.localVideoTrack];
+//    }
 }
 
 - (TVILocalVideoTrack *)localVideoTrack {
-    return self.camera.localVideoTrack;
+    return nil;
+//    return self.camera.localVideoTrack;
 }
 
 - (void)destroyLocalVideoTrack {
-    if (self.camera.localVideoTrack != nil) {
-        [self.localParticipant unpublishVideoTrack:self.camera.localVideoTrack];
-        [self.camera destroyLocalVideoTrack];
-        self.camera = nil;
-    } else {
-        NSLog(@"No local video track to unpublish");
-    }
+//    if (self.camera.localVideoTrack != nil) {
+//        [self.localParticipant unpublishVideoTrack:self.camera.localVideoTrack];
+//        [self.camera destroyLocalVideoTrack];
+//        self.camera = nil;
+//    } else {
+//        NSLog(@"No local video track to unpublish");
+//    }
 }
 
 - (void)flipCamera {
-    [self.camera flipCamera];
+//    [self.camera flipCamera];
 }
 
 - (BOOL)shouldMirrorLocalVideoView {
-    return self.camera.shouldMirrorLocalVideoView;
+    return false;
+//    return self.camera.shouldMirrorLocalVideoView;
 }
 
 #pragma mark - Delegate management
 - (void)addDelegate:(id)delegate {
-    if (delegate && [delegate conformsToProtocol:@protocol(LocalMediaControllerDelegate)]) {
-        @synchronized(self) {
-            [self.delegates addPointer:(__bridge void *)delegate];
-        }
-    }
+//    if (delegate && [delegate conformsToProtocol:@protocol(LocalMediaControllerDelegate)]) {
+//        @synchronized(self) {
+//            [self.delegates addPointer:(__bridge void *)delegate];
+//        }
+//    }
 }
 
 - (void)removeDelegate:(id)delegate {
-    if (delegate) {
-        void *ptr = (__bridge void *)delegate;
-
-        @synchronized(self) {
-            for (NSUInteger i = 0; i < [self.delegates count]; i++) {
-                if ([self.delegates pointerAtIndex:i] == ptr) {
-                    [self.delegates removePointerAtIndex:i];
-                    break;
-                }
-            }
-        }
-    }
+//    if (delegate) {
+//        void *ptr = (__bridge void *)delegate;
+//
+//        @synchronized(self) {
+//            for (NSUInteger i = 0; i < [self.delegates count]; i++) {
+//                if ([self.delegates pointerAtIndex:i] == ptr) {
+//                    [self.delegates removePointerAtIndex:i];
+//                    break;
+//                }
+//            }
+//        }
+//    }
 }
 
 - (void)videoCaptureStarted {
-    @synchronized(self) {
-        for (id delegate in self.delegates) {
-            if (delegate &&
-                [delegate conformsToProtocol:@protocol(LocalMediaControllerDelegate)] &&
-                [delegate respondsToSelector:@selector(localMediaControllerStartedVideoCapture:)]) {
-                [delegate localMediaControllerStartedVideoCapture:self];
-            }
-        }
-    }
+//    @synchronized(self) {
+//        for (id delegate in self.delegates) {
+//            if (delegate &&
+//                [delegate conformsToProtocol:@protocol(LocalMediaControllerDelegate)] &&
+//                [delegate respondsToSelector:@selector(localMediaControllerStartedVideoCapture:)]) {
+//                [delegate localMediaControllerStartedVideoCapture:self];
+//            }
+//        }
+//    }
 }
 
 - (void)cameraSourceWasInterrupted {
-    if (self.camera.localVideoTrack) {
-        [self.localParticipant unpublishVideoTrack:self.camera.localVideoTrack];
-    }
+//    if (self.camera.localVideoTrack) {
+//        [self.localParticipant unpublishVideoTrack:self.camera.localVideoTrack];
+//    }
 }
 
 - (void)cameraSourceInterruptionEnded {
-    if (self.camera.localVideoTrack) {
-        [self.localParticipant publishVideoTrack:self.camera.localVideoTrack];
-    }
+//    if (self.camera.localVideoTrack) {
+//        [self.localParticipant publishVideoTrack:self.camera.localVideoTrack];
+//    }
 }
 
 @end

@@ -50,6 +50,7 @@ class VideoView: CustomView {
     }
 
     func configure(config: Config, contentMode: UIView.ContentMode = .scaleAspectFit) {
+        NSLog("TCR: Configure video view")
         guard let videoTrack = config.videoTrack, videoTrack.isEnabled else {
             self.videoTrack?.removeRenderer(videoView)
             isVideoOn = false
@@ -70,6 +71,7 @@ class VideoView: CustomView {
 
 extension VideoView: TwilioVideo.VideoViewDelegate {
     func videoViewDidReceiveData(view: TwilioVideo.VideoView) {
+        NSLog("TCR: Video view did receive data")
         isVideoOn = true
     }
 }

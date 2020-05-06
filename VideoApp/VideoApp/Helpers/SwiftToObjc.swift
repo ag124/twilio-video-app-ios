@@ -59,7 +59,6 @@ import Foundation
         let identity = AppSettingsStore.shared.userIdentity.nilIfEmpty ?? AuthStore.shared.userDisplayName // TODO: Make more DRY
         let localParticipant = LocalParticipant(
             identity: identity,
-            localMediaController: localMediaController,
             micTrackFactory: MicTrackFactory(),
             cameraFactory: CameraFactory()
         )

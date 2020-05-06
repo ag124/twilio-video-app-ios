@@ -67,7 +67,7 @@ class RoomViewModel {
     }
 
     func flipCamera() {
-        room.localParticipant.flipCamera()
+//        room.localParticipant.flipCamera()
     }
     
     @objc func handleRoomDidChangeNotification(_ notification: Notification) {

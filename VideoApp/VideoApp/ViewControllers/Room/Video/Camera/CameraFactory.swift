@@ -17,7 +17,7 @@
 import Foundation
 
 class CameraFactory {
-    func makeCamera() -> Camera? {
-        Camera() // Rename to CameraSession?
+    func makeCamera(position: AVCaptureDevice.Position) -> Camera? {
+        Camera(position: position) // Rename to CameraSession?
     }
 }

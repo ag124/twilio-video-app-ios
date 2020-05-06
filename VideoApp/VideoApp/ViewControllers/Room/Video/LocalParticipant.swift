@@ -18,11 +18,11 @@ import TwilioVideo
 
 class LocalParticipant: NSObject, Participant {
     let identity: String
-    var micAudioTrack: LocalAudioTrack? { localMediaController.localAudioTrack } // Use track name
-    var cameraVideoTrack: VideoTrack? { localMediaController.localVideoTrack } // Use track name
+    var micAudioTrack: LocalAudioTrack? { micTrack }
+    var cameraVideoTrack: VideoTrack? { localCameraVideoTrack }
     var screenVideoTrack: VideoTrack? { nil }
-    var localCameraVideoTrack: LocalVideoTrack? { localMediaController.localVideoTrack } // Use track name
-    let shouldMirrorVideo = true
+    var localCameraVideoTrack: LocalVideoTrack? { camera?.track }
+    var shouldMirrorVideo: Bool { cameraPosition == .front }
     let isRemote = false
     var isPinned = false
     let isDominantSpeaker = false
@@ -53,7 +53,7 @@ class LocalParticipant: NSObject, Participant {
         }
         set {
             if newValue {
-                guard let camera = cameraFactory.makeCamera() else { return }
+                guard let camera = cameraFactory.makeCamera(position: cameraPosition) else { return }
                 
                 self.camera = camera
                 camera.delegate = self
@@ -66,6 +66,7 @@ class LocalParticipant: NSObject, Participant {
             }
 
             postChange(.didUpdate(participant: self))
+            NSLog("TCR: Post change")
         }
     }
     var participant: TwilioVideo.LocalParticipant? {
@@ -73,29 +74,19 @@ class LocalParticipant: NSObject, Participant {
             participant?.delegate = self
         }
     }
-    private let localMediaController: LocalMediaController
+    var cameraPosition: AVCaptureDevice.Position = .front {
+        didSet { camera?.position = cameraPosition }
+    }
     private let notificationCenter = NotificationCenter.default
     private let micTrackFactory: MicTrackFactory
     private let cameraFactory: CameraFactory
     private var micTrack: LocalAudioTrack?
     private var camera: Camera?
     
-
-    init(
-        identity: String,
-        localMediaController: LocalMediaController,
-        micTrackFactory: MicTrackFactory,
-        cameraFactory: CameraFactory
-    ) {
+    init(identity: String, micTrackFactory: MicTrackFactory, cameraFactory: CameraFactory) {
         self.identity = identity
-        self.localMediaController = localMediaController
         self.micTrackFactory = micTrackFactory
         self.cameraFactory = cameraFactory
-        super.init()
-    }
-    
-    func flipCamera() {
-        localMediaController.flipCamera()
     }
 
     private func postChange(_ change: ParticipantUpdate) {

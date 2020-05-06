@@ -188,37 +188,6 @@
     return dismissed;
 }
 
-//- (void)handleDeepLinkedURL:(NSURL *)deepLinkedURL {
-//    // We only care about the user tapping the link if we are not currently in a room.
-//    if (!self.roomViewController) {
-//        NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:deepLinkedURL resolvingAgainstBaseURL:NO];
-//
-//        if ([urlComponents.path hasPrefix:@"/room"]) {
-//            NSString *roomName = urlComponents.path.lastPathComponent;
-//            self.roomTextField.text = roomName;
-//
-//            NSString *message = [NSString stringWithFormat:@"Would you like to join room: %@?", roomName];
-//
-//            typeof(self) __weak weakSelf = self;
-//
-//            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//                UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {}];
-//
-//                UIAlertAction *join = [UIAlertAction actionWithTitle:@"Join" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-//                    typeof(self) __strong strongSelf = weakSelf;
-//                    [strongSelf joinRoomButtonPressed:strongSelf];
-//                }];
-//
-//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Join Room?" message:message preferredStyle:UIAlertControllerStyleAlert];
-//                [alert addAction:cancel];
-//                [alert addAction:join];
-//
-//                [self presentViewController:alert animated:YES completion:nil];
-//            }];
-//        }
-//    }
-//}
-
 #pragma mark - LocalMediaControllerDelegate
 - (void)localMediaControllerStartedVideoCapture:(LocalMediaController *)localMediaController {
     self.localVideoView.mirror = self.localMediaController.shouldMirrorLocalVideoView;

@@ -18,7 +18,5 @@
 
 @interface LobbyViewController : UIViewController
 
-//- (void)handleDeepLinkedURL:(NSURL *)deepLinkedURL;
-
 @end
 

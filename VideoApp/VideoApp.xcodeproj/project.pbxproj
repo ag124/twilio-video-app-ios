@@ -315,6 +315,9 @@
 		DC9A5E332462211D00E4B079 /* CameraFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E322462211D00E4B079 /* CameraFactory.swift */; };
 		DC9A5E342462211D00E4B079 /* CameraFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E322462211D00E4B079 /* CameraFactory.swift */; };
 		DC9A5E352462211D00E4B079 /* CameraFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E322462211D00E4B079 /* CameraFactory.swift */; };
+		DC9A5E3724622C6100E4B079 /* CameraConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */; };
+		DC9A5E3824622C6100E4B079 /* CameraConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */; };
+		DC9A5E3924622C6100E4B079 /* CameraConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */; };
 		DCA53948235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA53949235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA5394A235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
@@ -711,6 +714,7 @@
 		DC9A5E2824620B6D00E4B079 /* CameraTrackFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTrackFactory.swift; sourceTree = "<group>"; };
 		DC9A5E2C2462153000E4B079 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		DC9A5E322462211D00E4B079 /* CameraFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFactory.swift; sourceTree = "<group>"; };
+		DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraConfigFactory.swift; sourceTree = "<group>"; };
 		DCA53947235F53E700CA26FB /* InternalAuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAuthStore.swift; sourceTree = "<group>"; };
 		DCA5394B235F740200CA26FB /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		DCA5394F235F765D00CA26FB /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
@@ -1383,6 +1387,7 @@
 				DC9A5E322462211D00E4B079 /* CameraFactory.swift */,
 				DC9A5E24246207E600E4B079 /* CameraSourceFactory.swift */,
 				DC9A5E2824620B6D00E4B079 /* CameraTrackFactory.swift */,
+				DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -2664,6 +2669,7 @@
 				DC044695238F1FAA0072F597 /* User.swift in Sources */,
 				DC9A5DC02459F1D100E4B079 /* Participant.swift in Sources */,
 				DC8EAE3B23BA88850045018F /* URLOpening.swift in Sources */,
+				DC9A5E3724622C6100E4B079 /* CameraConfigFactory.swift in Sources */,
 				24A723ED1ECE1D2A00486E7A /* HeaderTableViewCell.m in Sources */,
 				24A598531ECCE069003466B4 /* RoundButton.m in Sources */,
 				DCEC3D1723861D3700EBDEBF /* SelectTopologyViewModelFactory.swift in Sources */,
@@ -2812,6 +2818,7 @@
 				DC044696238F1FAA0072F597 /* User.swift in Sources */,
 				DC9A5DC12459F1D100E4B079 /* Participant.swift in Sources */,
 				DC8EAE3C23BA88850045018F /* URLOpening.swift in Sources */,
+				DC9A5E3824622C6100E4B079 /* CameraConfigFactory.swift in Sources */,
 				4B00122F1FBA52C4004A587E /* HeaderTableViewCell.m in Sources */,
 				4B0012301FBA52C4004A587E /* RoundButton.m in Sources */,
 				DCEC3D1823861D3700EBDEBF /* SelectTopologyViewModelFactory.swift in Sources */,
@@ -2960,6 +2967,7 @@
 				DC044697238F1FAA0072F597 /* User.swift in Sources */,
 				DC9A5DC22459F1D100E4B079 /* Participant.swift in Sources */,
 				DC8EAE3D23BA88850045018F /* URLOpening.swift in Sources */,
+				DC9A5E3924622C6100E4B079 /* CameraConfigFactory.swift in Sources */,
 				4B00126C1FBA52E5004A587E /* HeaderTableViewCell.m in Sources */,
 				4B00126D1FBA52E5004A587E /* RoundButton.m in Sources */,
 				DCEC3D1923861D3700EBDEBF /* SelectTopologyViewModelFactory.swift in Sources */,
