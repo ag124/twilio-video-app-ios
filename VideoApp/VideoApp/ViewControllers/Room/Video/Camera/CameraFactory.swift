@@ -14,7 +14,7 @@
 //  limitations under the License.
 //
 
-import Foundation
+import AVFoundation
 
 class CameraFactory {
     func makeCamera(position: AVCaptureDevice.Position) -> Camera? {

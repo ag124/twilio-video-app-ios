@@ -19,7 +19,7 @@ import UIKit
 class RoomViewController: UIViewController {
     @IBOutlet weak var disableMicButton: CircleToggleButton!
     @IBOutlet weak var disableCameraButton:  CircleToggleButton!
-    @IBOutlet weak var leaveButton: RoundButton!
+    @IBOutlet weak var leaveButton: UIButton!
     @IBOutlet weak var switchCameraButton: UIButton!
     @IBOutlet weak var roomNameLabel: UILabel!
     @IBOutlet weak var participantCollectionView: UICollectionView!

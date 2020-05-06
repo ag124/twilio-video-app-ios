@@ -14,7 +14,7 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
 
 @available(iOS 13, *)
 protocol WindowSceneObserving: AnyObject {
