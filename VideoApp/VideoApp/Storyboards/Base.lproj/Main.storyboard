@@ -583,9 +583,9 @@
                                     <stackView opaque="NO" contentMode="bottom" axis="vertical" alignment="bottom" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JQ7-UY-R10" userLabel="Buttons">
                                         <rect key="frame" x="346" y="682" width="48" height="160"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xjQ-ct-136" userLabel="Mic" customClass="VariableAlphaToggleButton">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xjQ-ct-136" userLabel="Mic" customClass="CircleToggleButton" customModule="VideoApp" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="backgroundColor" red="0.87835419179999996" green="0.87848073240000002" blue="0.87832647559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="xjQ-ct-136" secondAttribute="height" multiplier="1:1" id="eDX-xC-6E1"/>
                                                 </constraints>
@@ -599,13 +599,10 @@
                                                         <real key="value" value="0.80000000000000004"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="disableMicButtonTapped:" destination="HNa-RJ-vcm" eventType="touchUpInside" id="Qwu-jD-zZi"/>
-                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sqN-Vg-1NI" userLabel="Camera" customClass="VariableAlphaToggleButton">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sqN-Vg-1NI" userLabel="Camera" customClass="CircleToggleButton" customModule="VideoApp" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="56" width="48" height="48"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="backgroundColor" red="0.87835419179999996" green="0.87848073240000002" blue="0.87832647559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="sqN-Vg-1NI" secondAttribute="height" multiplier="1:1" id="9pk-gy-JO2"/>
                                                 </constraints>
@@ -619,13 +616,10 @@
                                                         <real key="value" value="0.80000000000000004"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="disableCameraButtonTapped:" destination="HNa-RJ-vcm" eventType="touchUpInside" id="2Ec-Oh-SAV"/>
-                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dW2-aV-srT" userLabel="Leave" customClass="RoundButton">
                                                 <rect key="frame" x="0.0" y="112" width="48" height="48"/>
-                                                <color key="backgroundColor" red="0.80000000000000004" green="0.16862745100000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.94904273750000001" green="0.18432870509999999" blue="0.27451074120000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="leaveRoomButton"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="dW2-aV-srT" secondAttribute="height" multiplier="1:1" id="3yI-5o-LpI"/>
@@ -911,15 +905,15 @@
     </scenes>
     <resources>
         <image name="hangup" width="26" height="10"/>
-        <image name="mute-audio" width="14" height="19"/>
-        <image name="mute-video" width="18" height="12"/>
+        <image name="mute-audio" width="12" height="16"/>
+        <image name="mute-video" width="20" height="20"/>
         <image name="no-video" width="109" height="109"/>
         <image name="settings-white" width="24" height="24"/>
         <image name="stats-disabled" width="60" height="60"/>
         <image name="switch-camera" width="24" height="24"/>
         <image name="twilio-name-white" width="168" height="47"/>
-        <image name="unmute-audio" width="20" height="21"/>
-        <image name="unmute-video" width="18" height="18"/>
+        <image name="unmute-audio" width="15.333333015441895" height="16"/>
+        <image name="unmute-video" width="20" height="20"/>
         <image name="video-logo-login" width="74" height="57"/>
         <image name="video-logo-splash" width="134" height="102"/>
     </resources>

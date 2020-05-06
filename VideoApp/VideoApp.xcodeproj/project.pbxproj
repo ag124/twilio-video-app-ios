@@ -318,6 +318,15 @@
 		DC9A5E3724622C6100E4B079 /* CameraConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */; };
 		DC9A5E3824622C6100E4B079 /* CameraConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */; };
 		DC9A5E3924622C6100E4B079 /* CameraConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */; };
+		DC9A5E3B2463161400E4B079 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3A2463161400E4B079 /* CircleView.swift */; };
+		DC9A5E3C2463161400E4B079 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3A2463161400E4B079 /* CircleView.swift */; };
+		DC9A5E3D2463161400E4B079 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3A2463161400E4B079 /* CircleView.swift */; };
+		DC9A5E3F2463239E00E4B079 /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3E2463239D00E4B079 /* ToggleButton.swift */; };
+		DC9A5E402463239E00E4B079 /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3E2463239D00E4B079 /* ToggleButton.swift */; };
+		DC9A5E412463239E00E4B079 /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3E2463239D00E4B079 /* ToggleButton.swift */; };
+		DC9A5E432463247700E4B079 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E422463247700E4B079 /* CircleButton.swift */; };
+		DC9A5E442463247700E4B079 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E422463247700E4B079 /* CircleButton.swift */; };
+		DC9A5E452463247700E4B079 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E422463247700E4B079 /* CircleButton.swift */; };
 		DCA53948235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA53949235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA5394A235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
@@ -715,6 +724,9 @@
 		DC9A5E2C2462153000E4B079 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		DC9A5E322462211D00E4B079 /* CameraFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFactory.swift; sourceTree = "<group>"; };
 		DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraConfigFactory.swift; sourceTree = "<group>"; };
+		DC9A5E3A2463161400E4B079 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		DC9A5E3E2463239D00E4B079 /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
+		DC9A5E422463247700E4B079 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		DCA53947235F53E700CA26FB /* InternalAuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAuthStore.swift; sourceTree = "<group>"; };
 		DCA5394B235F740200CA26FB /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		DCA5394F235F765D00CA26FB /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
@@ -1375,6 +1387,9 @@
 			isa = PBXGroup;
 			children = (
 				DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */,
+				DC9A5E3A2463161400E4B079 /* CircleView.swift */,
+				DC9A5E3E2463239D00E4B079 /* ToggleButton.swift */,
+				DC9A5E422463247700E4B079 /* CircleButton.swift */,
 				DC9A5E102460CE9800E4B079 /* ParticipantCell.xib */,
 			);
 			path = ParticipantCell;
@@ -2569,6 +2584,7 @@
 				DC44C2C92387118400205174 /* UITableViewCellHelpers.swift in Sources */,
 				DC39248C2416A1D80068E33F /* SelectEnvironmentViewModel.swift in Sources */,
 				DC3924892416A1D80068E33F /* SelectEnvironmentViewModelFactory.swift in Sources */,
+				DC9A5E432463247700E4B079 /* CircleButton.swift in Sources */,
 				DCEC3D0E23860BBC00EBDEBF /* UITableViewHelpers.swift in Sources */,
 				DC44C2C223870D0800205174 /* BasicCell.swift in Sources */,
 				DC8AA8D32367A399006C06D5 /* TestSceneDelegate.swift in Sources */,
@@ -2687,6 +2703,8 @@
 				DCC7E36124082EB300431AC3 /* AuthError.swift in Sources */,
 				DCAEBF1C2383342C00141D2D /* DestructiveButtonCell.swift in Sources */,
 				DCD940B9243BD6DA00D9ECC5 /* LocalVideoTrackHelpers.swift in Sources */,
+				DC9A5E3B2463161400E4B079 /* CircleView.swift in Sources */,
+				DC9A5E3F2463239E00E4B079 /* ToggleButton.swift in Sources */,
 				DCEC3D0A238608B500EBDEBF /* EditUserIdentityViewModelFactory.swift in Sources */,
 				DCD7674B23DA336600A2939C /* DeepLink.swift in Sources */,
 				DCA53950235F765D00CA26FB /* AuthFlow.swift in Sources */,
@@ -2718,6 +2736,7 @@
 				DC44C2CA2387118400205174 /* UITableViewCellHelpers.swift in Sources */,
 				DC39248D2416A1D80068E33F /* SelectEnvironmentViewModel.swift in Sources */,
 				DC39248A2416A1D80068E33F /* SelectEnvironmentViewModelFactory.swift in Sources */,
+				DC9A5E442463247700E4B079 /* CircleButton.swift in Sources */,
 				DCEC3D0F23860BBC00EBDEBF /* UITableViewHelpers.swift in Sources */,
 				DC44C2C323870D0800205174 /* BasicCell.swift in Sources */,
 				DC8AA8D42367A399006C06D5 /* TestSceneDelegate.swift in Sources */,
@@ -2836,6 +2855,8 @@
 				DCC7E36224082EB300431AC3 /* AuthError.swift in Sources */,
 				DCAEBF1D2383342C00141D2D /* DestructiveButtonCell.swift in Sources */,
 				DCD940BA243BD6DA00D9ECC5 /* LocalVideoTrackHelpers.swift in Sources */,
+				DC9A5E3C2463161400E4B079 /* CircleView.swift in Sources */,
+				DC9A5E402463239E00E4B079 /* ToggleButton.swift in Sources */,
 				DCEC3D0B238608B500EBDEBF /* EditUserIdentityViewModelFactory.swift in Sources */,
 				DCD7674C23DA336600A2939C /* DeepLink.swift in Sources */,
 				DCA53951235F765D00CA26FB /* AuthFlow.swift in Sources */,
@@ -2867,6 +2888,7 @@
 				DC44C2CB2387118400205174 /* UITableViewCellHelpers.swift in Sources */,
 				DC39248E2416A1D80068E33F /* SelectEnvironmentViewModel.swift in Sources */,
 				DC39248B2416A1D80068E33F /* SelectEnvironmentViewModelFactory.swift in Sources */,
+				DC9A5E452463247700E4B079 /* CircleButton.swift in Sources */,
 				DCEC3D1023860BBC00EBDEBF /* UITableViewHelpers.swift in Sources */,
 				DC44C2C423870D0800205174 /* BasicCell.swift in Sources */,
 				DC8AA8D52367A399006C06D5 /* TestSceneDelegate.swift in Sources */,
@@ -2985,6 +3007,8 @@
 				DCC7E36324082EB300431AC3 /* AuthError.swift in Sources */,
 				DCAEBF1E2383342C00141D2D /* DestructiveButtonCell.swift in Sources */,
 				DCD940BB243BD6DA00D9ECC5 /* LocalVideoTrackHelpers.swift in Sources */,
+				DC9A5E3D2463161400E4B079 /* CircleView.swift in Sources */,
+				DC9A5E412463239E00E4B079 /* ToggleButton.swift in Sources */,
 				DCEC3D0C238608B500EBDEBF /* EditUserIdentityViewModelFactory.swift in Sources */,
 				DCD7674D23DA336600A2939C /* DeepLink.swift in Sources */,
 				DCA53952235F765D00CA26FB /* AuthFlow.swift in Sources */,

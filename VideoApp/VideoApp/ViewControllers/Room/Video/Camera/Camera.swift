@@ -25,12 +25,12 @@ protocol CameraDelegate: AnyObject {
 class Camera: NSObject {
     weak var delegate: CameraDelegate?
     let track: LocalVideoTrack
-    var position: AVCaptureDevice.Position? {
+    var position: AVCaptureDevice.Position? { // TODO: Don't use optional?
         get {
             source.device?.position
         }
         set {
-            guard let captureDevice = CameraSource.captureDevice(position: .front) else {
+            guard let newValue = newValue, let captureDevice = CameraSource.captureDevice(position: newValue) else {
                 print("Unable to create capture device."); return
             }
             

@@ -17,14 +17,13 @@
 import UIKit
 
 class RoomViewController: UIViewController {
-    @IBOutlet weak var disableMicButton: VariableAlphaToggleButton!
-    @IBOutlet weak var disableCameraButton: VariableAlphaToggleButton!
+    @IBOutlet weak var disableMicButton: CircleToggleButton!
+    @IBOutlet weak var disableCameraButton:  CircleToggleButton!
     @IBOutlet weak var leaveButton: RoundButton!
     @IBOutlet weak var switchCameraButton: UIButton!
     @IBOutlet weak var roomNameLabel: UILabel!
     @IBOutlet weak var participantCollectionView: UICollectionView!
     @IBOutlet weak var mainVideoView: MainVideoView!
-    
     var viewModel: RoomViewModel!
     
     override func viewDidLoad() {
@@ -36,6 +35,9 @@ class RoomViewController: UIViewController {
         disableMicButton.isSelected = !viewModel.isMicOn
         disableCameraButton.isSelected = !viewModel.isCameraOn
 
+        disableMicButton.didToggle = { self.viewModel.isMicOn = !$0 }
+        disableCameraButton.didToggle = { self.viewModel.isCameraOn = !$0 }
+
         participantCollectionView.register(
             UINib(nibName: "ParticipantCell", bundle: nil),
             forCellWithReuseIdentifier: "ParticipantCell"
@@ -46,16 +48,6 @@ class RoomViewController: UIViewController {
 
         let participant = viewModel.data.mainParticipant
         mainVideoView.configure(identity: participant.identity, videoConfig: participant.videoConfig)
-    }
-    
-    @IBAction func disableCameraButtonTapped(_ sender: Any) {
-        disableCameraButton.isSelected = !disableCameraButton.isSelected
-        viewModel.isCameraOn = !disableCameraButton.isSelected
-    }
-    
-    @IBAction func disableMicButtonTapped(_ sender: Any) {
-        disableMicButton.isSelected = !disableMicButton.isSelected // TODO: Move to button
-        viewModel.isMicOn = !disableMicButton.isSelected
     }
     
     @IBAction func leaveButtonTapped(_ sender: Any) {
