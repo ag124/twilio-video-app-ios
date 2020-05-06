@@ -309,12 +309,12 @@
         <!--Lobby View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="lobbyViewController" id="BYZ-38-t0r" customClass="LobbyViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="lobbyViewController" id="BYZ-38-t0r" customClass="LobbyViewController" customModule="VideoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="GiF-At-G0j" userLabel="Local Video View" customClass="TVIVideoView">
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="GiF-At-G0j" userLabel="Local Video View" customClass="MainVideoView" customModule="VideoApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="24" width="414" height="838"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -342,12 +342,12 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="joinRoomButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sfE-QF-ojD"/>
+                                    <action selector="joinRoomButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ds6-Uu-dB5"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cg-rJ-wKE" customClass="VariableAlphaToggleButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cg-rJ-wKE" customClass="CircleButton" customModule="VideoApp" customModuleProvider="target">
                                 <rect key="frame" x="346" y="738" width="48" height="48"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.87835419179999996" green="0.87848073240000002" blue="0.87832647559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="L5D-Ax-c4I"/>
                                     <constraint firstAttribute="height" constant="48" id="Yfc-lh-Qw0"/>
@@ -363,12 +363,12 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="toggleAudioPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="54p-Do-dGQ"/>
+                                    <action selector="toggleAudioPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xiW-sV-W95"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VHq-hM-JN4" customClass="VariableAlphaToggleButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VHq-hM-JN4" customClass="CircleButton" customModule="VideoApp" customModuleProvider="target">
                                 <rect key="frame" x="346" y="794" width="48" height="48"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.87835419179999996" green="0.87848073240000002" blue="0.87832647559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="6pF-Jb-x3X"/>
                                     <constraint firstAttribute="height" constant="48" id="u0J-Bd-j7P"/>
@@ -384,7 +384,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="toggleVideoPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WmG-UX-da7"/>
+                                    <action selector="toggleVideoPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7HH-Be-f3T"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Room" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d96-2z-6r8">
@@ -415,18 +415,6 @@
                                     <constraint firstAttribute="height" constant="2.5" id="KR3-cV-LVN"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-video" translatesAutoresizingMaskIntoConstraints="NO" id="Aul-ZZ-CEb" userLabel="No Video Image">
-                                <rect key="frame" x="152.5" y="393.5" width="109" height="109"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NKj-ok-koK" userLabel="You Label">
-                                <rect key="frame" x="20" y="330.5" width="374" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="kGj-0v-BCd"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="awE-PY-Z6T">
                                 <rect key="frame" x="324.5" y="44" width="25" height="25"/>
                                 <constraints>
@@ -435,7 +423,7 @@
                                 </constraints>
                                 <state key="normal" image="switch-camera"/>
                                 <connections>
-                                    <action selector="flipCameraPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TJe-nd-Jit"/>
+                                    <action selector="flipCameraPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YZJ-m9-hHh"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -456,18 +444,13 @@
                             <constraint firstAttribute="trailingMargin" secondItem="3lB-l1-eHH" secondAttribute="trailing" constant="73" id="S8n-2r-anc"/>
                             <constraint firstItem="VHq-hM-JN4" firstAttribute="top" secondItem="1cg-rJ-wKE" secondAttribute="bottom" constant="8" id="SgR-d0-jeI"/>
                             <constraint firstItem="I8b-lu-qjO" firstAttribute="centerX" secondItem="1cg-rJ-wKE" secondAttribute="centerX" id="SnC-CM-d0p"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="NKj-ok-koK" secondAttribute="trailing" id="TXJ-av-LvG"/>
-                            <constraint firstItem="Aul-ZZ-CEb" firstAttribute="top" secondItem="NKj-ok-koK" secondAttribute="bottom" constant="29" id="TdX-ea-q29"/>
-                            <constraint firstItem="Aul-ZZ-CEb" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="UaJ-6y-gaJ"/>
                             <constraint firstItem="d96-2z-6r8" firstAttribute="trailing" secondItem="3lB-l1-eHH" secondAttribute="trailing" id="WyI-c7-xQc"/>
                             <constraint firstItem="GiF-At-G0j" firstAttribute="top" secondItem="vsj-ih-5eY" secondAttribute="top" constant="-20" id="Xe9-Tn-HdR"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="NKj-ok-koK" secondAttribute="leading" id="XyZ-pR-EGC"/>
                             <constraint firstItem="d96-2z-6r8" firstAttribute="firstBaseline" secondItem="ImV-dk-p1J" secondAttribute="baseline" id="YQ4-Rq-Qox"/>
                             <constraint firstItem="wpZ-5i-lMt" firstAttribute="leading" secondItem="GiF-At-G0j" secondAttribute="leading" id="cIE-7q-9LO"/>
                             <constraint firstItem="KLa-Ap-CMh" firstAttribute="top" secondItem="3lB-l1-eHH" secondAttribute="bottom" constant="35" id="dsr-kO-dMk"/>
                             <constraint firstItem="d96-2z-6r8" firstAttribute="baseline" secondItem="ImV-dk-p1J" secondAttribute="baseline" id="gTW-U9-FaL"/>
                             <constraint firstItem="awE-PY-Z6T" firstAttribute="centerY" secondItem="I8b-lu-qjO" secondAttribute="centerY" id="jNl-VR-5vS"/>
-                            <constraint firstItem="Aul-ZZ-CEb" firstAttribute="centerX" secondItem="vsj-ih-5eY" secondAttribute="centerX" id="kTH-Ty-tDo"/>
                             <constraint firstItem="wpZ-5i-lMt" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="pEV-Vt-2GY"/>
                             <constraint firstItem="I8b-lu-qjO" firstAttribute="top" secondItem="3lB-l1-eHH" secondAttribute="top" id="pFo-Wg-KLE"/>
                             <constraint firstItem="d96-2z-6r8" firstAttribute="width" secondItem="3lB-l1-eHH" secondAttribute="width" id="pUW-3h-BDk"/>
@@ -482,15 +465,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="j0t-Ss-mF4"/>
                     <connections>
-                        <outlet property="audioToggleButton" destination="1cg-rJ-wKE" id="HdI-rf-PBr"/>
-                        <outlet property="containerView" destination="wpZ-5i-lMt" id="KEO-0h-yrG"/>
-                        <outlet property="flipCameraButton" destination="awE-PY-Z6T" id="5L7-ng-80v"/>
-                        <outlet property="localVideoView" destination="GiF-At-G0j" id="DTi-3T-HYs"/>
-                        <outlet property="loggedInUser" destination="3lB-l1-eHH" id="zIy-hB-2g4"/>
-                        <outlet property="noVideoImage" destination="Aul-ZZ-CEb" id="Q7G-sa-dvC"/>
-                        <outlet property="roomTextField" destination="d96-2z-6r8" id="zHC-L0-1FX"/>
-                        <outlet property="videoToggleButton" destination="VHq-hM-JN4" id="TAB-NQ-3Hm"/>
-                        <outlet property="youLabel" destination="NKj-ok-koK" id="GYY-pQ-SZJ"/>
+                        <outlet property="audioToggleButton" destination="1cg-rJ-wKE" id="Y9c-4d-ZT0"/>
+                        <outlet property="containerView" destination="wpZ-5i-lMt" id="zrd-4E-4iN"/>
+                        <outlet property="flipCameraButton" destination="awE-PY-Z6T" id="L5j-QV-hdC"/>
+                        <outlet property="loggedInUser" destination="3lB-l1-eHH" id="BBT-Ga-TCn"/>
+                        <outlet property="roomTextField" destination="d96-2z-6r8" id="yBH-U8-ZKb"/>
+                        <outlet property="videoToggleButton" destination="VHq-hM-JN4" id="sWe-1v-RIB"/>
+                        <outlet property="videoView" destination="GiF-At-G0j" id="vAv-Qh-pw2"/>
                         <segue destination="HNa-RJ-vcm" kind="show" identifier="roomSegue" animates="NO" id="k0D-SG-DDn"/>
                     </connections>
                 </viewController>
@@ -907,7 +888,6 @@
         <image name="hangup" width="26" height="10"/>
         <image name="mute-audio" width="12" height="16"/>
         <image name="mute-video" width="20" height="20"/>
-        <image name="no-video" width="109" height="109"/>
         <image name="settings-white" width="24" height="24"/>
         <image name="stats-disabled" width="60" height="60"/>
         <image name="switch-camera" width="24" height="24"/>

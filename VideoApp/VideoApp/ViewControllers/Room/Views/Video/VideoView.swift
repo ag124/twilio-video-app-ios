@@ -31,12 +31,6 @@ class VideoView: CustomView {
     @IBOutlet weak var videoView: TwilioVideo.VideoView!
     weak var delegate: VideoViewDelegate?
     private var videoTrack: VideoTrack?
-    private var isVideoOn = false {
-        didSet {
-            isHidden = !isVideoOn
-            delegate?.didUpdateStatus(isVideoOn: !isHidden)
-        }
-    }
     
     deinit {
         videoTrack?.removeRenderer(videoView)
@@ -50,10 +44,9 @@ class VideoView: CustomView {
     }
 
     func configure(config: Config, contentMode: UIView.ContentMode = .scaleAspectFit) {
-        NSLog("TCR: Configure video view")
         guard let videoTrack = config.videoTrack, videoTrack.isEnabled else {
             self.videoTrack?.removeRenderer(videoView)
-            isVideoOn = false
+            updateStatus(hasVideoData: false)
             return
         }
         guard !videoTrack.isRendered(by: videoView) else {
@@ -64,15 +57,19 @@ class VideoView: CustomView {
         self.videoTrack = videoTrack
         videoTrack.addRenderer(videoView)
         videoView.shouldMirror = config.shouldMirror
-        isVideoOn = videoView.hasVideoData
         videoView.contentMode = contentMode
+        updateStatus(hasVideoData: videoView.hasVideoData)
+    }
+    
+    private func updateStatus(hasVideoData: Bool) {
+        isHidden = !hasVideoData
+        delegate?.didUpdateStatus(isVideoOn: hasVideoData)
     }
 }
 
 extension VideoView: TwilioVideo.VideoViewDelegate {
     func videoViewDidReceiveData(view: TwilioVideo.VideoView) {
-        NSLog("TCR: Video view did receive data")
-        isVideoOn = true
+        updateStatus(hasVideoData: true)
     }
 }
 

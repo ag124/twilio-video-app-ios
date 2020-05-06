@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		241282421E36A6AB002198BE /* LobbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 241282411E36A6AB002198BE /* LobbyViewController.m */; };
 		241282451E36A6AB002198BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 241282431E36A6AB002198BE /* Main.storyboard */; };
 		241282471E36A6AB002198BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 241282461E36A6AB002198BE /* Assets.xcassets */; };
 		2412824A1E36A6AB002198BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 241282481E36A6AB002198BE /* LaunchScreen.storyboard */; };
@@ -32,7 +31,6 @@
 		4B0012261FBA52C4004A587E /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723E21ECE1C8500486E7A /* StatsViewController.m */; };
 		4B0012281FBA52C4004A587E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24491F7C1E37F8F000028B24 /* LoginViewController.m */; };
 		4B0012291FBA52C4004A587E /* TrackStatsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723EC1ECE1D2A00486E7A /* TrackStatsTableViewCell.m */; };
-		4B00122A1FBA52C4004A587E /* LobbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 241282411E36A6AB002198BE /* LobbyViewController.m */; };
 		4B00122C1FBA52C4004A587E /* StatsUIModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723E61ECE1CBD00486E7A /* StatsUIModel.m */; };
 		4B00122D1FBA52C4004A587E /* RemoteParticipantUIModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C239F51EDF263800AA9419 /* RemoteParticipantUIModel.m */; };
 		4B00122F1FBA52C4004A587E /* HeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723EA1ECE1D2A00486E7A /* HeaderTableViewCell.m */; };
@@ -45,7 +43,6 @@
 		4B0012631FBA52E5004A587E /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723E21ECE1C8500486E7A /* StatsViewController.m */; };
 		4B0012651FBA52E5004A587E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24491F7C1E37F8F000028B24 /* LoginViewController.m */; };
 		4B0012661FBA52E5004A587E /* TrackStatsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723EC1ECE1D2A00486E7A /* TrackStatsTableViewCell.m */; };
-		4B0012671FBA52E5004A587E /* LobbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 241282411E36A6AB002198BE /* LobbyViewController.m */; };
 		4B0012691FBA52E5004A587E /* StatsUIModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723E61ECE1CBD00486E7A /* StatsUIModel.m */; };
 		4B00126A1FBA52E5004A587E /* RemoteParticipantUIModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C239F51EDF263800AA9419 /* RemoteParticipantUIModel.m */; };
 		4B00126C1FBA52E5004A587E /* HeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A723EA1ECE1D2A00486E7A /* HeaderTableViewCell.m */; };
@@ -71,9 +68,6 @@
 		DC044695238F1FAA0072F597 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC044694238F1FAA0072F597 /* User.swift */; };
 		DC044696238F1FAA0072F597 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC044694238F1FAA0072F597 /* User.swift */; };
 		DC044697238F1FAA0072F597 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC044694238F1FAA0072F597 /* User.swift */; };
-		DC044699238F20130072F597 /* SwiftToObjc.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC044698238F20130072F597 /* SwiftToObjc.swift */; };
-		DC04469A238F20130072F597 /* SwiftToObjc.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC044698238F20130072F597 /* SwiftToObjc.swift */; };
-		DC04469B238F20130072F597 /* SwiftToObjc.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC044698238F20130072F597 /* SwiftToObjc.swift */; };
 		DC04469D238F29500072F597 /* UserStoreSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC04469C238F29500072F597 /* UserStoreSpec.swift */; };
 		DC04469F238F29F50072F597 /* MockAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC04469E238F29F50072F597 /* MockAuthStore.swift */; };
 		DC0446A1239716530072F597 /* TestSecretsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0446A0239716530072F597 /* TestSecretsStore.swift */; };
@@ -327,6 +321,15 @@
 		DC9A5E432463247700E4B079 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E422463247700E4B079 /* CircleButton.swift */; };
 		DC9A5E442463247700E4B079 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E422463247700E4B079 /* CircleButton.swift */; };
 		DC9A5E452463247700E4B079 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E422463247700E4B079 /* CircleButton.swift */; };
+		DC9A5E472463345F00E4B079 /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E462463345F00E4B079 /* LobbyViewController.swift */; };
+		DC9A5E482463345F00E4B079 /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E462463345F00E4B079 /* LobbyViewController.swift */; };
+		DC9A5E492463345F00E4B079 /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E462463345F00E4B079 /* LobbyViewController.swift */; };
+		DC9A5E4B2463575F00E4B079 /* UserStoreFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E4A2463575F00E4B079 /* UserStoreFactory.swift */; };
+		DC9A5E4C2463575F00E4B079 /* UserStoreFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E4A2463575F00E4B079 /* UserStoreFactory.swift */; };
+		DC9A5E4D2463575F00E4B079 /* UserStoreFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E4A2463575F00E4B079 /* UserStoreFactory.swift */; };
+		DC9A5E4F246366D500E4B079 /* LocalParticipantFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E4E246366D500E4B079 /* LocalParticipantFactory.swift */; };
+		DC9A5E50246366D500E4B079 /* LocalParticipantFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E4E246366D500E4B079 /* LocalParticipantFactory.swift */; };
+		DC9A5E51246366D500E4B079 /* LocalParticipantFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E4E246366D500E4B079 /* LocalParticipantFactory.swift */; };
 		DCA53948235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA53949235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA5394A235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
@@ -565,8 +568,6 @@
 		09DA89059C9FC51D558EB8D4 /* Pods-Video-Twilio-Video-TwilioTests-Video-CommunityTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Video-Twilio-Video-TwilioTests-Video-CommunityTests.release.xcconfig"; path = "Target Support Files/Pods-Video-Twilio-Video-TwilioTests-Video-CommunityTests/Pods-Video-Twilio-Video-TwilioTests-Video-CommunityTests.release.xcconfig"; sourceTree = "<group>"; };
 		1FB1306CB055161D792FB7EB /* Pods_Video_Twilio_Video_TwilioTests_Video_CommunityTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Video_Twilio_Video_TwilioTests_Video_CommunityTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		241282371E36A6AB002198BE /* Video-Twilio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Video-Twilio.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		241282401E36A6AB002198BE /* LobbyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LobbyViewController.h; sourceTree = "<group>"; };
-		241282411E36A6AB002198BE /* LobbyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LobbyViewController.m; sourceTree = "<group>"; };
 		241282441E36A6AB002198BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		241282461E36A6AB002198BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		241282491E36A6AB002198BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -621,7 +622,6 @@
 		DC044683238EF6C20072F597 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		DC044690238F1E3C0072F597 /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
 		DC044694238F1FAA0072F597 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		DC044698238F20130072F597 /* SwiftToObjc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftToObjc.swift; sourceTree = "<group>"; };
 		DC04469C238F29500072F597 /* UserStoreSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoreSpec.swift; sourceTree = "<group>"; };
 		DC04469E238F29F50072F597 /* MockAuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthStore.swift; sourceTree = "<group>"; };
 		DC0446A0239716530072F597 /* TestSecretsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSecretsStore.swift; sourceTree = "<group>"; };
@@ -727,6 +727,9 @@
 		DC9A5E3A2463161400E4B079 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		DC9A5E3E2463239D00E4B079 /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
 		DC9A5E422463247700E4B079 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
+		DC9A5E462463345F00E4B079 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
+		DC9A5E4A2463575F00E4B079 /* UserStoreFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoreFactory.swift; sourceTree = "<group>"; };
+		DC9A5E4E246366D500E4B079 /* LocalParticipantFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalParticipantFactory.swift; sourceTree = "<group>"; };
 		DCA53947235F53E700CA26FB /* InternalAuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAuthStore.swift; sourceTree = "<group>"; };
 		DCA5394B235F740200CA26FB /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		DCA5394F235F765D00CA26FB /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
@@ -1022,6 +1025,7 @@
 			children = (
 				DC044694238F1FAA0072F597 /* User.swift */,
 				DC044690238F1E3C0072F597 /* UserStore.swift */,
+				DC9A5E4A2463575F00E4B079 /* UserStoreFactory.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1066,8 +1070,7 @@
 		DC0446C323A2D5D10072F597 /* Lobby */ = {
 			isa = PBXGroup;
 			children = (
-				241282401E36A6AB002198BE /* LobbyViewController.h */,
-				241282411E36A6AB002198BE /* LobbyViewController.m */,
+				DC9A5E462463345F00E4B079 /* LobbyViewController.swift */,
 			);
 			path = Lobby;
 			sourceTree = "<group>";
@@ -1175,7 +1178,6 @@
 				DC1C2F8923A6E7270044FB4D /* NotificationCenterProtocol.swift */,
 				DC1C2F7D23A445740044FB4D /* Notifications.swift */,
 				DC44C2E123875C4F00205174 /* StringHelpers.swift */,
-				DC044698238F20130072F597 /* SwiftToObjc.swift */,
 				243CDB4922665F1800637B6B /* TwilioColors.swift */,
 				DC44C2C82387118400205174 /* UITableViewCellHelpers.swift */,
 				DCEC3D0D23860BBC00EBDEBF /* UITableViewHelpers.swift */,
@@ -1337,6 +1339,7 @@
 				DCD940B0243B9B7A00D9ECC5 /* ConnectOptionsFactory.swift */,
 				DC9A5DBF2459F1D100E4B079 /* Participant.swift */,
 				DC9A5DCD245B0E6100E4B079 /* LocalParticipant.swift */,
+				DC9A5E4E246366D500E4B079 /* LocalParticipantFactory.swift */,
 				DC9A5DD1245B332D00E4B079 /* RemoteParticipant.swift */,
 				DC9A5E31246215C200E4B079 /* Mic */,
 				DC9A5E30246215A700E4B079 /* Camera */,
@@ -2618,6 +2621,7 @@
 				DC8EAE2F23BA5EC80045018F /* AppDelegate.swift in Sources */,
 				24A723E31ECE1C8500486E7A /* StatsViewController.m in Sources */,
 				24491F7D1E37F8F000028B24 /* LoginViewController.m in Sources */,
+				DC9A5E4B2463575F00E4B079 /* UserStoreFactory.swift in Sources */,
 				DC9A5DC5245A0B5F00E4B079 /* Room.swift in Sources */,
 				DC0446B823A182980072F597 /* CrashReportStore.swift in Sources */,
 				DC76FD01241054FC001B2FFC /* EnvironmentVariableStore.swift in Sources */,
@@ -2641,7 +2645,6 @@
 				24A723EE1ECE1D2A00486E7A /* TrackStatsTableViewCell.m in Sources */,
 				DCAEBF3B2384448500141D2D /* SelectOptionViewController.swift in Sources */,
 				DC4E4E1F23577EA700C5D313 /* AppSettingsStore.swift in Sources */,
-				241282421E36A6AB002198BE /* LobbyViewController.m in Sources */,
 				DC44C2E623876AFB00205174 /* SelectOptionSegueSender.swift in Sources */,
 				DCB7C18E2405C0BE009DEA70 /* KeychainStorage.swift in Sources */,
 				DC44C2E223875C4F00205174 /* StringHelpers.swift in Sources */,
@@ -2660,6 +2663,7 @@
 				DC8EAE4C23BA9F5E0045018F /* WindowSceneObserverFactory.swift in Sources */,
 				DC044684238EF6C20072F597 /* Environment.swift in Sources */,
 				24C239F61EDF263800AA9419 /* RemoteParticipantUIModel.m in Sources */,
+				DC9A5E472463345F00E4B079 /* LobbyViewController.swift in Sources */,
 				DCAEBF47238446F500141D2D /* SelectTopologyViewModel.swift in Sources */,
 				DCC7E36E24085B7200431AC3 /* CommunityCreateTwilioAccessTokenRequest.swift in Sources */,
 				DCF461612385B13000DD8FEA /* AdvancedSettingsViewModel.swift in Sources */,
@@ -2694,12 +2698,12 @@
 				DCEC3CF82385F8CA00EBDEBF /* EditTextViewModel.swift in Sources */,
 				DC9A5DE2245CA2E000E4B079 /* CustomView.swift in Sources */,
 				DC82A35323FDB6890081578C /* SDKLogLevel.swift in Sources */,
-				DC044699238F20130072F597 /* SwiftToObjc.swift in Sources */,
 				DC8EAE4323BA96C00045018F /* URLOpenerFactory.swift in Sources */,
 				24CF99DC1ECF36E8007C8631 /* VariableAlphaToggleButton.m in Sources */,
 				DC8AA8CF2367A10E006C06D5 /* TestAppDelegate.swift in Sources */,
 				DCF461652385B17A00DD8FEA /* AdvancedSettingsViewControllerFactory.swift in Sources */,
 				DC1C2F8623A6E7050044FB4D /* DispatchQueueProtocol.swift in Sources */,
+				DC9A5E4F246366D500E4B079 /* LocalParticipantFactory.swift in Sources */,
 				DCC7E36124082EB300431AC3 /* AuthError.swift in Sources */,
 				DCAEBF1C2383342C00141D2D /* DestructiveButtonCell.swift in Sources */,
 				DCD940B9243BD6DA00D9ECC5 /* LocalVideoTrackHelpers.swift in Sources */,
@@ -2770,6 +2774,7 @@
 				DC8EAE3023BA5EC80045018F /* AppDelegate.swift in Sources */,
 				4B0012261FBA52C4004A587E /* StatsViewController.m in Sources */,
 				4B0012281FBA52C4004A587E /* LoginViewController.m in Sources */,
+				DC9A5E4C2463575F00E4B079 /* UserStoreFactory.swift in Sources */,
 				DC9A5DC6245A0B5F00E4B079 /* Room.swift in Sources */,
 				DC0446B923A182980072F597 /* CrashReportStore.swift in Sources */,
 				DC76FD0224105500001B2FFC /* EnvironmentVariableStore.swift in Sources */,
@@ -2793,7 +2798,6 @@
 				4B0012291FBA52C4004A587E /* TrackStatsTableViewCell.m in Sources */,
 				DCAEBF3C2384448500141D2D /* SelectOptionViewController.swift in Sources */,
 				DC4E4E2023577EA700C5D313 /* AppSettingsStore.swift in Sources */,
-				4B00122A1FBA52C4004A587E /* LobbyViewController.m in Sources */,
 				DC44C2E723876AFB00205174 /* SelectOptionSegueSender.swift in Sources */,
 				DCB7C18F2405C0BE009DEA70 /* KeychainStorage.swift in Sources */,
 				DC44C2E323875C4F00205174 /* StringHelpers.swift in Sources */,
@@ -2812,6 +2816,7 @@
 				DC8EAE4D23BA9F5E0045018F /* WindowSceneObserverFactory.swift in Sources */,
 				DC044685238EF6C20072F597 /* Environment.swift in Sources */,
 				4B00122D1FBA52C4004A587E /* RemoteParticipantUIModel.m in Sources */,
+				DC9A5E482463345F00E4B079 /* LobbyViewController.swift in Sources */,
 				DCAEBF48238446F500141D2D /* SelectTopologyViewModel.swift in Sources */,
 				DCC7E36F24085B7200431AC3 /* CommunityCreateTwilioAccessTokenRequest.swift in Sources */,
 				DCF461622385B13000DD8FEA /* AdvancedSettingsViewModel.swift in Sources */,
@@ -2846,12 +2851,12 @@
 				DCEC3CF92385F8CA00EBDEBF /* EditTextViewModel.swift in Sources */,
 				DC9A5DE3245CA2E000E4B079 /* CustomView.swift in Sources */,
 				DC82A35423FDB6890081578C /* SDKLogLevel.swift in Sources */,
-				DC04469A238F20130072F597 /* SwiftToObjc.swift in Sources */,
 				DC8EAE4423BA96C00045018F /* URLOpenerFactory.swift in Sources */,
 				4B0012321FBA52C4004A587E /* VariableAlphaToggleButton.m in Sources */,
 				DC8AA8D02367A10E006C06D5 /* TestAppDelegate.swift in Sources */,
 				DCF461662385B17A00DD8FEA /* AdvancedSettingsViewControllerFactory.swift in Sources */,
 				DC1C2F8723A6E7050044FB4D /* DispatchQueueProtocol.swift in Sources */,
+				DC9A5E50246366D500E4B079 /* LocalParticipantFactory.swift in Sources */,
 				DCC7E36224082EB300431AC3 /* AuthError.swift in Sources */,
 				DCAEBF1D2383342C00141D2D /* DestructiveButtonCell.swift in Sources */,
 				DCD940BA243BD6DA00D9ECC5 /* LocalVideoTrackHelpers.swift in Sources */,
@@ -2922,6 +2927,7 @@
 				DC8EAE3123BA5EC80045018F /* AppDelegate.swift in Sources */,
 				4B0012631FBA52E5004A587E /* StatsViewController.m in Sources */,
 				4B0012651FBA52E5004A587E /* LoginViewController.m in Sources */,
+				DC9A5E4D2463575F00E4B079 /* UserStoreFactory.swift in Sources */,
 				DC9A5DC7245A0B5F00E4B079 /* Room.swift in Sources */,
 				DC0446BA23A182980072F597 /* CrashReportStore.swift in Sources */,
 				DC76FD0324105501001B2FFC /* EnvironmentVariableStore.swift in Sources */,
@@ -2945,7 +2951,6 @@
 				4B0012661FBA52E5004A587E /* TrackStatsTableViewCell.m in Sources */,
 				DCAEBF3D2384448500141D2D /* SelectOptionViewController.swift in Sources */,
 				DC4E4E2123577EA700C5D313 /* AppSettingsStore.swift in Sources */,
-				4B0012671FBA52E5004A587E /* LobbyViewController.m in Sources */,
 				DC44C2E823876AFB00205174 /* SelectOptionSegueSender.swift in Sources */,
 				DCB7C1902405C0BE009DEA70 /* KeychainStorage.swift in Sources */,
 				DC44C2E423875C4F00205174 /* StringHelpers.swift in Sources */,
@@ -2964,6 +2969,7 @@
 				DC8EAE4E23BA9F5E0045018F /* WindowSceneObserverFactory.swift in Sources */,
 				DC044686238EF6C20072F597 /* Environment.swift in Sources */,
 				4B00126A1FBA52E5004A587E /* RemoteParticipantUIModel.m in Sources */,
+				DC9A5E492463345F00E4B079 /* LobbyViewController.swift in Sources */,
 				DCAEBF49238446F500141D2D /* SelectTopologyViewModel.swift in Sources */,
 				DCC7E37024085B7200431AC3 /* CommunityCreateTwilioAccessTokenRequest.swift in Sources */,
 				DCF461632385B13000DD8FEA /* AdvancedSettingsViewModel.swift in Sources */,
@@ -2998,12 +3004,12 @@
 				DCEC3CFA2385F8CA00EBDEBF /* EditTextViewModel.swift in Sources */,
 				DC9A5DE4245CA2E000E4B079 /* CustomView.swift in Sources */,
 				DC82A35523FDB6890081578C /* SDKLogLevel.swift in Sources */,
-				DC04469B238F20130072F597 /* SwiftToObjc.swift in Sources */,
 				DC8EAE4523BA96C00045018F /* URLOpenerFactory.swift in Sources */,
 				4B00126F1FBA52E5004A587E /* VariableAlphaToggleButton.m in Sources */,
 				DC8AA8D12367A10E006C06D5 /* TestAppDelegate.swift in Sources */,
 				DCF461672385B17A00DD8FEA /* AdvancedSettingsViewControllerFactory.swift in Sources */,
 				DC1C2F8823A6E7050044FB4D /* DispatchQueueProtocol.swift in Sources */,
+				DC9A5E51246366D500E4B079 /* LocalParticipantFactory.swift in Sources */,
 				DCC7E36324082EB300431AC3 /* AuthError.swift in Sources */,
 				DCAEBF1E2383342C00141D2D /* DestructiveButtonCell.swift in Sources */,
 				DCD940BB243BD6DA00D9ECC5 /* LocalVideoTrackHelpers.swift in Sources */,

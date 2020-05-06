@@ -36,7 +36,7 @@ class MainParticipantStore {
         notificationCenter.addObserver(self, selector: #selector(participanListDidChange(_:)), name: .participantListChange, object: nil)
     }
 
-    @objc func roomDidChange(_ notification:Notification) {
+    @objc func roomDidChange(_ notification: Notification) {
         guard let change = notification.userInfo?["key"] as? RoomChange else { return }
         
         switch change {
@@ -45,7 +45,7 @@ class MainParticipantStore {
         }
     }
     
-    @objc func participantDidChange(_ notification:Notification) {
+    @objc func participantDidChange(_ notification: Notification) {
         guard let change = notification.userInfo?["key"] as? ParticipantUpdate else { return }
         
         switch change {
@@ -57,7 +57,7 @@ class MainParticipantStore {
         }
     }
 
-    @objc func participanListDidChange(_ notification:Notification) {
+    @objc func participanListDidChange(_ notification: Notification) {
         updateMainParticipant() // Check for pin change
     }
     
