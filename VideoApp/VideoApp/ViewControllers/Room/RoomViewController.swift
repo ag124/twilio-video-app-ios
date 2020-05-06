@@ -63,13 +63,21 @@ class RoomViewController: UIViewController {
     }
     
     @IBAction func switchCameraButtonTapped(_ sender: Any) {
-        viewModel.flipCamera()
+        viewModel.cameraPosition = viewModel.cameraPosition == .front ? .back : .front // TODO: Improve with toggle button
     }
 }
 
 extension RoomViewController: RoomViewModelDelegate {
-    func didUpdateData() {
-
+    func didConnect() {
+        // TODO: Show connection status
+    }
+    
+    func didFailToConnect(error: Error) {
+        // TODO: Show connection status
+    }
+    
+    func didDisconnect(error: Error?) {
+        // TODO: Show connection status
     }
     
     // TODO: Rename to indices?

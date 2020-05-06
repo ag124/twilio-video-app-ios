@@ -24,9 +24,16 @@ enum RoomChange {
     case didRemoveRemoteParticipants(participants: [Participant])
 }
 
+enum RoomState {
+    case disconnected
+    case connecting // Includes fetching access token
+    case connected
+}
+
 class Room: NSObject {
     let localParticipant: LocalParticipant
     private(set) var remoteParticipants: [RemoteParticipant] = []
+    private(set) var state: RoomState = .disconnected
     private let accessTokenStore: TwilioAccessTokenStoreReading
     private let connectOptionsFactory: ConnectOptionsFactory
     private let notificationCenter = NotificationCenter.default
@@ -44,7 +51,9 @@ class Room: NSObject {
 
     // TODO: Create new status that includes fetching access token
     func connect(roomName: String) {
-        // TODO: Fatal error if we are already connecting or connected
+        guard state == .disconnected else { fatalError("Connection already in progress.") }
+
+        state = .connecting
         
         accessTokenStore.fetchTwilioAccessToken(roomName: roomName) { [weak self] result in
             guard let self = self else { return }
@@ -59,7 +68,9 @@ class Room: NSObject {
                 )
                 // TODO: Inject
                 self.room = TwilioVideoSDK.connect(options: options, delegate: self)
+                
             case let .failure(error):
+                self.state = .disconnected
                 self.sendRoomUpdate(change: .didFailToConnect(error: error))
             }
         }
@@ -78,7 +89,7 @@ class Room: NSObject {
 
 extension Room: TwilioVideo.RoomDelegate {
     func roomDidConnect(room: TwilioVideo.Room) {
-        print("Connect remote participant count: \(room.remoteParticipants.count)")
+        state = .connected
         localParticipant.participant = room.localParticipant
         updateRemoteParticipants()
         sendRoomUpdate(change: .didConnect)
@@ -89,11 +100,13 @@ extension Room: TwilioVideo.RoomDelegate {
     }
     
     func roomDidFailToConnect(room: TwilioVideo.Room, error: Error) {
+        state = .disconnected
         self.room = nil
         sendRoomUpdate(change: .didFailToConnect(error: error))
     }
     
     func roomDidDisconnect(room: TwilioVideo.Room, error: Error?) {
+        state = .disconnected
         self.room = nil
         let participants = remoteParticipants
         updateRemoteParticipants()

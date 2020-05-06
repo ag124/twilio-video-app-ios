@@ -17,7 +17,9 @@
 import Foundation
 
 protocol RoomViewModelDelegate: AnyObject {
-    func didUpdateData() // TODO: Change to connection changes
+    func didConnect()
+    func didFailToConnect(error: Error)
+    func didDisconnect(error: Error?)
     func didAddParticipants(at indexes: [Int])
     func didRemoveParticipants(at indices: [Int])
     func didMoveParticipant(at index: Int, to newIndex: Int)
@@ -41,6 +43,10 @@ class RoomViewModel {
     var isCameraOn: Bool {
         get { room.localParticipant.isCameraOn }
         set { room.localParticipant.isCameraOn = newValue }
+    }
+    var cameraPosition: AVCaptureDevice.Position {
+        get { room.localParticipant.cameraPosition }
+        set { room.localParticipant.cameraPosition = newValue }
     }
     private let roomName: String
     private let room: Room
@@ -66,22 +72,14 @@ class RoomViewModel {
         participantsStore.togglePin(at: index)
     }
 
-    func flipCamera() {
-//        room.localParticipant.flipCamera()
-    }
-    
     @objc func handleRoomDidChangeNotification(_ notification: Notification) {
         guard let change = notification.userInfo?["key"] as? RoomChange else { return }
         
         switch change {
-        case .didConnect:
-            delegate?.didUpdateData()
-        case .didFailToConnect: // TODO: Handle error
-            break
-        case .didDisconnect: // TODO: Handle error
-            delegate?.didUpdateData()
-        case .didAddRemoteParticipants, .didRemoveRemoteParticipants:
-            break
+        case .didConnect: delegate?.didConnect()
+        case let .didFailToConnect(error): delegate?.didFailToConnect(error: error)
+        case let .didDisconnect(error): delegate?.didDisconnect(error: error)
+        case .didAddRemoteParticipants, .didRemoveRemoteParticipants: break
         }
     }
 
@@ -90,14 +88,10 @@ class RoomViewModel {
         guard let change = notification.userInfo?["key"] as? ParticipantListChange else { return }
 
         switch change {
-        case let .didInsertParticipants(indices):
-            delegate?.didAddParticipants(at: indices)
-        case let .didDeleteParticipants(indices):
-            delegate?.didRemoveParticipants(at: indices)
-        case let .didMoveParticipant(oldIndex, newIndex):
-            delegate?.didMoveParticipant(at: oldIndex, to: newIndex)
-        case let .didUpdateParticipant(index):
-            delegate?.didUpdateParticipantAttributes(at: index)
+        case let .didInsertParticipants(indices): delegate?.didAddParticipants(at: indices)
+        case let .didDeleteParticipants(indices): delegate?.didRemoveParticipants(at: indices)
+        case let .didMoveParticipant(oldIndex, newIndex): delegate?.didMoveParticipant(at: oldIndex, to: newIndex)
+        case let .didUpdateParticipant(index): delegate?.didUpdateParticipantAttributes(at: index)
         }
     }
     
