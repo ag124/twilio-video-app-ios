@@ -50,7 +50,6 @@ enum RoomState {
         self.connectOptionsFactory = connectOptionsFactory
     }
 
-    // TODO: Create new status that includes fetching access token
     func connect(roomName: String) {
         guard state == .disconnected else { fatalError("Connection already in progress.") }
 

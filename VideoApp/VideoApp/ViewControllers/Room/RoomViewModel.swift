@@ -38,7 +38,7 @@ class RoomViewModel {
     }
     var isMicOn: Bool {
         get { room.localParticipant.isMicOn }
-        set { room.localParticipant.isMicOn = newValue } // TODO: Make sure the only gets called on a real change
+        set { room.localParticipant.isMicOn = newValue }
     }
     var isCameraOn: Bool {
         get { room.localParticipant.isCameraOn }
