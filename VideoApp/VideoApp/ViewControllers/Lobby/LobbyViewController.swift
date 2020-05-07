@@ -92,6 +92,10 @@ class LobbyViewController: UIViewController {
                 connectOptionsFactory: ConnectOptionsFactory()
             )
             roomViewController.viewModel = RoomViewModel(roomName: roomTextField.text ?? "", room: room)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil) // TODO: Use a factory
+            let statsViewController = storyboard.instantiateViewController(withIdentifier: "statsViewController") as! StatsViewController
+            statsViewController.videoAppRoom = room
+            roomViewController.statsViewController = statsViewController
         case "showSettings":
             let navigationController = segue.destination as! UINavigationController
             let settingsViewController = navigationController.viewControllers.first as! SettingsViewController

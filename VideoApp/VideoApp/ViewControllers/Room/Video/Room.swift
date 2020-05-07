@@ -31,14 +31,14 @@ enum RoomState {
     case connected
 }
 
-class Room: NSObject {
+@objc class Room: NSObject {
     let localParticipant: LocalParticipant
     private(set) var remoteParticipants: [RemoteParticipant] = []
     private(set) var state: RoomState = .disconnected
+    @objc private(set) var room: TwilioVideo.Room? // Only exposed for stats and should not be used for anything else
     private let accessTokenStore: TwilioAccessTokenStoreReading
     private let connectOptionsFactory: ConnectOptionsFactory
     private let notificationCenter = NotificationCenter.default
-    private var room: TwilioVideo.Room?
     
     init(
         localParticipant: LocalParticipant,

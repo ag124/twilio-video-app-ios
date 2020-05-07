@@ -25,6 +25,7 @@ class RoomViewController: UIViewController {
     @IBOutlet weak var participantCollectionView: UICollectionView!
     @IBOutlet weak var mainVideoView: MainVideoView!
     var viewModel: RoomViewModel!
+    var statsViewController: StatsViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,8 @@ class RoomViewController: UIViewController {
 
         let participant = viewModel.data.mainParticipant
         mainVideoView.configure(identity: participant.identity, videoConfig: participant.videoConfig)
+        
+        statsViewController.addAsSwipeableView(toParentViewController: self)
     }
     
     @IBAction func leaveButtonTapped(_ sender: Any) {
