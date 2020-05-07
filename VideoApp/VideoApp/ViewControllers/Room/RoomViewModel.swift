@@ -14,15 +14,14 @@
 //  limitations under the License.
 //
 
-import AVFoundation
+import AVFoundation // TODO: Maybe avoid this
+import IGListDiffKit
 
 protocol RoomViewModelDelegate: AnyObject {
     func didConnect()
     func didFailToConnect(error: Error)
     func didDisconnect(error: Error?)
-    func didAddParticipants(at indexes: [Int])
-    func didRemoveParticipants(at indices: [Int])
-    func didMoveParticipant(at index: Int, to newIndex: Int)
+    func didUpdateParticipants(diff: ListIndexSetResult)
     func didUpdateParticipantAttributes(at index: Int)
     func didUpdateMainParticipant()
 }
@@ -59,9 +58,9 @@ class RoomViewModel {
         self.room = room
         participantsStore = ParticipantsStore(room: room)
         mainParticipantStore = MainParticipantStore(room: room, participantsStore: participantsStore)
-        notificationCenter.addObserver(self, selector: #selector(handleRoomDidChangeNotification(_:)), name: .roomDidChange, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(participantListChange(_:)), name: .participantListChange, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(mainParticipantChange(_:)), name: .mainParticipantStoreChange, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(handleRoomDidChangeNotification(_:)), name: .roomDidChange, object: room)
+        notificationCenter.addObserver(self, selector: #selector(participantListChange(_:)), name: .participantListChange, object: participantsStore)
+        notificationCenter.addObserver(self, selector: #selector(mainParticipantChange(_:)), name: .mainParticipantStoreChange, object: mainParticipantStore)
     }
     
     func connect() {
@@ -92,9 +91,7 @@ class RoomViewModel {
         guard let change = notification.userInfo?["key"] as? ParticipantListChange else { return }
 
         switch change {
-        case let .didInsertParticipants(indices): delegate?.didAddParticipants(at: indices)
-        case let .didDeleteParticipants(indices): delegate?.didRemoveParticipants(at: indices)
-        case let .didMoveParticipant(oldIndex, newIndex): delegate?.didMoveParticipant(at: oldIndex, to: newIndex)
+        case let .didUpdateList(diff): delegate?.didUpdateParticipants(diff: diff)
         case let .didUpdateParticipant(index): delegate?.didUpdateParticipantAttributes(at: index)
         }
     }

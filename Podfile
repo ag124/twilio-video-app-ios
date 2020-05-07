@@ -10,10 +10,10 @@ target 'Video-Twilio' do
   pod 'Alamofire', '5.0.2'
   pod 'AppCenter/Distribute', '2.5.3'
   pod 'Crashlytics', '3.14.0'
-  pod 'DeepDiff', '2.3.1'
   pod 'Firebase/Analytics', '6.14.0'
   pod 'FirebaseUI/Auth', '8.4.0'
   pod 'FirebaseUI/Google', '8.4.0'
+  pod 'IGListDiffKit'
   pod 'KeychainAccess', '4.1.0'
   pod 'TwilioVideo', '~> 3.2'
 

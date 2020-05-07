@@ -14,6 +14,7 @@
 //  limitations under the License.
 //
 
+import IGListDiffKit
 import UIKit
 
 class RoomViewController: UIViewController {
@@ -65,7 +66,29 @@ class RoomViewController: UIViewController {
     }
 }
 
+extension IndexSet {
+    var indexPaths: [IndexPath] {
+        map { IndexPath(item: $0, section: 0)}
+    }
+}
+
 extension RoomViewController: RoomViewModelDelegate {
+    func didUpdateParticipants(diff: ListIndexSetResult) {
+        participantCollectionView.performBatchUpdates(
+            {
+                participantCollectionView.insertItems(at: diff.inserts.indexPaths)
+                participantCollectionView.deleteItems(at: diff.deletes.indexPaths)
+                diff.moves.forEach { move in
+                    participantCollectionView.moveItem(
+                        at: IndexPath(item: move.from, section: 0),
+                        to: IndexPath(item: move.to, section: 0)
+                    )
+                }
+        },
+            completion: nil
+        )
+    }
+
     func didConnect() {
         roomNameLabel.text = viewModel.data.roomName
     }
@@ -83,19 +106,6 @@ extension RoomViewController: RoomViewModelDelegate {
         showError(error: error) { [weak self] in self?.navigationController?.popViewController(animated: true) }
     }
     
-    // TODO: Rename to indices?
-    func didAddParticipants(at indexes: [Int]) {
-        participantCollectionView.insertItems(at: indexes.map { IndexPath(item: $0, section: 0) })
-    }
-    
-    func didRemoveParticipants(at indices: [Int]) {
-        participantCollectionView.deleteItems(at: indices.map { IndexPath(item: $0, section: 0) }) // Maybe make Int to Index path extension
-    }
-
-    func didMoveParticipant(at index: Int, to newIndex: Int) {
-        participantCollectionView.moveItem(at: IndexPath(item: index, section: 0), to: IndexPath(item: newIndex, section: 0))
-    }
-
     func didUpdateParticipantAttributes(at index: Int) {
         guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ParticipantCell else { return }
         

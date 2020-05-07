@@ -14,13 +14,11 @@
 //  limitations under the License.
 //
 
-import Foundation
+import IGListDiffKit
 
 enum ParticipantListChange {
-    case didInsertParticipants(indices: [Int])
-    case didDeleteParticipants(indices: [Int])
-    case didMoveParticipant(oldIndex: Int, newIndex: Int)
     case didUpdateParticipant(index: Int)
+    case didUpdateList(diff: ListIndexSetResult)
 }
 
 class ParticipantsStore {
@@ -56,10 +54,10 @@ class ParticipantsStore {
             post(change: .didUpdateParticipant(index: index))
             
             if participant.screenVideoTrack != nil && index != participants.newScreenIndex {
-                participants.remove(at: index)
-                let newIndex = participants.newScreenIndex
-                participants.insert(participant, at: newIndex)
-                post(change: .didMoveParticipant(oldIndex: index, newIndex: newIndex))
+                var new = participants
+                new.remove(at: index)
+                new.insert(participant, at: new.newScreenIndex)
+                sendDiff(new: new)
             }
         }
     }
@@ -75,45 +73,37 @@ class ParticipantsStore {
     }
     
     private func insertParticipants(participants: [Participant]) {
+        var new = self.participants
+        
         participants.forEach { participant in
             let index: Int
             
             if !participant.isRemote {
                 index = 0
             } else if participant.screenVideoTrack != nil {
-                index = self.participants.newScreenIndex
+                index = new.newScreenIndex
             } else {
-                index = self.participants.endIndex
+                index = new.endIndex
             }
             
-            self.participants.insert(participant, at: index)
+            new.insert(participant, at: index)
         }
         
-        var indices: [Int] = []
-
-        participants.forEach { participant in
-            if let index = self.participants.index(of: participant) {
-                indices.append(index)
-            }
-        }
-
-        post(change: .didInsertParticipants(indices: indices))
+        sendDiff(new: new)
+    }
+    
+    private func sendDiff(new: [Participant]) {
+        let diff = ListDiff(oldArray: self.participants, newArray: new, option: .equality)
+        self.participants = new
+        post(change: .didUpdateList(diff: diff))
     }
     
     private func deleteParticipants(participants: [Participant]) {
-        var indices: [Int] = []
-
-        participants.forEach { participant in
-            if let index = self.participants.index(of: participant) {
-                indices.append(index)
-            }
-        }
-        
-        participants.forEach { participant in
-            self.participants.removeAll(where: { participant === $0 }) // TODO: Maybe this can be even cleaner
+        let new = self.participants.filter { oldParticipant in
+            participants.first { $0 === oldParticipant } == nil
         }
 
-        post(change: .didDeleteParticipants(indices: indices))
+        sendDiff(new: new)
     }
     
     private func post(change: ParticipantListChange) {

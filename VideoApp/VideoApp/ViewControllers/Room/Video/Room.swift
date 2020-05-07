@@ -114,6 +114,7 @@ extension Room: TwilioVideo.RoomDelegate {
     func roomDidDisconnect(room: TwilioVideo.Room, error: Error?) {
         state = .disconnected
         self.room = nil
+        localParticipant.participant = nil
         let participants = remoteParticipants
         updateRemoteParticipants()
         sendRoomUpdate(change: .didDisconnect(error: error))

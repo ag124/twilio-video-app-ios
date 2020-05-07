@@ -14,6 +14,7 @@
 //  limitations under the License.
 //
 
+import IGListDiffKit
 import TwilioVideo
 
 typealias NetworkQualityLevel = TwilioVideo.NetworkQualityLevel
@@ -22,7 +23,7 @@ enum ParticipantUpdate {
     case didUpdate(participant: Participant)
 }
 
-protocol Participant: AnyObject {
+protocol Participant: AnyObject, ListDiffable {
     var identity: String { get }
     var cameraVideoTrack: VideoTrack? { get }
     var screenVideoTrack: VideoTrack? { get }

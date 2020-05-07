@@ -14,6 +14,7 @@
 //  limitations under the License.
 //
 
+import IGListDiffKit
 import TwilioVideo
 
 class RemoteParticipant: NSObject, Participant {
@@ -31,12 +32,22 @@ class RemoteParticipant: NSObject, Participant {
     
     init(participant: TwilioVideo.RemoteParticipant) {
         self.participant = participant
-        super.init()
+        super.init() // TODO: Required?
         participant.delegate = self
     }
     
     private func postChange(_ change: ParticipantUpdate) {
         self.notificationCenter.post(name: .participantDidChange, object: self, userInfo: ["key": change])
+    }
+}
+
+extension RemoteParticipant {
+    func diffIdentifier() -> NSObjectProtocol {
+        identity as NSString
+    }
+
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+        return true // Don't use this to detect updates because the SDK tells us when a participant updates
     }
 }
 
