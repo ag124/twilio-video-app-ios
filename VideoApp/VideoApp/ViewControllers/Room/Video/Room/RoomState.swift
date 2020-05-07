@@ -16,12 +16,8 @@
 
 import Foundation
 
-class LocalParticipantFactory {
-    func makeLocalParticipant() -> LocalParticipant {
-        LocalParticipant(
-            identity: UserStoreFactory().makeUserStore().user.displayName,
-            micTrackFactory: MicTrackFactory(),
-            cameraFactory: CameraFactory()
-        )
-    }
+enum RoomState {
+    case disconnected
+    case connecting // Includes fetching access token
+    case connected
 }

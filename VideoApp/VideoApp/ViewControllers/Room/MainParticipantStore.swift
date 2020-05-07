@@ -24,28 +24,29 @@ class MainParticipantStore {
     private(set) var mainParticipant: Participant
     private let room: Room
     private let participantsStore: ParticipantsStore
-    private let notificationCenter = NotificationCenter.default
+    private let notificationCenter: NotificationCenter
     
-    init(room: Room, participantsStore: ParticipantsStore) {
+    init(room: Room, participantsStore: ParticipantsStore, notificationCenter: NotificationCenter) {
         self.room = room
         self.participantsStore = participantsStore
-        self.mainParticipant = room.localParticipant // Maybe make this cleaner
-        updateMainParticipant()
+        self.notificationCenter = notificationCenter
+        self.mainParticipant = room.localParticipant
+        update()
         notificationCenter.addObserver(self, selector: #selector(roomDidChange(_:)), name: .roomDidChange, object: nil)
         notificationCenter.addObserver(self, selector: #selector(participantDidChange(_:)), name: .participantDidChange, object: nil)
         notificationCenter.addObserver(self, selector: #selector(participanListDidChange(_:)), name: .participantListChange, object: nil)
     }
 
-    @objc func roomDidChange(_ notification: Notification) {
+    @objc private func roomDidChange(_ notification: Notification) {
         guard let payload = notification.payload as? RoomChange else { return }
         
         switch payload {
         case .didStartConnecting, .didConnect, .didFailToConnect, .didDisconnect: break
-        case .didAddRemoteParticipants, .didRemoveRemoteParticipants: updateMainParticipant()
+        case .didAddRemoteParticipants, .didRemoveRemoteParticipants: update()
         }
     }
     
-    @objc func participantDidChange(_ notification: Notification) {
+    @objc private func participantDidChange(_ notification: Notification) {
         guard let payload = notification.payload as? ParticipantUpdate else { return }
         
         switch payload {
@@ -53,44 +54,35 @@ class MainParticipantStore {
             if participant === mainParticipant {
                 post(.didUpdateMainParticipant)
             }
-            updateMainParticipant()
+            
+            update()
         }
     }
 
-    @objc func participanListDidChange(_ notification: Notification) {
-        updateMainParticipant() // Check for pin change
+    @objc private func participanListDidChange(_ notification: Notification) {
+        update()
     }
     
-    @discardableResult private func updateMainParticipant() -> Bool {
-        let new = findMainParticipant()
+    private func update() {
+        let pinnedParticipant = participantsStore.participants.first(where: { $0.isPinned })
+        let screenParticipant = room.remoteParticipants.first(where: { $0.screenTrack != nil })
+        let dominantSpeaker = room.remoteParticipants.first(where: { $0.isDominantSpeaker })
+        let firstRemoteParticipant = participantsStore.participants.first(where: { $0.isRemote })
+        
+        let new =
+            pinnedParticipant ??
+            screenParticipant ??
+            dominantSpeaker ??
+            firstRemoteParticipant ??
+            room.localParticipant
 
         if new.identity != mainParticipant.identity {
             mainParticipant = new
             post(.didUpdateMainParticipant)
-            return true
-        } else {
-            return false
         }
-    }
-    
-    private func findMainParticipant() -> Participant {
-        participantsStore.pinnedParticipant ??
-            room.remoteParticipants.screenPresenter ??
-            room.remoteParticipants.first(where: { $0.isDominantSpeaker }) ??
-            participantsStore.firstRemoteParticipant ??
-            room.localParticipant
     }
     
     private func post(_ payload: MainParticipantStoreChange) {
         notificationCenter.post(name: .mainParticipantStoreChange, object: self, payload: payload)
     }
-}
-
-extension Array where Element == RemoteParticipant {
-    var screenPresenter: Participant? { first(where: { $0.screenVideoTrack != nil }) }
-}
-
-private extension ParticipantsStore {
-    var firstRemoteParticipant: Participant? { participants.first(where: { $0.isRemote })}
-    var pinnedParticipant: Participant? { participants.first(where: { $0.isPinned })} // Probably can use room
 }

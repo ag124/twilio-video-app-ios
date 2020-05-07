@@ -17,7 +17,7 @@
 import IGListDiffKit
 import TwilioVideo
 
-typealias NetworkQualityLevel = TwilioVideo.NetworkQualityLevel
+typealias NetworkQualityLevel = TwilioVideo.NetworkQualityLevel // So UI doesn't have to import TwilioVideo
 
 enum ParticipantUpdate {
     case didUpdate(participant: Participant)
@@ -25,12 +25,12 @@ enum ParticipantUpdate {
 
 protocol Participant: AnyObject, ListDiffable {
     var identity: String { get }
-    var cameraVideoTrack: VideoTrack? { get }
-    var screenVideoTrack: VideoTrack? { get }
-    var isMicOn: Bool { get }
-    var shouldMirrorVideo: Bool { get } // Rename to should mirror camera, might be able to remove this or implement in extension
+    var cameraTrack: VideoTrack? { get }
+    var screenTrack: VideoTrack? { get }
+    var shouldMirrorCamera: Bool { get }
     var networkQualityLevel: NetworkQualityLevel { get }
     var isRemote: Bool { get }
-    var isPinned: Bool { get set }
+    var isMicOn: Bool { get }
     var isDominantSpeaker: Bool { get }
+    var isPinned: Bool { get set }
 }

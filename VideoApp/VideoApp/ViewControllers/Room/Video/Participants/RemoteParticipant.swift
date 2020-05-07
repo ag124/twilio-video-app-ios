@@ -19,19 +19,20 @@ import TwilioVideo
 
 class RemoteParticipant: NSObject, Participant {
     var identity: String { participant.identity }
-    var isMicOn: Bool { participant.remoteAudioTracks.first?.isTrackEnabled == true } // TODO: Use correct track name
-    var cameraVideoTrack: VideoTrack? { participant.remoteVideoTracks.first(where: { $0.trackName.contains("camera") })?.remoteTrack }
-    var screenVideoTrack: VideoTrack? { participant.remoteVideoTracks.first(where: { $0.trackName.contains("screen") })?.remoteTrack }
-    let shouldMirrorVideo = false
-    let isRemote = true
-    var isPinned = false
-    var isDominantSpeaker = false { didSet { postUpdate() } }
+    var cameraTrack: VideoTrack? { participant.remoteVideoTrack(name: TrackName.camera) }
+    var screenTrack: VideoTrack? { participant.remoteVideoTrack(name: TrackName.screen) }
+    let shouldMirrorCamera = false
     var networkQualityLevel: NetworkQualityLevel { participant.networkQualityLevel }
+    let isRemote = true
+    var isMicOn: Bool { participant.remoteAudioTracks.first(where: { $0.trackName == TrackName.mic })?.isTrackEnabled == true }
+    var isDominantSpeaker = false { didSet { postUpdate() } }
+    var isPinned = false
     private let participant: TwilioVideo.RemoteParticipant
-    private let notificationCenter = NotificationCenter.default
+    private let notificationCenter: NotificationCenter
     
-    init(participant: TwilioVideo.RemoteParticipant) {
+    init(participant: TwilioVideo.RemoteParticipant, notificationCenter: NotificationCenter) {
         self.participant = participant
+        self.notificationCenter = notificationCenter
         super.init()
         participant.delegate = self
     }
@@ -42,7 +43,7 @@ class RemoteParticipant: NSObject, Participant {
     }
 }
 
-extension RemoteParticipant {
+extension RemoteParticipant: ListDiffable {
     func diffIdentifier() -> NSObjectProtocol {
         identity as NSString
     }
@@ -53,20 +54,6 @@ extension RemoteParticipant {
 }
 
 extension RemoteParticipant: RemoteParticipantDelegate {
-    func remoteParticipantDidPublishVideoTrack(
-        participant: TwilioVideo.RemoteParticipant,
-        publication: RemoteVideoTrackPublication
-    ) {
-//        delegate?.didUpdateVideoConfig(participant: self)
-    }
-    
-    func remoteParticipantDidUnpublishVideoTrack(
-        participant: TwilioVideo.RemoteParticipant,
-        publication: RemoteVideoTrackPublication
-    ) {
-//        delegate?.didUpdateVideoConfig(participant: self)
-    }
-
     func remoteParticipantDidEnableVideoTrack(
         participant: TwilioVideo.RemoteParticipant,
         publication: RemoteVideoTrackPublication
@@ -132,5 +119,11 @@ extension RemoteParticipant: RemoteParticipantDelegate {
         networkQualityLevel: NetworkQualityLevel
     ) {
         postUpdate()
+    }
+}
+
+private extension TwilioVideo.RemoteParticipant {
+    func remoteVideoTrack(name: String) -> VideoTrack? {
+        remoteVideoTracks.first(where: { $0.trackName.contains(name) })?.remoteTrack
     }
 }

@@ -29,7 +29,7 @@ struct RoomViewModelData {
                 networkQualityLevel: participant.networkQualityLevel,
                 isPinned: participant.isPinned
             )
-            videoConfig = .init(videoTrack: participant.cameraVideoTrack, shouldMirror: participant.shouldMirrorVideo)
+            videoConfig = .init(videoTrack: participant.cameraTrack, shouldMirror: participant.shouldMirrorCamera)
         }
     }
     
@@ -40,8 +40,8 @@ struct RoomViewModelData {
         init(participant: VideoApp.Participant) {
             identity = participant.identity
             videoConfig = .init(
-                videoTrack: participant.screenVideoTrack ?? participant.cameraVideoTrack,
-                shouldMirror: participant.shouldMirrorVideo
+                videoTrack: participant.screenTrack ?? participant.cameraTrack,
+                shouldMirror: participant.shouldMirrorCamera
             )
         }
     }

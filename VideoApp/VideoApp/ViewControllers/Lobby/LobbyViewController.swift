@@ -86,12 +86,11 @@ class LobbyViewController: UIViewController {
         switch segue.identifier {
         case "roomSegue":
             let roomViewController = segue.destination as! RoomViewController
-            let room = Room(
-                localParticipant: participant,
-                accessTokenStore: TwilioAccessTokenStoreFactory().makeTwilioAccessTokenStore(),
-                connectOptionsFactory: ConnectOptionsFactory()
+            let room = RoomFactory().makeRoom(localParticipant: participant)
+            roomViewController.viewModel = RoomViewModelFactory().makeRoomViewModel(
+                roomName: roomTextField.text ?? "",
+                room: room
             )
-            roomViewController.viewModel = RoomViewModel(roomName: roomTextField.text ?? "", room: room)
             let storyboard = UIStoryboard(name: "Main", bundle: nil) // TODO: Use a factory
             let statsViewController = storyboard.instantiateViewController(withIdentifier: "statsViewController") as! StatsViewController
             statsViewController.videoAppRoom = room
@@ -162,8 +161,8 @@ class LobbyViewController: UIViewController {
         videoView.configure(
             identity: participant.identity,
             videoConfig: .init(
-                videoTrack: isVisible ? participant.cameraVideoTrack : nil,
-                shouldMirror: participant.shouldMirrorVideo
+                videoTrack: isVisible ? participant.cameraTrack : nil,
+                shouldMirror: participant.shouldMirrorCamera
             )
         )
     }

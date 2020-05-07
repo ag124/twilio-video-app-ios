@@ -19,14 +19,11 @@ import TwilioVideo
 
 class LocalParticipant: NSObject, Participant {
     let identity: String
-    var cameraVideoTrack: VideoTrack? { localCameraVideoTrack }
-    var screenVideoTrack: VideoTrack? { nil }
-    var localCameraVideoTrack: LocalVideoTrack? { camera?.track }
-    var shouldMirrorVideo: Bool { cameraPosition == .front }
-    let isRemote = false
-    var isPinned = false
-    let isDominantSpeaker = false
+    var cameraTrack: VideoTrack? { localCameraTrack }
+    var screenTrack: VideoTrack? { nil }
+    var shouldMirrorCamera: Bool { cameraPosition == .front }
     var networkQualityLevel: NetworkQualityLevel { participant?.networkQualityLevel ?? .unknown }
+    let isRemote = false
     var isMicOn: Bool {
         get {
             micTrack?.isEnabled ?? false
@@ -47,6 +44,8 @@ class LocalParticipant: NSObject, Participant {
             postUpdate()
         }
     }
+    let isDominantSpeaker = false
+    var isPinned = false
     var isCameraOn: Bool {
         get {
             camera?.track.isEnabled ?? false
@@ -69,23 +68,28 @@ class LocalParticipant: NSObject, Participant {
         }
     }
     var participant: TwilioVideo.LocalParticipant? {
-        didSet {
-            participant?.delegate = self
-        }
+        didSet { participant?.delegate = self }
     }
+    var localCameraTrack: LocalVideoTrack? { camera?.track }
     var cameraPosition: AVCaptureDevice.Position = .front {
         didSet { camera?.position = cameraPosition }
     }
     private(set) var micTrack: LocalAudioTrack?
-    private let notificationCenter = NotificationCenter.default
     private let micTrackFactory: MicTrackFactory
     private let cameraFactory: CameraFactory
+    private let notificationCenter: NotificationCenter
     private var camera: Camera?
-    
-    init(identity: String, micTrackFactory: MicTrackFactory, cameraFactory: CameraFactory) {
+
+    init(
+        identity: String,
+        micTrackFactory: MicTrackFactory,
+        cameraFactory: CameraFactory,
+        notificationCenter: NotificationCenter
+    ) {
         self.identity = identity
         self.micTrackFactory = micTrackFactory
         self.cameraFactory = cameraFactory
+        self.notificationCenter = notificationCenter
     }
 
     private func postUpdate() {
@@ -94,7 +98,7 @@ class LocalParticipant: NSObject, Participant {
     }
 }
 
-extension LocalParticipant {
+extension LocalParticipant: ListDiffable {
     func diffIdentifier() -> NSObjectProtocol {
         identity as NSString
     }
@@ -110,7 +114,7 @@ extension LocalParticipant: LocalParticipantDelegate {
         videoTrack: LocalVideoTrack,
         error: Error
     ) {
-
+        print("Failed to publish video track: \(error)")
     }
     
     func localParticipantDidFailToPublishAudioTrack(
@@ -118,7 +122,7 @@ extension LocalParticipant: LocalParticipantDelegate {
         audioTrack: LocalAudioTrack,
         error: Error
     ) {
-
+        print("Failed to publish audio track: \(error)")
     }
     
     func localParticipantNetworkQualityLevelDidChange(

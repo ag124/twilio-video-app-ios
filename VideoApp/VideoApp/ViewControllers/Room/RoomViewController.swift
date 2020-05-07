@@ -73,22 +73,6 @@ extension IndexSet {
 }
 
 extension RoomViewController: RoomViewModelDelegate {
-    func didUpdateParticipants(diff: ListIndexSetResult) {
-        participantCollectionView.performBatchUpdates(
-            {
-                participantCollectionView.insertItems(at: diff.inserts.indexPaths)
-                participantCollectionView.deleteItems(at: diff.deletes.indexPaths)
-                diff.moves.forEach { move in
-                    participantCollectionView.moveItem(
-                        at: IndexPath(item: move.from, section: 0),
-                        to: IndexPath(item: move.to, section: 0)
-                    )
-                }
-        },
-            completion: nil
-        )
-    }
-
     func didConnect() {
         roomNameLabel.text = viewModel.data.roomName
     }
@@ -105,8 +89,24 @@ extension RoomViewController: RoomViewModelDelegate {
         
         showError(error: error) { [weak self] in self?.navigationController?.popViewController(animated: true) }
     }
-    
-    func didUpdateParticipantAttributes(at index: Int) {
+
+    func didUpdateList(diff: ListIndexSetResult) {
+        participantCollectionView.performBatchUpdates(
+            {
+                participantCollectionView.insertItems(at: diff.inserts.indexPaths)
+                participantCollectionView.deleteItems(at: diff.deletes.indexPaths)
+                diff.moves.forEach { move in
+                    participantCollectionView.moveItem(
+                        at: IndexPath(item: move.from, section: 0),
+                        to: IndexPath(item: move.to, section: 0)
+                    )
+                }
+        },
+            completion: nil
+        )
+    }
+
+    func didUpdateParticipant(at index: Int) {
         guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ParticipantCell else { return }
         
         let participant = viewModel.data.participants[index]

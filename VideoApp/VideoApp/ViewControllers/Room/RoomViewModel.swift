@@ -21,8 +21,8 @@ protocol RoomViewModelDelegate: AnyObject {
     func didConnect()
     func didFailToConnect(error: Error)
     func didDisconnect(error: Error?)
-    func didUpdateParticipants(diff: ListIndexSetResult)
-    func didUpdateParticipantAttributes(at index: Int)
+    func didUpdateList(diff: ListIndexSetResult)
+    func didUpdateParticipant(at index: Int)
     func didUpdateMainParticipant()
 }
 
@@ -49,15 +49,22 @@ class RoomViewModel {
     }
     private let roomName: String
     private let room: Room
-    private let participantsStore: ParticipantsStore!
-    private let mainParticipantStore: MainParticipantStore!
-    private let notificationCenter = NotificationCenter.default
+    private let participantsStore: ParticipantsStore
+    private let mainParticipantStore: MainParticipantStore
+    private let notificationCenter: NotificationCenter
 
-    init(roomName: String, room: Room) {
+    init(
+        roomName: String,
+        room: Room,
+        participantsStore: ParticipantsStore,
+        mainParticipantStore: MainParticipantStore,
+        notificationCenter: NotificationCenter
+    ) {
         self.roomName = roomName
         self.room = room
-        participantsStore = ParticipantsStore(room: room)
-        mainParticipantStore = MainParticipantStore(room: room, participantsStore: participantsStore)
+        self.participantsStore = participantsStore
+        self.mainParticipantStore = mainParticipantStore
+        self.notificationCenter = notificationCenter
         notificationCenter.addObserver(self, selector: #selector(handleRoomDidChangeNotification(_:)), name: .roomDidChange, object: room)
         notificationCenter.addObserver(self, selector: #selector(participantListChange(_:)), name: .participantListChange, object: participantsStore)
         notificationCenter.addObserver(self, selector: #selector(mainParticipantChange(_:)), name: .mainParticipantStoreChange, object: mainParticipantStore)
@@ -90,8 +97,8 @@ class RoomViewModel {
         guard let payload = notification.payload as? ParticipantListChange else { return }
 
         switch payload {
-        case let .didUpdateList(diff): delegate?.didUpdateParticipants(diff: diff)
-        case let .didUpdateParticipant(index): delegate?.didUpdateParticipantAttributes(at: index)
+        case let .didUpdateList(diff): delegate?.didUpdateList(diff: diff)
+        case let .didUpdateParticipant(index): delegate?.didUpdateParticipant(at: index)
         }
     }
     

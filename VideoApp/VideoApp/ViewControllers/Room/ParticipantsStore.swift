@@ -24,14 +24,36 @@ enum ParticipantListChange {
 class ParticipantsStore {
     private(set) var participants: [Participant] = []
     private let room: Room
-    private let notificationCenter = NotificationCenter.default
+    private let notificationCenter: NotificationCenter
     
-    init(room: Room) {
+    init(room: Room, notificationCenter: NotificationCenter) {
         self.room = room
+        self.notificationCenter = notificationCenter
         insertParticipants(participants: [room.localParticipant] + room.remoteParticipants)
+
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(handleRoomDidChangeNotification(_:)),
+            name: .roomDidChange,
+            object: room
+        )
+
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(handleParticipantDidChangeNotification(_:)),
+            name: .participantDidChange,
+            object: nil
+        )
+    }
+
+    func togglePin(at index: Int) {
+        if let oldIndex = participants.firstIndex(where: { $0.isPinned }), oldIndex != index {
+            participants[oldIndex].isPinned = false
+            post(.didUpdateParticipant(index: oldIndex))
+        }
         
-        notificationCenter.addObserver(self, selector: #selector(handleRoomDidChangeNotification(_:)), name: .roomDidChange, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(handleParticipantDidChangeNotification(_:)), name: .participantDidChange, object: nil)
+        participants[index].isPinned = !participants[index].isPinned
+        post(.didUpdateParticipant(index: index))
     }
 
     @objc func handleRoomDidChangeNotification(_ notification:Notification) {
@@ -49,27 +71,17 @@ class ParticipantsStore {
         
         switch payload {
         case let .didUpdate(participant):
-            guard let index = participants.index(of: participant) else { return }
+            guard let index = participants.firstIndex(where: { $0 === participant }) else { return }
             
             post(.didUpdateParticipant(index: index))
             
-            if participant.screenVideoTrack != nil && index != participants.newScreenIndex {
+            if participant.screenTrack != nil && index != participants.screenIndex {
                 var new = participants
                 new.remove(at: index)
-                new.insert(participant, at: new.newScreenIndex)
-                sendDiff(new: new)
+                new.insert(participant, at: new.screenIndex)
+                postDiff(new: new)
             }
         }
-    }
-
-    func togglePin(at index: Int) {
-        if let oldPinIndex = participants.firstIndex(where: { $0.isPinned }), oldPinIndex != index {
-            participants[oldPinIndex].isPinned = false
-            post(.didUpdateParticipant(index: oldPinIndex))
-        }
-        
-        participants[index].isPinned = !participants[index].isPinned
-        post(.didUpdateParticipant(index: index))
     }
     
     private func insertParticipants(participants: [Participant]) {
@@ -80,8 +92,8 @@ class ParticipantsStore {
             
             if !participant.isRemote {
                 index = 0
-            } else if participant.screenVideoTrack != nil {
-                index = new.newScreenIndex
+            } else if participant.screenTrack != nil {
+                index = new.screenIndex
             } else {
                 index = new.endIndex
             }
@@ -89,30 +101,28 @@ class ParticipantsStore {
             new.insert(participant, at: index)
         }
         
-        sendDiff(new: new)
+        postDiff(new: new)
     }
     
-    private func sendDiff(new: [Participant]) {
+    private func deleteParticipants(participants: [Participant]) {
+        let new = self.participants.filter { participant in
+            participants.first { $0 === participant } == nil
+        }
+
+        postDiff(new: new)
+    }
+
+    private func postDiff(new: [Participant]) {
         let diff = ListDiff(oldArray: self.participants, newArray: new, option: .equality)
         self.participants = new
         post(.didUpdateList(diff: diff))
     }
-    
-    private func deleteParticipants(participants: [Participant]) {
-        let new = self.participants.filter { oldParticipant in
-            participants.first { $0 === oldParticipant } == nil
-        }
 
-        sendDiff(new: new)
-    }
-    
     private func post(_ payload: ParticipantListChange) {
         notificationCenter.post(name: .participantListChange, object: self, payload: payload)
     }
 }
 
-// TODO: Move
 private extension Array where Element == Participant {
-    var newScreenIndex: Int { firstIndex(where: { $0.isRemote }) ?? endIndex }
-    func index(of participant: Participant) -> Int? { firstIndex(where: { $0 === participant }) }
+    var screenIndex: Int { firstIndex(where: { $0.isRemote }) ?? endIndex }
 }
