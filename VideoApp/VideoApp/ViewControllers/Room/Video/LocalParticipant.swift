@@ -19,7 +19,6 @@ import TwilioVideo
 
 class LocalParticipant: NSObject, Participant {
     let identity: String
-    var micAudioTrack: LocalAudioTrack? { micTrack } // TODO: Is this a duplicate property?
     var cameraVideoTrack: VideoTrack? { localCameraVideoTrack }
     var screenVideoTrack: VideoTrack? { nil }
     var localCameraVideoTrack: LocalVideoTrack? { camera?.track }
@@ -78,10 +77,10 @@ class LocalParticipant: NSObject, Participant {
     var cameraPosition: AVCaptureDevice.Position = .front {
         didSet { camera?.position = cameraPosition }
     }
+    private(set) var micTrack: LocalAudioTrack?
     private let notificationCenter = NotificationCenter.default
     private let micTrackFactory: MicTrackFactory
     private let cameraFactory: CameraFactory
-    private var micTrack: LocalAudioTrack?
     private var camera: Camera?
     
     init(identity: String, micTrackFactory: MicTrackFactory, cameraFactory: CameraFactory) {

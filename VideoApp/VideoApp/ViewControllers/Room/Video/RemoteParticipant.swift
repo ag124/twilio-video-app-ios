@@ -25,19 +25,19 @@ class RemoteParticipant: NSObject, Participant {
     let shouldMirrorVideo = false
     let isRemote = true
     var isPinned = false
-    var isDominantSpeaker = false { didSet { postChange(.didUpdate(participant: self)) } }
+    var isDominantSpeaker = false { didSet { postUpdate() } }
     var networkQualityLevel: NetworkQualityLevel { participant.networkQualityLevel }
     private let participant: TwilioVideo.RemoteParticipant
     private let notificationCenter = NotificationCenter.default
     
     init(participant: TwilioVideo.RemoteParticipant) {
         self.participant = participant
-        super.init() // TODO: Required?
+        super.init()
         participant.delegate = self
     }
     
-    private func postChange(_ change: ParticipantUpdate) {
-        self.notificationCenter.post(name: .participantDidChange, object: self, userInfo: ["key": change])
+    private func postUpdate() {
+        self.notificationCenter.post(name: .participantDidChange, object: self, userInfo: ["key": ParticipantUpdate.didUpdate(participant: self)])
     }
 }
 
@@ -70,14 +70,14 @@ extension RemoteParticipant: RemoteParticipantDelegate {
         participant: TwilioVideo.RemoteParticipant,
         publication: RemoteVideoTrackPublication
     ) {
-        postChange(.didUpdate(participant: self)) // TODO: Make more dry
+        postUpdate()
     }
     
     func remoteParticipantDidDisableVideoTrack(
         participant: TwilioVideo.RemoteParticipant,
         publication: RemoteVideoTrackPublication
     ) {
-        postChange(.didUpdate(participant: self))
+        postUpdate()
     }
     
     func didSubscribeToVideoTrack(
@@ -85,7 +85,7 @@ extension RemoteParticipant: RemoteParticipantDelegate {
         publication: RemoteVideoTrackPublication,
         participant: TwilioVideo.RemoteParticipant
     ) {
-        postChange(.didUpdate(participant: self))
+        postUpdate()
     }
     
     func didUnsubscribeFromVideoTrack(
@@ -93,21 +93,21 @@ extension RemoteParticipant: RemoteParticipantDelegate {
         publication: RemoteVideoTrackPublication,
         participant: TwilioVideo.RemoteParticipant
     ) {
-        postChange(.didUpdate(participant: self))
+        postUpdate()
     }
     
     func remoteParticipantDidEnableAudioTrack(
         participant: TwilioVideo.RemoteParticipant,
         publication: RemoteAudioTrackPublication
     ) {
-        postChange(.didUpdate(participant: self))
+        postUpdate()
     }
     
     func remoteParticipantDidDisableAudioTrack(
         participant: TwilioVideo.RemoteParticipant,
         publication: RemoteAudioTrackPublication
     ) {
-        postChange(.didUpdate(participant: self))
+        postUpdate()
     }
     
     func didSubscribeToAudioTrack(
@@ -115,7 +115,7 @@ extension RemoteParticipant: RemoteParticipantDelegate {
         publication: RemoteAudioTrackPublication,
         participant: TwilioVideo.RemoteParticipant
     ) {
-        postChange(.didUpdate(participant: self))
+        postUpdate()
     }
     
     func didUnsubscribeFromAudioTrack(
@@ -123,13 +123,13 @@ extension RemoteParticipant: RemoteParticipantDelegate {
         publication: RemoteAudioTrackPublication,
         participant: TwilioVideo.RemoteParticipant
     ) {
-        postChange(.didUpdate(participant: self))
+        postUpdate()
     }
 
     func remoteParticipantNetworkQualityLevelDidChange(
         participant: TwilioVideo.RemoteParticipant,
         networkQualityLevel: NetworkQualityLevel
     ) {
-        postChange(.didUpdate(participant: self))
+        postUpdate()
     }
 }

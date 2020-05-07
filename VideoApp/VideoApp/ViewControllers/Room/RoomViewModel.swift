@@ -14,7 +14,7 @@
 //  limitations under the License.
 //
 
-import AVFoundation // TODO: Maybe avoid this
+import AVFoundation
 import IGListDiffKit
 
 protocol RoomViewModelDelegate: AnyObject {
@@ -86,7 +86,6 @@ class RoomViewModel {
         }
     }
 
-    // TODO: Maybe have data source observe directly
     @objc func participantListChange(_ notification: Notification) {
         guard let change = notification.userInfo?["key"] as? ParticipantListChange else { return }
 

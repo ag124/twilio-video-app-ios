@@ -51,7 +51,6 @@ class Camera: NSObject {
     }
 
     init?(position: AVCaptureDevice.Position) {
-        NSLog("TCR: Create camera")
         guard let source = sourceFactory.makeCameraSource() else {
             print("unable to create a capturer..."); return nil
         }
@@ -71,7 +70,6 @@ class Camera: NSObject {
         
         source.requestOutputFormat(config.outputFormat)
         
-        NSLog("TCR: Start capture")
         source.startCapture(device: captureDevice, format: config.inputFormat) { _, _, _ in // TODO: Log error
             NSLog("TCR: Did start capturing")
         }

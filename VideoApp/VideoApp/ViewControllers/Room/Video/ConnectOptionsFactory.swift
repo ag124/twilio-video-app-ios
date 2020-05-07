@@ -25,7 +25,7 @@ import TwilioVideo
         audioTracks: [LocalAudioTrack],
         videoTracks: [LocalVideoTrack]
     ) -> ConnectOptions {
-        let connectOptions = ConnectOptions(token: accessToken) { builder in // TODO: Remove the variable
+        ConnectOptions(token: accessToken) { builder in
             builder.roomName = roomName
             builder.audioTracks = audioTracks
             builder.videoTracks = videoTracks
@@ -58,7 +58,5 @@ import TwilioVideo
                 }
             }
         }
-        
-        return connectOptions
     }
 }

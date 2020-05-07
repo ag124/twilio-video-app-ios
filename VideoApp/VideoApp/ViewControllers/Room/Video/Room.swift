@@ -54,7 +54,7 @@ enum RoomState {
         guard state == .disconnected else { fatalError("Connection already in progress.") }
 
         state = .connecting
-        sendRoomUpdate(change: .didStartConnecting) // TODO: Make more dry
+        sendRoomUpdate(change: .didStartConnecting)
 
         accessTokenStore.fetchTwilioAccessToken(roomName: roomName) { [weak self] result in
             guard let self = self else { return }
@@ -64,7 +64,7 @@ enum RoomState {
                 let options = self.connectOptionsFactory.makeConnectOptions(
                     accessToken: accessToken,
                     roomName: roomName,
-                    audioTracks: [self.localParticipant.micAudioTrack].compactMap { $0 },
+                    audioTracks: [self.localParticipant.micTrack].compactMap { $0 },
                     videoTracks: [self.localParticipant.localCameraVideoTrack].compactMap { $0 }
                 )
                 // TODO: Inject
