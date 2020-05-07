@@ -170,8 +170,8 @@ class LobbyViewController: UIViewController {
     
     private func refresh() {
         loggedInUser.text = participant.identity
-        audioToggleButton.isSelected = participant.isMicOn
-        videoToggleButton.isSelected = participant.isCameraOn
+        audioToggleButton.isSelected = !participant.isMicOn
+        videoToggleButton.isSelected = !participant.isCameraOn
         flipCameraButton.isEnabled = participant.isCameraOn
     }
 

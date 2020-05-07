@@ -18,7 +18,7 @@ import TwilioVideo
 
 class LocalParticipant: NSObject, Participant {
     let identity: String
-    var micAudioTrack: LocalAudioTrack? { micTrack }
+    var micAudioTrack: LocalAudioTrack? { micTrack } // TODO: Is this a duplicate property?
     var cameraVideoTrack: VideoTrack? { localCameraVideoTrack }
     var screenVideoTrack: VideoTrack? { nil }
     var localCameraVideoTrack: LocalVideoTrack? { camera?.track }
@@ -33,7 +33,7 @@ class LocalParticipant: NSObject, Participant {
         }
         set {
             if newValue {
-                guard let micTrack = micTrackFactory.makeMicTrack() else { return } // TODO: Make sure these aren't called mutliple times
+                guard micTrack == nil, let micTrack = micTrackFactory.makeMicTrack() else { return }
                 
                 self.micTrack = micTrack
                 participant?.publishAudioTrack(micTrack)
@@ -53,7 +53,7 @@ class LocalParticipant: NSObject, Participant {
         }
         set {
             if newValue {
-                guard let camera = cameraFactory.makeCamera(position: cameraPosition) else { return }
+                guard camera == nil, let camera = cameraFactory.makeCamera(position: cameraPosition) else { return }
                 
                 self.camera = camera
                 camera.delegate = self
