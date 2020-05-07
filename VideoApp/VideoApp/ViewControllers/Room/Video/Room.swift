@@ -17,6 +17,7 @@
 import TwilioVideo
 
 enum RoomChange {
+    case didStartConnecting
     case didConnect
     case didFailToConnect(error: Error)
     case didDisconnect(error:Error?)
@@ -54,7 +55,8 @@ class Room: NSObject {
         guard state == .disconnected else { fatalError("Connection already in progress.") }
 
         state = .connecting
-        
+        sendRoomUpdate(change: .didStartConnecting) // TODO: Make more dry
+
         accessTokenStore.fetchTwilioAccessToken(roomName: roomName) { [weak self] result in
             guard let self = self else { return }
             
@@ -68,7 +70,6 @@ class Room: NSObject {
                 )
                 // TODO: Inject
                 self.room = TwilioVideoSDK.connect(options: options, delegate: self)
-                
             case let .failure(error):
                 self.state = .disconnected
                 self.sendRoomUpdate(change: .didFailToConnect(error: error))
@@ -76,6 +77,12 @@ class Room: NSObject {
         }
     }
 
+    func disconnect() {
+        room?.disconnect()
+        state = .disconnected
+        sendRoomUpdate(change: .didDisconnect(error: nil))
+    }
+    
     private func updateRemoteParticipants() {
         guard let room = room else { remoteParticipants = []; return }
         

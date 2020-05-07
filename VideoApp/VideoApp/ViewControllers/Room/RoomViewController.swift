@@ -51,7 +51,7 @@ class RoomViewController: UIViewController {
     }
     
     @IBAction func leaveButtonTapped(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        viewModel.disconnect()
     }
     
     @IBAction func switchCameraButtonTapped(_ sender: Any) {
@@ -61,15 +61,20 @@ class RoomViewController: UIViewController {
 
 extension RoomViewController: RoomViewModelDelegate {
     func didConnect() {
-        // TODO: Show connection status
+        roomNameLabel.text = viewModel.data.roomName
     }
     
     func didFailToConnect(error: Error) {
-        // TODO: Show connection status
+        showError(error: error) { [weak self] in self?.navigationController?.popViewController(animated: true) }
     }
     
     func didDisconnect(error: Error?) {
-        // TODO: Show connection status
+        guard let error = error else {
+            navigationController?.popViewController(animated: true)
+            return
+        }
+        
+        showError(error: error) { [weak self] in self?.navigationController?.popViewController(animated: true) }
     }
     
     // TODO: Rename to indices?

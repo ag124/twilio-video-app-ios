@@ -40,7 +40,7 @@ class MainParticipantStore {
         guard let change = notification.userInfo?["key"] as? RoomChange else { return }
         
         switch change {
-        case .didConnect, .didFailToConnect, .didDisconnect: break
+        case .didStartConnecting, .didConnect, .didFailToConnect, .didDisconnect: break
         case .didAddRemoteParticipants, .didRemoveRemoteParticipants: updateMainParticipant()
         }
     }

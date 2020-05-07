@@ -318,6 +318,9 @@
 		DC9A5E4F246366D500E4B079 /* LocalParticipantFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E4E246366D500E4B079 /* LocalParticipantFactory.swift */; };
 		DC9A5E50246366D500E4B079 /* LocalParticipantFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E4E246366D500E4B079 /* LocalParticipantFactory.swift */; };
 		DC9A5E51246366D500E4B079 /* LocalParticipantFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E4E246366D500E4B079 /* LocalParticipantFactory.swift */; };
+		DC9A5E5324638A9C00E4B079 /* ShowError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E5224638A9C00E4B079 /* ShowError.swift */; };
+		DC9A5E5424638A9C00E4B079 /* ShowError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E5224638A9C00E4B079 /* ShowError.swift */; };
+		DC9A5E5524638A9C00E4B079 /* ShowError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E5224638A9C00E4B079 /* ShowError.swift */; };
 		DCA53948235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA53949235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
 		DCA5394A235F53E700CA26FB /* InternalAuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA53947235F53E700CA26FB /* InternalAuthStore.swift */; };
@@ -702,6 +705,7 @@
 		DC9A5E462463345F00E4B079 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
 		DC9A5E4A2463575F00E4B079 /* UserStoreFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoreFactory.swift; sourceTree = "<group>"; };
 		DC9A5E4E246366D500E4B079 /* LocalParticipantFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalParticipantFactory.swift; sourceTree = "<group>"; };
+		DC9A5E5224638A9C00E4B079 /* ShowError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowError.swift; sourceTree = "<group>"; };
 		DCA53947235F53E700CA26FB /* InternalAuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalAuthStore.swift; sourceTree = "<group>"; };
 		DCA5394B235F740200CA26FB /* AuthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
 		DCA5394F235F765D00CA26FB /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
@@ -1132,6 +1136,7 @@
 				DC1C2F8523A6E7050044FB4D /* DispatchQueueProtocol.swift */,
 				DC1C2F8923A6E7270044FB4D /* NotificationCenterProtocol.swift */,
 				DC1C2F7D23A445740044FB4D /* Notifications.swift */,
+				DC9A5E5224638A9C00E4B079 /* ShowError.swift */,
 				DC44C2E123875C4F00205174 /* StringHelpers.swift */,
 				243CDB4922665F1800637B6B /* TwilioColors.swift */,
 				DC44C2C82387118400205174 /* UITableViewCellHelpers.swift */,
@@ -2645,6 +2650,7 @@
 				DCAEBF1C2383342C00141D2D /* DestructiveButtonCell.swift in Sources */,
 				DC9A5E3B2463161400E4B079 /* CircleView.swift in Sources */,
 				DC9A5E3F2463239E00E4B079 /* ToggleButton.swift in Sources */,
+				DC9A5E5324638A9C00E4B079 /* ShowError.swift in Sources */,
 				DCEC3D0A238608B500EBDEBF /* EditUserIdentityViewModelFactory.swift in Sources */,
 				DCD7674B23DA336600A2939C /* DeepLink.swift in Sources */,
 				DCA53950235F765D00CA26FB /* AuthFlow.swift in Sources */,
@@ -2792,6 +2798,7 @@
 				DCAEBF1D2383342C00141D2D /* DestructiveButtonCell.swift in Sources */,
 				DC9A5E3C2463161400E4B079 /* CircleView.swift in Sources */,
 				DC9A5E402463239E00E4B079 /* ToggleButton.swift in Sources */,
+				DC9A5E5424638A9C00E4B079 /* ShowError.swift in Sources */,
 				DCEC3D0B238608B500EBDEBF /* EditUserIdentityViewModelFactory.swift in Sources */,
 				DCD7674C23DA336600A2939C /* DeepLink.swift in Sources */,
 				DCA53951235F765D00CA26FB /* AuthFlow.swift in Sources */,
@@ -2939,6 +2946,7 @@
 				DCAEBF1E2383342C00141D2D /* DestructiveButtonCell.swift in Sources */,
 				DC9A5E3D2463161400E4B079 /* CircleView.swift in Sources */,
 				DC9A5E412463239E00E4B079 /* ToggleButton.swift in Sources */,
+				DC9A5E5524638A9C00E4B079 /* ShowError.swift in Sources */,
 				DCEC3D0C238608B500EBDEBF /* EditUserIdentityViewModelFactory.swift in Sources */,
 				DCD7674D23DA336600A2939C /* DeepLink.swift in Sources */,
 				DCA53952235F765D00CA26FB /* AuthFlow.swift in Sources */,

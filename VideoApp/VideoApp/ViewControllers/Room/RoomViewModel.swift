@@ -31,7 +31,7 @@ class RoomViewModel {
     weak var delegate: RoomViewModelDelegate?
     var data: RoomViewModelData {
         .init(
-            roomName: roomName,
+            roomName: room.state == .connecting ? "Connecting..." : roomName,
             participants: participantsStore.participants.map { .init(participant: $0) },
             mainParticipant: .init(participant: mainParticipantStore.mainParticipant)
         )
@@ -68,6 +68,10 @@ class RoomViewModel {
         room.connect(roomName: roomName)
     }
     
+    func disconnect() {
+        room.disconnect()
+    }
+    
     func togglePin(at index: Int) {
         participantsStore.togglePin(at: index)
     }
@@ -76,7 +80,7 @@ class RoomViewModel {
         guard let change = notification.userInfo?["key"] as? RoomChange else { return }
         
         switch change {
-        case .didConnect: delegate?.didConnect()
+        case .didStartConnecting, .didConnect: delegate?.didConnect()
         case let .didFailToConnect(error): delegate?.didFailToConnect(error: error)
         case let .didDisconnect(error): delegate?.didDisconnect(error: error)
         case .didAddRemoteParticipants, .didRemoveRemoteParticipants: break
