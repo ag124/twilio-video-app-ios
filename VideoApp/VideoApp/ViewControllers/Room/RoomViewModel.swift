@@ -76,9 +76,9 @@ class RoomViewModel {
     }
 
     @objc func handleRoomDidChangeNotification(_ notification: Notification) {
-        guard let change = notification.userInfo?["key"] as? RoomChange else { return }
+        guard let payload = notification.payload as? RoomChange else { return }
         
-        switch change {
+        switch payload {
         case .didStartConnecting, .didConnect: delegate?.didConnect()
         case let .didFailToConnect(error): delegate?.didFailToConnect(error: error)
         case let .didDisconnect(error): delegate?.didDisconnect(error: error)
@@ -87,18 +87,18 @@ class RoomViewModel {
     }
 
     @objc func participantListChange(_ notification: Notification) {
-        guard let change = notification.userInfo?["key"] as? ParticipantListChange else { return }
+        guard let payload = notification.payload as? ParticipantListChange else { return }
 
-        switch change {
+        switch payload {
         case let .didUpdateList(diff): delegate?.didUpdateParticipants(diff: diff)
         case let .didUpdateParticipant(index): delegate?.didUpdateParticipantAttributes(at: index)
         }
     }
     
     @objc func mainParticipantChange(_ notification: Notification) {
-        guard let change = notification.userInfo?["key"] as? MainParticipantStoreChange else { return }
+        guard let payload = notification.payload as? MainParticipantStoreChange else { return }
 
-        switch change {
+        switch payload {
         case .didUpdateMainParticipant: delegate?.didUpdateMainParticipant()
         }
     }

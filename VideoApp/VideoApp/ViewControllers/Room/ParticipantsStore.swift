@@ -35,9 +35,9 @@ class ParticipantsStore {
     }
 
     @objc func handleRoomDidChangeNotification(_ notification:Notification) {
-        guard let change = notification.userInfo?["key"] as? RoomChange else { return }
+        guard let payload = notification.payload as? RoomChange else { return }
         
-        switch change {
+        switch payload {
         case .didStartConnecting, .didConnect, .didFailToConnect, .didDisconnect: break
         case let .didAddRemoteParticipants(participants): insertParticipants(participants: participants)
         case let .didRemoveRemoteParticipants(participants): deleteParticipants(participants: participants)
@@ -45,13 +45,13 @@ class ParticipantsStore {
     }
 
     @objc func handleParticipantDidChangeNotification(_ notification:Notification) {
-        guard let change = notification.userInfo?["key"] as? ParticipantUpdate else { return }
+        guard let payload = notification.payload as? ParticipantUpdate else { return }
         
-        switch change {
+        switch payload {
         case let .didUpdate(participant):
             guard let index = participants.index(of: participant) else { return }
             
-            post(change: .didUpdateParticipant(index: index))
+            post(.didUpdateParticipant(index: index))
             
             if participant.screenVideoTrack != nil && index != participants.newScreenIndex {
                 var new = participants
@@ -65,11 +65,11 @@ class ParticipantsStore {
     func togglePin(at index: Int) {
         if let oldPinIndex = participants.firstIndex(where: { $0.isPinned }), oldPinIndex != index {
             participants[oldPinIndex].isPinned = false
-            post(change: .didUpdateParticipant(index: oldPinIndex))
+            post(.didUpdateParticipant(index: oldPinIndex))
         }
         
         participants[index].isPinned = !participants[index].isPinned
-        post(change: .didUpdateParticipant(index: index))
+        post(.didUpdateParticipant(index: index))
     }
     
     private func insertParticipants(participants: [Participant]) {
@@ -95,7 +95,7 @@ class ParticipantsStore {
     private func sendDiff(new: [Participant]) {
         let diff = ListDiff(oldArray: self.participants, newArray: new, option: .equality)
         self.participants = new
-        post(change: .didUpdateList(diff: diff))
+        post(.didUpdateList(diff: diff))
     }
     
     private func deleteParticipants(participants: [Participant]) {
@@ -106,8 +106,8 @@ class ParticipantsStore {
         sendDiff(new: new)
     }
     
-    private func post(change: ParticipantListChange) {
-        self.notificationCenter.post(name: .participantListChange, object: self, userInfo: ["key": change])
+    private func post(_ payload: ParticipantListChange) {
+        notificationCenter.post(name: .participantListChange, object: self, payload: payload)
     }
 }
 

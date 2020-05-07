@@ -146,9 +146,9 @@ class LobbyViewController: UIViewController {
     }
 
     @objc private func participantDidChange(_ notification: Notification) {
-        guard let change = notification.userInfo?["key"] as? ParticipantUpdate else { return }
+        guard let payload = notification.payload as? ParticipantUpdate else { return }
         
-        switch change {
+        switch payload {
         case let .didUpdate(participant):
             guard participant === participant else { return }
 

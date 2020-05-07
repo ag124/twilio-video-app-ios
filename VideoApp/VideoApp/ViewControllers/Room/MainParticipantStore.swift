@@ -37,21 +37,21 @@ class MainParticipantStore {
     }
 
     @objc func roomDidChange(_ notification: Notification) {
-        guard let change = notification.userInfo?["key"] as? RoomChange else { return }
+        guard let payload = notification.payload as? RoomChange else { return }
         
-        switch change {
+        switch payload {
         case .didStartConnecting, .didConnect, .didFailToConnect, .didDisconnect: break
         case .didAddRemoteParticipants, .didRemoveRemoteParticipants: updateMainParticipant()
         }
     }
     
     @objc func participantDidChange(_ notification: Notification) {
-        guard let change = notification.userInfo?["key"] as? ParticipantUpdate else { return }
+        guard let payload = notification.payload as? ParticipantUpdate else { return }
         
-        switch change {
+        switch payload {
         case let .didUpdate(participant):
             if participant === mainParticipant {
-                post(change: .didUpdateMainParticipant)
+                post(.didUpdateMainParticipant)
             }
             updateMainParticipant()
         }
@@ -66,7 +66,7 @@ class MainParticipantStore {
 
         if new.identity != mainParticipant.identity {
             mainParticipant = new
-            post(change: .didUpdateMainParticipant)
+            post(.didUpdateMainParticipant)
             return true
         } else {
             return false
@@ -81,8 +81,8 @@ class MainParticipantStore {
             room.localParticipant
     }
     
-    private func post(change: MainParticipantStoreChange) {
-        self.notificationCenter.post(name: .mainParticipantStoreChange, object: self, userInfo: ["key": change])
+    private func post(_ payload: MainParticipantStoreChange) {
+        notificationCenter.post(name: .mainParticipantStoreChange, object: self, payload: payload)
     }
 }
 

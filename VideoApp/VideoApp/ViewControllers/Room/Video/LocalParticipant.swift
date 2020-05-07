@@ -44,7 +44,7 @@ class LocalParticipant: NSObject, Participant {
                 self.micTrack = nil
             }
 
-            postChange(.didUpdate(participant: self))
+            postUpdate()
         }
     }
     var isCameraOn: Bool {
@@ -65,8 +65,7 @@ class LocalParticipant: NSObject, Participant {
                 self.camera = nil
             }
 
-            postChange(.didUpdate(participant: self))
-            NSLog("TCR: Post change")
+            postUpdate()
         }
     }
     var participant: TwilioVideo.LocalParticipant? {
@@ -89,8 +88,9 @@ class LocalParticipant: NSObject, Participant {
         self.cameraFactory = cameraFactory
     }
 
-    private func postChange(_ change: ParticipantUpdate) {
-        self.notificationCenter.post(name: .participantDidChange, object: self, userInfo: ["key": change])
+    private func postUpdate() {
+        let payload = ParticipantUpdate.didUpdate(participant: self)
+        notificationCenter.post(name: .participantDidChange, object: self, payload: payload)
     }
 }
 
@@ -100,7 +100,7 @@ extension LocalParticipant {
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        return true // Don't use this to detect updates because the SDK tells us when a participant updates
+        true // Don't use this to detect updates because the SDK tells us when a participant updates
     }
 }
 
@@ -125,7 +125,7 @@ extension LocalParticipant: LocalParticipantDelegate {
         participant: TwilioVideo.LocalParticipant,
         networkQualityLevel: NetworkQualityLevel
     ) {
-        postChange(.didUpdate(participant: self))
+        postUpdate()
     }
 }
 

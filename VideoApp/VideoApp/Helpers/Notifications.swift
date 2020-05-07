@@ -23,3 +23,13 @@ extension Notification.Name {
     static let participantListChange = Notification.Name("ParticipantListDidChange")
     static let mainParticipantStoreChange = Notification.Name("MainParticipantStoreChange")
 }
+
+extension NotificationCenter {
+    func post(name aName: NSNotification.Name, object anObject: Any?, payload: Any) {
+        post(name: aName, object: anObject, userInfo: ["payload": payload])
+    }
+}
+
+extension Notification {
+    var payload: Any? { userInfo?["payload"] }
+}

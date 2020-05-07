@@ -37,7 +37,8 @@ class RemoteParticipant: NSObject, Participant {
     }
     
     private func postUpdate() {
-        self.notificationCenter.post(name: .participantDidChange, object: self, userInfo: ["key": ParticipantUpdate.didUpdate(participant: self)])
+        let payload = ParticipantUpdate.didUpdate(participant: self)
+        notificationCenter.post(name: .participantDidChange, object: self, payload: payload)
     }
 }
 
@@ -47,7 +48,7 @@ extension RemoteParticipant {
     }
 
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        return true // Don't use this to detect updates because the SDK tells us when a participant updates
+        true // Don't use this to detect updates because the SDK tells us when a participant updates
     }
 }
 
