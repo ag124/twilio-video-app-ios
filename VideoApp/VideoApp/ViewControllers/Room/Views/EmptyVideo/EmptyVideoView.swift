@@ -17,7 +17,7 @@
 import UIKit
 
 @IBDesignable
-class EmptyVideoView: CustomView {
+class EmptyVideoView: NibView {
     @IBOutlet weak var identityLabel: UILabel!
 
     func configure(identity: String) {

@@ -255,9 +255,9 @@
 		DC9A5DDE245C8CA300E4B079 /* MainVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC9A5DDD245C8CA300E4B079 /* MainVideoView.xib */; };
 		DC9A5DDF245C8CA300E4B079 /* MainVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC9A5DDD245C8CA300E4B079 /* MainVideoView.xib */; };
 		DC9A5DE0245C8CA300E4B079 /* MainVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC9A5DDD245C8CA300E4B079 /* MainVideoView.xib */; };
-		DC9A5DE2245CA2E000E4B079 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DE1245CA2E000E4B079 /* CustomView.swift */; };
-		DC9A5DE3245CA2E000E4B079 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DE1245CA2E000E4B079 /* CustomView.swift */; };
-		DC9A5DE4245CA2E000E4B079 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DE1245CA2E000E4B079 /* CustomView.swift */; };
+		DC9A5DE2245CA2E000E4B079 /* NibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DE1245CA2E000E4B079 /* NibView.swift */; };
+		DC9A5DE3245CA2E000E4B079 /* NibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DE1245CA2E000E4B079 /* NibView.swift */; };
+		DC9A5DE4245CA2E000E4B079 /* NibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DE1245CA2E000E4B079 /* NibView.swift */; };
 		DC9A5DF3245CB41000E4B079 /* EmptyVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DF2245CB41000E4B079 /* EmptyVideoView.swift */; };
 		DC9A5DF4245CB41000E4B079 /* EmptyVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DF2245CB41000E4B079 /* EmptyVideoView.swift */; };
 		DC9A5DF5245CB41000E4B079 /* EmptyVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5DF2245CB41000E4B079 /* EmptyVideoView.swift */; };
@@ -684,7 +684,7 @@
 		DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCell.swift; sourceTree = "<group>"; };
 		DC9A5DD9245C8AE500E4B079 /* MainVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVideoView.swift; sourceTree = "<group>"; };
 		DC9A5DDD245C8CA300E4B079 /* MainVideoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainVideoView.xib; sourceTree = "<group>"; };
-		DC9A5DE1245CA2E000E4B079 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
+		DC9A5DE1245CA2E000E4B079 /* NibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibView.swift; sourceTree = "<group>"; };
 		DC9A5DF2245CB41000E4B079 /* EmptyVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyVideoView.swift; sourceTree = "<group>"; };
 		DC9A5DF6245CB42C00E4B079 /* EmptyVideoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyVideoView.xib; sourceTree = "<group>"; };
 		DC9A5DFB245CB66800E4B079 /* VideoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoView.xib; sourceTree = "<group>"; };
@@ -1314,7 +1314,7 @@
 				DC9A5DE9245CB2A700E4B079 /* EmptyVideo */,
 				DC9A5DE8245CB1D600E4B079 /* Video */,
 				DC9A5DE7245CB1C400E4B079 /* MainVideo */,
-				DC9A5DE1245CA2E000E4B079 /* CustomView.swift */,
+				DC9A5DE1245CA2E000E4B079 /* NibView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2639,7 +2639,7 @@
 				DC9A5E0D245F611D00E4B079 /* MainParticipantStore.swift in Sources */,
 				DCC7E37624085BE200431AC3 /* APIErrorResponse.swift in Sources */,
 				DCEC3CF82385F8CA00EBDEBF /* EditTextViewModel.swift in Sources */,
-				DC9A5DE2245CA2E000E4B079 /* CustomView.swift in Sources */,
+				DC9A5DE2245CA2E000E4B079 /* NibView.swift in Sources */,
 				DC82A35323FDB6890081578C /* SDKLogLevel.swift in Sources */,
 				DC8EAE4323BA96C00045018F /* URLOpenerFactory.swift in Sources */,
 				DC8AA8CF2367A10E006C06D5 /* TestAppDelegate.swift in Sources */,
@@ -2787,7 +2787,7 @@
 				DC9A5E0E245F611D00E4B079 /* MainParticipantStore.swift in Sources */,
 				DCC7E37724085BE200431AC3 /* APIErrorResponse.swift in Sources */,
 				DCEC3CF92385F8CA00EBDEBF /* EditTextViewModel.swift in Sources */,
-				DC9A5DE3245CA2E000E4B079 /* CustomView.swift in Sources */,
+				DC9A5DE3245CA2E000E4B079 /* NibView.swift in Sources */,
 				DC82A35423FDB6890081578C /* SDKLogLevel.swift in Sources */,
 				DC8EAE4423BA96C00045018F /* URLOpenerFactory.swift in Sources */,
 				DC8AA8D02367A10E006C06D5 /* TestAppDelegate.swift in Sources */,
@@ -2935,7 +2935,7 @@
 				DC9A5E0F245F611D00E4B079 /* MainParticipantStore.swift in Sources */,
 				DCC7E37824085BE200431AC3 /* APIErrorResponse.swift in Sources */,
 				DCEC3CFA2385F8CA00EBDEBF /* EditTextViewModel.swift in Sources */,
-				DC9A5DE4245CA2E000E4B079 /* CustomView.swift in Sources */,
+				DC9A5DE4245CA2E000E4B079 /* NibView.swift in Sources */,
 				DC82A35523FDB6890081578C /* SDKLogLevel.swift in Sources */,
 				DC8EAE4523BA96C00045018F /* URLOpenerFactory.swift in Sources */,
 				DC8AA8D12367A10E006C06D5 /* TestAppDelegate.swift in Sources */,

@@ -17,7 +17,7 @@
 import UIKit
 
 @IBDesignable
-class MainVideoView: CustomView {
+class MainVideoView: NibView {
     @IBOutlet weak var emptyVideoView: EmptyVideoView!
     @IBOutlet weak var videoView: VideoView!
     

@@ -16,7 +16,7 @@
 
 import UIKit
 
-class CustomView: UIView {
+class NibView: UIView {
     override init(frame: CGRect) {
      super.init(frame: frame)
      setup()

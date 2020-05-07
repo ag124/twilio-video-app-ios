@@ -22,7 +22,7 @@ protocol VideoViewDelegate: AnyObject {
 }
 
 @IBDesignable
-class VideoView: CustomView {
+class VideoView: NibView {
     struct Config {
         let videoTrack: VideoTrack?
         let shouldMirror: Bool
