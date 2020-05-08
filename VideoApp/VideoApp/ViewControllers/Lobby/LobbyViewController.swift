@@ -91,7 +91,7 @@ class LobbyViewController: UIViewController {
                 roomName: roomTextField.text ?? "",
                 room: room
             )
-            let storyboard = UIStoryboard(name: "Main", bundle: nil) // TODO: Use a factory
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let statsViewController = storyboard.instantiateViewController(withIdentifier: "statsViewController") as! StatsViewController
             statsViewController.videoAppRoom = room
             roomViewController.statsViewController = statsViewController

@@ -129,14 +129,14 @@ extension Room: TwilioVideo.RoomDelegate {
     }
     
     func participantDidDisconnect(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant) {
-        guard let participant = remoteParticipants.find(identity: participant.identity) else { return }
+        guard let participant = remoteParticipants.first(identity: participant.identity) else { return }
         
         updateRemoteParticipants()
         post(.didRemoveRemoteParticipants(participants: [participant]))
     }
     
     func dominantSpeakerDidChange(room: TwilioVideo.Room, participant: TwilioVideo.RemoteParticipant?) {
-        guard let participant = remoteParticipants.find(identity: participant?.identity) else { return }
+        guard let participant = remoteParticipants.first(identity: participant?.identity) else { return }
 
         remoteParticipants.first(where: { $0.isDominantSpeaker })?.isDominantSpeaker = false
         participant.isDominantSpeaker = true // The participant sends out update
@@ -144,7 +144,7 @@ extension Room: TwilioVideo.RoomDelegate {
 }
 
 private extension Array where Element == RemoteParticipant {
-    func find(identity: String?) -> RemoteParticipant? {
+    func first(identity: String?) -> RemoteParticipant? {
         first(where: { $0.identity == identity })
     }
 }
