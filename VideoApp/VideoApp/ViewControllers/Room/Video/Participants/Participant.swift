@@ -27,7 +27,7 @@ protocol Participant: AnyObject, ListDiffable {
     var identity: String { get }
     var cameraTrack: VideoTrack? { get }
     var screenTrack: VideoTrack? { get }
-    var shouldMirrorCamera: Bool { get }
+    var shouldMirrorCameraVideo: Bool { get }
     var networkQualityLevel: NetworkQualityLevel { get }
     var isRemote: Bool { get }
     var isMicOn: Bool { get }

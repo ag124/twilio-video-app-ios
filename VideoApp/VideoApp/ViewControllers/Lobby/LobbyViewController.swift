@@ -162,7 +162,7 @@ class LobbyViewController: UIViewController {
             identity: participant.identity,
             videoConfig: .init(
                 videoTrack: isVisible ? participant.cameraTrack : nil,
-                shouldMirror: participant.shouldMirrorCamera
+                shouldMirror: participant.shouldMirrorCameraVideo
             )
         )
     }

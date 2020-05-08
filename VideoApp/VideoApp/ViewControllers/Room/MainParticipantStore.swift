@@ -32,9 +32,9 @@ class MainParticipantStore {
         self.notificationCenter = notificationCenter
         self.mainParticipant = room.localParticipant
         update()
-        notificationCenter.addObserver(self, selector: #selector(roomDidChange(_:)), name: .roomDidChange, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(roomDidChange(_:)), name: .roomDidChange, object: room)
         notificationCenter.addObserver(self, selector: #selector(participantDidChange(_:)), name: .participantDidChange, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(participanListDidChange(_:)), name: .participantListChange, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(participanListDidChange(_:)), name: .participantListChange, object: participantsStore)
     }
 
     @objc private func roomDidChange(_ notification: Notification) {

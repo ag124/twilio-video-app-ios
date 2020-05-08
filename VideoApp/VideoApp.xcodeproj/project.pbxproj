@@ -505,6 +505,12 @@
 		DCEDB3282464EB0B006AF70D /* RoomViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEDB3272464EB0B006AF70D /* RoomViewModelFactory.swift */; };
 		DCEDB3292464EB0B006AF70D /* RoomViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEDB3272464EB0B006AF70D /* RoomViewModelFactory.swift */; };
 		DCEDB32A2464EB0B006AF70D /* RoomViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEDB3272464EB0B006AF70D /* RoomViewModelFactory.swift */; };
+		DCEDB32C2464F815006AF70D /* UICollectionViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEDB32B2464F815006AF70D /* UICollectionViewHelpers.swift */; };
+		DCEDB32D2464F815006AF70D /* UICollectionViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEDB32B2464F815006AF70D /* UICollectionViewHelpers.swift */; };
+		DCEDB32E2464F815006AF70D /* UICollectionViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEDB32B2464F815006AF70D /* UICollectionViewHelpers.swift */; };
+		DCEDB3302464F9BA006AF70D /* IndexSetHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEDB32F2464F9BA006AF70D /* IndexSetHelpers.swift */; };
+		DCEDB3312464F9BA006AF70D /* IndexSetHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEDB32F2464F9BA006AF70D /* IndexSetHelpers.swift */; };
+		DCEDB3322464F9BA006AF70D /* IndexSetHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEDB32F2464F9BA006AF70D /* IndexSetHelpers.swift */; };
 		DCF4614C238598C700DD8FEA /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF4614B238598C700DD8FEA /* SettingsViewModel.swift */; };
 		DCF4614D238598C700DD8FEA /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF4614B238598C700DD8FEA /* SettingsViewModel.swift */; };
 		DCF4614E238598C700DD8FEA /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF4614B238598C700DD8FEA /* SettingsViewModel.swift */; };
@@ -796,6 +802,8 @@
 		DCEDB31F2464CF90006AF70D /* RoomState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomState.swift; sourceTree = "<group>"; };
 		DCEDB3232464D7EE006AF70D /* RoomFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomFactory.swift; sourceTree = "<group>"; };
 		DCEDB3272464EB0B006AF70D /* RoomViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewModelFactory.swift; sourceTree = "<group>"; };
+		DCEDB32B2464F815006AF70D /* UICollectionViewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewHelpers.swift; sourceTree = "<group>"; };
+		DCEDB32F2464F9BA006AF70D /* IndexSetHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexSetHelpers.swift; sourceTree = "<group>"; };
 		DCF4614B238598C700DD8FEA /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		DCF4615023859BA400DD8FEA /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		DCF4615423859BB800DD8FEA /* AppInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoStore.swift; sourceTree = "<group>"; };
@@ -1151,11 +1159,13 @@
 			children = (
 				DC1C2F9123AC34B30044FB4D /* BundleProtocol.swift */,
 				DC1C2F8523A6E7050044FB4D /* DispatchQueueProtocol.swift */,
+				DCEDB32F2464F9BA006AF70D /* IndexSetHelpers.swift */,
 				DC1C2F8923A6E7270044FB4D /* NotificationCenterProtocol.swift */,
 				DC1C2F7D23A445740044FB4D /* Notifications.swift */,
 				DC9A5E5224638A9C00E4B079 /* ShowError.swift */,
 				DC44C2E123875C4F00205174 /* StringHelpers.swift */,
 				243CDB4922665F1800637B6B /* TwilioColors.swift */,
+				DCEDB32B2464F815006AF70D /* UICollectionViewHelpers.swift */,
 				DC44C2C82387118400205174 /* UITableViewCellHelpers.swift */,
 				DCEC3D0D23860BBC00EBDEBF /* UITableViewHelpers.swift */,
 				DCC7E3542406ED3900431AC3 /* UserDefaultsProtocol.swift */,
@@ -2600,6 +2610,7 @@
 				DC1C2F8A23A6E7270044FB4D /* NotificationCenterProtocol.swift in Sources */,
 				DC9A5DD2245B332D00E4B079 /* RemoteParticipant.swift in Sources */,
 				DC8EAE3323BA71990045018F /* LaunchStoresFactory.swift in Sources */,
+				DCEDB3302464F9BA006AF70D /* IndexSetHelpers.swift in Sources */,
 				DC44C2EA23876B4700205174 /* EditTextSegueSender.swift in Sources */,
 				DC4E4E2323577EE500C5D313 /* Topology.swift in Sources */,
 				DC0446CF23A2F01A0072F597 /* DeveloperSettingsViewControllerFactory.swift in Sources */,
@@ -2706,6 +2717,7 @@
 				DCAEBF1C2383342C00141D2D /* DestructiveButtonCell.swift in Sources */,
 				DC9A5E3B2463161400E4B079 /* CircleView.swift in Sources */,
 				DC9A5E3F2463239E00E4B079 /* ToggleButton.swift in Sources */,
+				DCEDB32C2464F815006AF70D /* UICollectionViewHelpers.swift in Sources */,
 				DC9A5E5324638A9C00E4B079 /* ShowError.swift in Sources */,
 				DCEC3D0A238608B500EBDEBF /* EditUserIdentityViewModelFactory.swift in Sources */,
 				DCD7674B23DA336600A2939C /* DeepLink.swift in Sources */,
@@ -2752,6 +2764,7 @@
 				DC1C2F8B23A6E7270044FB4D /* NotificationCenterProtocol.swift in Sources */,
 				DC9A5DD3245B332D00E4B079 /* RemoteParticipant.swift in Sources */,
 				DC8EAE3423BA71990045018F /* LaunchStoresFactory.swift in Sources */,
+				DCEDB3312464F9BA006AF70D /* IndexSetHelpers.swift in Sources */,
 				DC44C2EB23876B4700205174 /* EditTextSegueSender.swift in Sources */,
 				DC4E4E2423577EE500C5D313 /* Topology.swift in Sources */,
 				DC0446D023A2F01A0072F597 /* DeveloperSettingsViewControllerFactory.swift in Sources */,
@@ -2858,6 +2871,7 @@
 				DCAEBF1D2383342C00141D2D /* DestructiveButtonCell.swift in Sources */,
 				DC9A5E3C2463161400E4B079 /* CircleView.swift in Sources */,
 				DC9A5E402463239E00E4B079 /* ToggleButton.swift in Sources */,
+				DCEDB32D2464F815006AF70D /* UICollectionViewHelpers.swift in Sources */,
 				DC9A5E5424638A9C00E4B079 /* ShowError.swift in Sources */,
 				DCEC3D0B238608B500EBDEBF /* EditUserIdentityViewModelFactory.swift in Sources */,
 				DCD7674C23DA336600A2939C /* DeepLink.swift in Sources */,
@@ -2904,6 +2918,7 @@
 				DC1C2F8C23A6E7270044FB4D /* NotificationCenterProtocol.swift in Sources */,
 				DC9A5DD4245B332D00E4B079 /* RemoteParticipant.swift in Sources */,
 				DC8EAE3523BA71990045018F /* LaunchStoresFactory.swift in Sources */,
+				DCEDB3322464F9BA006AF70D /* IndexSetHelpers.swift in Sources */,
 				DC44C2EC23876B4700205174 /* EditTextSegueSender.swift in Sources */,
 				DC4E4E2523577EE500C5D313 /* Topology.swift in Sources */,
 				DC0446D123A2F01A0072F597 /* DeveloperSettingsViewControllerFactory.swift in Sources */,
@@ -3010,6 +3025,7 @@
 				DCAEBF1E2383342C00141D2D /* DestructiveButtonCell.swift in Sources */,
 				DC9A5E3D2463161400E4B079 /* CircleView.swift in Sources */,
 				DC9A5E412463239E00E4B079 /* ToggleButton.swift in Sources */,
+				DCEDB32E2464F815006AF70D /* UICollectionViewHelpers.swift in Sources */,
 				DC9A5E5524638A9C00E4B079 /* ShowError.swift in Sources */,
 				DCEC3D0C238608B500EBDEBF /* EditUserIdentityViewModelFactory.swift in Sources */,
 				DCD7674D23DA336600A2939C /* DeepLink.swift in Sources */,

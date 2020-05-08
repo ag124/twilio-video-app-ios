@@ -31,30 +31,22 @@ class RoomViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        roomNameLabel.text = viewModel.data.roomName
         participantCollectionView.dataSource = self
         participantCollectionView.delegate = self
-        disableMicButton.isSelected = !viewModel.isMicOn
-        disableCameraButton.isSelected = !viewModel.isCameraOn
-        switchCameraButton.isEnabled = viewModel.isCameraOn
+        participantCollectionView.register(ParticipantCell.self)
+
         disableMicButton.didToggle = { self.viewModel.isMicOn = !$0 }
-        disableCameraButton.didToggle = { isSelected in
-            self.viewModel.isCameraOn = !isSelected
-            self.switchCameraButton.isEnabled = !isSelected
+        disableCameraButton.didToggle = {
+            self.viewModel.isCameraOn = !$0
+            self.updateView()
         }
 
-        participantCollectionView.register(
-            UINib(nibName: "ParticipantCell", bundle: nil),
-            forCellWithReuseIdentifier: "ParticipantCell"
-        )
-        
         viewModel.delegate = self
         viewModel.connect()
 
-        let participant = viewModel.data.mainParticipant
-        mainVideoView.configure(identity: participant.identity, videoConfig: participant.videoConfig)
-        
         statsViewController.addAsSwipeableView(toParentViewController: self)
+
+        updateView()
     }
     
     @IBAction func leaveButtonTapped(_ sender: Any) {
@@ -62,19 +54,22 @@ class RoomViewController: UIViewController {
     }
     
     @IBAction func switchCameraButtonTapped(_ sender: Any) {
-        viewModel.cameraPosition = viewModel.cameraPosition == .front ? .back : .front // TODO: Improve with toggle button
+        viewModel.cameraPosition = viewModel.cameraPosition == .front ? .back : .front
     }
-}
-
-extension IndexSet {
-    var indexPaths: [IndexPath] {
-        map { IndexPath(item: $0, section: 0)}
+    
+    private func updateView() {
+        roomNameLabel.text = viewModel.data.roomName
+        disableMicButton.isSelected = !viewModel.isMicOn
+        disableCameraButton.isSelected = !viewModel.isCameraOn
+        switchCameraButton.isEnabled = viewModel.isCameraOn
+        let participant = viewModel.data.mainParticipant
+        mainVideoView.configure(identity: participant.identity, videoConfig: participant.videoConfig)
     }
 }
 
 extension RoomViewController: RoomViewModelDelegate {
     func didConnect() {
-        roomNameLabel.text = viewModel.data.roomName
+        updateView()
     }
     
     func didFailToConnect(error: Error) {
@@ -82,12 +77,11 @@ extension RoomViewController: RoomViewModelDelegate {
     }
     
     func didDisconnect(error: Error?) {
-        guard let error = error else {
+        if let error = error {
+            showError(error: error) { [weak self] in self?.navigationController?.popViewController(animated: true) }
+        } else {
             navigationController?.popViewController(animated: true)
-            return
         }
-        
-        showError(error: error) { [weak self] in self?.navigationController?.popViewController(animated: true) }
     }
 
     func didUpdateList(diff: ListIndexSetResult) {
@@ -101,7 +95,7 @@ extension RoomViewController: RoomViewModelDelegate {
                         to: IndexPath(item: move.to, section: 0)
                     )
                 }
-        },
+            },
             completion: nil
         )
     }
@@ -109,13 +103,11 @@ extension RoomViewController: RoomViewModelDelegate {
     func didUpdateParticipant(at index: Int) {
         guard let cell = participantCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ParticipantCell else { return }
         
-        let participant = viewModel.data.participants[index]
-        cell.configure(identity: participant.identity, status: participant.status, videoConfig: participant.videoConfig)
+        cell.configure(participant: viewModel.data.participants[index])
     }
     
     func didUpdateMainParticipant() {
-        let participant = viewModel.data.mainParticipant
-        mainVideoView.configure(identity: participant.identity, videoConfig: participant.videoConfig)
+        updateView()
     }
 }
 
@@ -125,11 +117,8 @@ extension RoomViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ParticipantCell", for: indexPath) as! ParticipantCell
-
-        let participant = viewModel.data.participants[indexPath.item]
-        cell.configure(identity: participant.identity, status: participant.status, videoConfig: participant.videoConfig)
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ParticipantCell.identifier, for: indexPath) as! ParticipantCell
+        cell.configure(participant: viewModel.data.participants[indexPath.item])
         return cell
     }
 }

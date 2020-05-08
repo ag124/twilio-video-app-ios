@@ -21,7 +21,7 @@ class LocalParticipant: NSObject, Participant {
     let identity: String
     var cameraTrack: VideoTrack? { localCameraTrack }
     var screenTrack: VideoTrack? { nil }
-    var shouldMirrorCamera: Bool { cameraPosition == .front }
+    var shouldMirrorCameraVideo: Bool { cameraPosition == .front }
     var networkQualityLevel: NetworkQualityLevel { participant?.networkQualityLevel ?? .unknown }
     let isRemote = false
     var isMicOn: Bool {

@@ -21,7 +21,7 @@ class RemoteParticipant: NSObject, Participant {
     var identity: String { participant.identity }
     var cameraTrack: VideoTrack? { participant.remoteVideoTrack(name: TrackName.camera) }
     var screenTrack: VideoTrack? { participant.remoteVideoTrack(name: TrackName.screen) }
-    let shouldMirrorCamera = false
+    let shouldMirrorCameraVideo = false
     var networkQualityLevel: NetworkQualityLevel { participant.networkQualityLevel }
     let isRemote = true
     var isMicOn: Bool { participant.remoteAudioTracks.first(where: { $0.trackName == TrackName.mic })?.isTrackEnabled == true }

@@ -29,19 +29,24 @@ class ParticipantCell: UICollectionViewCell {
     @IBOutlet weak var pinView: UIView!
     @IBOutlet weak var muteView: UIView!
     
-    func configure(identity: String, status: Status, videoConfig: VideoView.Config) {
-        identityLabel.text = identity
-        muteView.isHidden = status.isMicOn
-        pinView.isHidden = !status.isPinned
+    func configure(participant: Participant) {
+        identityLabel.text = participant.identity
+        muteView.isHidden = participant.isMicOn
+        pinView.isHidden = !participant.isPinned
         
-        // This can be cleaner
-        if let imageName = status.networkQualityLevel.imageName {
+        if let imageName = participant.networkQualityLevel.imageName {
             networkQualityImage.image = UIImage(named: imageName)
         } else {
             networkQualityImage.image = nil
         }
 
-        videoView.configure(config: videoConfig, contentMode: .scaleAspectFill)
+        videoView.configure(
+            config: .init(
+                videoTrack: participant.cameraTrack,
+                shouldMirror: participant.shouldMirrorCameraVideo
+            ),
+            contentMode: .scaleAspectFill
+        )
     }
 }
 

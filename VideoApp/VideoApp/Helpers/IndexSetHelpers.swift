@@ -16,21 +16,8 @@
 
 import Foundation
 
-struct RoomViewModelData {
-    struct MainParticipant {
-        let identity: String
-        let videoConfig: VideoView.Config
-        
-        init(participant: VideoApp.Participant) {
-            identity = participant.identity
-            videoConfig = .init(
-                videoTrack: participant.screenTrack ?? participant.cameraTrack,
-                shouldMirror: participant.shouldMirrorCameraVideo
-            )
-        }
+extension IndexSet {
+    var indexPaths: [IndexPath] {
+        map { IndexPath(item: $0, section: 0)}
     }
-    
-    let roomName: String
-    let participants: [Participant]
-    let mainParticipant: MainParticipant
 }

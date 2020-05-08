@@ -31,7 +31,7 @@ class RoomViewModel {
     var data: RoomViewModelData {
         .init(
             roomName: room.state == .connecting ? "Connecting..." : roomName,
-            participants: participantsStore.participants.map { .init(participant: $0) },
+            participants: participantsStore.participants,
             mainParticipant: .init(participant: mainParticipantStore.mainParticipant)
         )
     }
@@ -82,7 +82,7 @@ class RoomViewModel {
         participantsStore.togglePin(at: index)
     }
 
-    @objc func handleRoomDidChangeNotification(_ notification: Notification) {
+    @objc private func handleRoomDidChangeNotification(_ notification: Notification) {
         guard let payload = notification.payload as? RoomChange else { return }
         
         switch payload {
@@ -93,7 +93,7 @@ class RoomViewModel {
         }
     }
 
-    @objc func participantListChange(_ notification: Notification) {
+    @objc private func participantListChange(_ notification: Notification) {
         guard let payload = notification.payload as? ParticipantListChange else { return }
 
         switch payload {
@@ -102,7 +102,7 @@ class RoomViewModel {
         }
     }
     
-    @objc func mainParticipantChange(_ notification: Notification) {
+    @objc private func mainParticipantChange(_ notification: Notification) {
         guard let payload = notification.payload as? MainParticipantStoreChange else { return }
 
         switch payload {

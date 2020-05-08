@@ -56,7 +56,7 @@ class ParticipantsStore {
         post(.didUpdateParticipant(index: index))
     }
 
-    @objc func handleRoomDidChangeNotification(_ notification:Notification) {
+    @objc private func handleRoomDidChangeNotification(_ notification:Notification) {
         guard let payload = notification.payload as? RoomChange else { return }
         
         switch payload {
@@ -66,7 +66,7 @@ class ParticipantsStore {
         }
     }
 
-    @objc func handleParticipantDidChangeNotification(_ notification:Notification) {
+    @objc private func handleParticipantDidChangeNotification(_ notification:Notification) {
         guard let payload = notification.payload as? ParticipantUpdate else { return }
         
         switch payload {
