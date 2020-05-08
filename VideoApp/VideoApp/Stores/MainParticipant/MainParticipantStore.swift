@@ -16,10 +16,6 @@
 
 import Foundation
 
-enum MainParticipantStoreChange {
-    case didUpdateMainParticipant
-}
-
 class MainParticipantStore {
     private(set) var mainParticipant: Participant
     private let room: Room
@@ -32,13 +28,13 @@ class MainParticipantStore {
         self.notificationCenter = notificationCenter
         self.mainParticipant = room.localParticipant
         update()
-        notificationCenter.addObserver(self, selector: #selector(roomDidChange(_:)), name: .roomDidChange, object: room)
-        notificationCenter.addObserver(self, selector: #selector(participantDidChange(_:)), name: .participantDidChange, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(participanListDidChange(_:)), name: .participantListChange, object: participantsStore)
+        notificationCenter.addObserver(self, selector: #selector(handleRoomUpdate(_:)), name: .roomUpdate, object: room)
+        notificationCenter.addObserver(self, selector: #selector(handleParticipantUpdate(_:)), name: .participantUpdate, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(handleParticipantsStoreUpdate(_:)), name: .participantsStoreUpdate, object: participantsStore)
     }
 
-    @objc private func roomDidChange(_ notification: Notification) {
-        guard let payload = notification.payload as? RoomChange else { return }
+    @objc private func handleRoomUpdate(_ notification: Notification) {
+        guard let payload = notification.payload as? Room.Update else { return }
         
         switch payload {
         case .didStartConnecting, .didConnect, .didFailToConnect, .didDisconnect: break
@@ -46,20 +42,20 @@ class MainParticipantStore {
         }
     }
     
-    @objc private func participantDidChange(_ notification: Notification) {
+    @objc private func handleParticipantUpdate(_ notification: Notification) {
         guard let payload = notification.payload as? ParticipantUpdate else { return }
         
         switch payload {
         case let .didUpdate(participant):
             if participant === mainParticipant {
-                post(.didUpdateMainParticipant)
+                postUpdate()
             }
             
             update()
         }
     }
 
-    @objc private func participanListDidChange(_ notification: Notification) {
+    @objc private func handleParticipantsStoreUpdate(_ notification: Notification) {
         update()
     }
     
@@ -78,11 +74,11 @@ class MainParticipantStore {
 
         if new.identity != mainParticipant.identity {
             mainParticipant = new
-            post(.didUpdateMainParticipant)
+            postUpdate()
         }
     }
     
-    private func post(_ payload: MainParticipantStoreChange) {
-        notificationCenter.post(name: .mainParticipantStoreChange, object: self, payload: payload)
+    private func postUpdate() {
+        notificationCenter.post(name: .mainParticipantStoreUpdate, object: self)
     }
 }

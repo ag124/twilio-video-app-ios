@@ -16,12 +16,12 @@
 
 import IGListDiffKit
 
-enum ParticipantListChange {
-    case didUpdateParticipant(index: Int)
-    case didUpdateList(diff: ListIndexSetResult)
-}
-
 class ParticipantsStore {
+    enum Update {
+        case didUpdateParticipant(index: Int)
+        case didUpdateList(diff: ListIndexSetResult)
+    }
+
     private(set) var participants: [Participant] = []
     private let room: Room
     private let notificationCenter: NotificationCenter
@@ -30,20 +30,8 @@ class ParticipantsStore {
         self.room = room
         self.notificationCenter = notificationCenter
         insertParticipants(participants: [room.localParticipant] + room.remoteParticipants)
-
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(handleRoomDidChangeNotification(_:)),
-            name: .roomDidChange,
-            object: room
-        )
-
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(handleParticipantDidChangeNotification(_:)),
-            name: .participantDidChange,
-            object: nil
-        )
+        notificationCenter.addObserver(self, selector: #selector(handleRoomUpdate(_:)), name: .roomUpdate, object: room)
+        notificationCenter.addObserver(self, selector: #selector(handleParticipantUpdate(_:)), name: .participantUpdate, object: nil)
     }
 
     func togglePin(at index: Int) {
@@ -56,8 +44,8 @@ class ParticipantsStore {
         post(.didUpdateParticipant(index: index))
     }
 
-    @objc private func handleRoomDidChangeNotification(_ notification:Notification) {
-        guard let payload = notification.payload as? RoomChange else { return }
+    @objc private func handleRoomUpdate(_ notification:Notification) {
+        guard let payload = notification.payload as? Room.Update else { return }
         
         switch payload {
         case .didStartConnecting, .didConnect, .didFailToConnect, .didDisconnect: break
@@ -66,7 +54,7 @@ class ParticipantsStore {
         }
     }
 
-    @objc private func handleParticipantDidChangeNotification(_ notification:Notification) {
+    @objc private func handleParticipantUpdate(_ notification:Notification) {
         guard let payload = notification.payload as? ParticipantUpdate else { return }
         
         switch payload {
@@ -118,8 +106,8 @@ class ParticipantsStore {
         post(.didUpdateList(diff: diff))
     }
 
-    private func post(_ payload: ParticipantListChange) {
-        notificationCenter.post(name: .participantListChange, object: self, payload: payload)
+    private func post(_ update: Update) {
+        notificationCenter.post(name: .participantsStoreUpdate, object: self, payload: update)
     }
 }
 

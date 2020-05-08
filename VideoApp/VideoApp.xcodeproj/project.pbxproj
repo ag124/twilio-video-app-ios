@@ -291,12 +291,12 @@
 		DC9A5E2924620B6D00E4B079 /* CameraTrackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E2824620B6D00E4B079 /* CameraTrackFactory.swift */; };
 		DC9A5E2A24620B6D00E4B079 /* CameraTrackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E2824620B6D00E4B079 /* CameraTrackFactory.swift */; };
 		DC9A5E2B24620B6D00E4B079 /* CameraTrackFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E2824620B6D00E4B079 /* CameraTrackFactory.swift */; };
-		DC9A5E2D2462153000E4B079 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E2C2462153000E4B079 /* Camera.swift */; };
-		DC9A5E2E2462153000E4B079 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E2C2462153000E4B079 /* Camera.swift */; };
-		DC9A5E2F2462153000E4B079 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E2C2462153000E4B079 /* Camera.swift */; };
-		DC9A5E332462211D00E4B079 /* CameraFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E322462211D00E4B079 /* CameraFactory.swift */; };
-		DC9A5E342462211D00E4B079 /* CameraFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E322462211D00E4B079 /* CameraFactory.swift */; };
-		DC9A5E352462211D00E4B079 /* CameraFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E322462211D00E4B079 /* CameraFactory.swift */; };
+		DC9A5E2D2462153000E4B079 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E2C2462153000E4B079 /* CameraManager.swift */; };
+		DC9A5E2E2462153000E4B079 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E2C2462153000E4B079 /* CameraManager.swift */; };
+		DC9A5E2F2462153000E4B079 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E2C2462153000E4B079 /* CameraManager.swift */; };
+		DC9A5E332462211D00E4B079 /* CameraManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E322462211D00E4B079 /* CameraManagerFactory.swift */; };
+		DC9A5E342462211D00E4B079 /* CameraManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E322462211D00E4B079 /* CameraManagerFactory.swift */; };
+		DC9A5E352462211D00E4B079 /* CameraManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E322462211D00E4B079 /* CameraManagerFactory.swift */; };
 		DC9A5E3724622C6100E4B079 /* CameraConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */; };
 		DC9A5E3824622C6100E4B079 /* CameraConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */; };
 		DC9A5E3924622C6100E4B079 /* CameraConfigFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */; };
@@ -714,8 +714,8 @@
 		DC9A5E1C2461C0A100E4B079 /* MicTrackFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicTrackFactory.swift; sourceTree = "<group>"; };
 		DC9A5E24246207E600E4B079 /* CameraSourceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSourceFactory.swift; sourceTree = "<group>"; };
 		DC9A5E2824620B6D00E4B079 /* CameraTrackFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTrackFactory.swift; sourceTree = "<group>"; };
-		DC9A5E2C2462153000E4B079 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
-		DC9A5E322462211D00E4B079 /* CameraFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFactory.swift; sourceTree = "<group>"; };
+		DC9A5E2C2462153000E4B079 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		DC9A5E322462211D00E4B079 /* CameraManagerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManagerFactory.swift; sourceTree = "<group>"; };
 		DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraConfigFactory.swift; sourceTree = "<group>"; };
 		DC9A5E3A2463161400E4B079 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		DC9A5E3E2463239D00E4B079 /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
@@ -1373,8 +1373,8 @@
 		DC9A5E30246215A700E4B079 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
-				DC9A5E2C2462153000E4B079 /* Camera.swift */,
-				DC9A5E322462211D00E4B079 /* CameraFactory.swift */,
+				DC9A5E2C2462153000E4B079 /* CameraManager.swift */,
+				DC9A5E322462211D00E4B079 /* CameraManagerFactory.swift */,
 				DC9A5E24246207E600E4B079 /* CameraSourceFactory.swift */,
 				DC9A5E2824620B6D00E4B079 /* CameraTrackFactory.swift */,
 				DC9A5E3624622C6100E4B079 /* CameraConfigFactory.swift */,
@@ -2657,7 +2657,7 @@
 				DC9A5E09245DFFC100E4B079 /* ParticipantsStore.swift in Sources */,
 				DC82A34F23FC9AAA0081578C /* JSONContainer.swift in Sources */,
 				DC9A5DD6245B7F8600E4B079 /* ParticipantCell.swift in Sources */,
-				DC9A5E332462211D00E4B079 /* CameraFactory.swift in Sources */,
+				DC9A5E332462211D00E4B079 /* CameraManagerFactory.swift in Sources */,
 				DC3C32DC241812B400F56AFB /* APIURLFactory.swift in Sources */,
 				DC8EAE3F23BA926E0045018F /* VideoStore.swift in Sources */,
 				DC8EAE2F23BA5EC80045018F /* AppDelegate.swift in Sources */,
@@ -2681,7 +2681,7 @@
 				DCAEBF3F238444D500141D2D /* SelectOptionViewModel.swift in Sources */,
 				DCEC3D1B23861E1700EBDEBF /* SelectVideoCodecViewModelFactory.swift in Sources */,
 				DCF4615123859BA400DD8FEA /* AppInfo.swift in Sources */,
-				DC9A5E2D2462153000E4B079 /* Camera.swift in Sources */,
+				DC9A5E2D2462153000E4B079 /* CameraManager.swift in Sources */,
 				DCF461592385A51700DD8FEA /* SettingsViewController.swift in Sources */,
 				DCB7C1852405BD68009DEA70 /* API.swift in Sources */,
 				24A723EE1ECE1D2A00486E7A /* TrackStatsTableViewCell.m in Sources */,
@@ -2811,7 +2811,7 @@
 				DC9A5E0A245DFFC100E4B079 /* ParticipantsStore.swift in Sources */,
 				DC82A35023FC9AAA0081578C /* JSONContainer.swift in Sources */,
 				DC9A5DD7245B90BA00E4B079 /* ParticipantCell.swift in Sources */,
-				DC9A5E342462211D00E4B079 /* CameraFactory.swift in Sources */,
+				DC9A5E342462211D00E4B079 /* CameraManagerFactory.swift in Sources */,
 				DC3C32DD241812B400F56AFB /* APIURLFactory.swift in Sources */,
 				DC8EAE4023BA926E0045018F /* VideoStore.swift in Sources */,
 				DC8EAE3023BA5EC80045018F /* AppDelegate.swift in Sources */,
@@ -2835,7 +2835,7 @@
 				DCAEBF40238444D500141D2D /* SelectOptionViewModel.swift in Sources */,
 				DCEC3D1C23861E1700EBDEBF /* SelectVideoCodecViewModelFactory.swift in Sources */,
 				DCF4615223859BA400DD8FEA /* AppInfo.swift in Sources */,
-				DC9A5E2E2462153000E4B079 /* Camera.swift in Sources */,
+				DC9A5E2E2462153000E4B079 /* CameraManager.swift in Sources */,
 				DCF4615A2385A51700DD8FEA /* SettingsViewController.swift in Sources */,
 				DCB7C1862405BD68009DEA70 /* API.swift in Sources */,
 				4B0012291FBA52C4004A587E /* TrackStatsTableViewCell.m in Sources */,
@@ -2965,7 +2965,7 @@
 				DC9A5E0B245DFFC100E4B079 /* ParticipantsStore.swift in Sources */,
 				DC82A35123FC9AAA0081578C /* JSONContainer.swift in Sources */,
 				DC9A5DD8245B90BB00E4B079 /* ParticipantCell.swift in Sources */,
-				DC9A5E352462211D00E4B079 /* CameraFactory.swift in Sources */,
+				DC9A5E352462211D00E4B079 /* CameraManagerFactory.swift in Sources */,
 				DC3C32DE241812B400F56AFB /* APIURLFactory.swift in Sources */,
 				DC8EAE4123BA926E0045018F /* VideoStore.swift in Sources */,
 				DC8EAE3123BA5EC80045018F /* AppDelegate.swift in Sources */,
@@ -2989,7 +2989,7 @@
 				DCAEBF41238444D500141D2D /* SelectOptionViewModel.swift in Sources */,
 				DCEC3D1D23861E1700EBDEBF /* SelectVideoCodecViewModelFactory.swift in Sources */,
 				DCF4615323859BA400DD8FEA /* AppInfo.swift in Sources */,
-				DC9A5E2F2462153000E4B079 /* Camera.swift in Sources */,
+				DC9A5E2F2462153000E4B079 /* CameraManager.swift in Sources */,
 				DCF4615B2385A51700DD8FEA /* SettingsViewController.swift in Sources */,
 				DCB7C1872405BD68009DEA70 /* API.swift in Sources */,
 				4B0012661FBA52E5004A587E /* TrackStatsTableViewCell.m in Sources */,

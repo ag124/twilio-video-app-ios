@@ -21,7 +21,7 @@ class LocalParticipantFactory {
         LocalParticipant(
             identity: UserStoreFactory().makeUserStore().user.displayName,
             micTrackFactory: MicTrackFactory(),
-            cameraFactory: CameraFactory(),
+            cameraManagerFactory: CameraManagerFactory(),
             notificationCenter: .default
         )
     }

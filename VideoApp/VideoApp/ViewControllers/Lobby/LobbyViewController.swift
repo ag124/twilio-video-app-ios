@@ -50,7 +50,7 @@ class LobbyViewController: UIViewController {
         
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
         
-        notificationCenter.addObserver(self, selector: #selector(participantDidChange(_:)), name: .participantDidChange, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(participantDidChange(_:)), name: .participantUpdate, object: nil)
         notificationCenter.addObserver(self, selector: #selector(handleSettingChange), name: .appSettingDidChange, object: nil)
         
         refresh()

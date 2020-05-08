@@ -16,8 +16,8 @@
 
 import AVFoundation
 
-class CameraFactory {
-    func makeCamera(position: AVCaptureDevice.Position) -> Camera? {
-        Camera(position: position)
+class CameraManagerFactory {
+    func makeCameraManager(position: AVCaptureDevice.Position) -> CameraManager? {
+        CameraManager(position: position)
     }
 }

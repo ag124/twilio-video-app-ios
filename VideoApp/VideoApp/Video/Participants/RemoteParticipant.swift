@@ -38,8 +38,8 @@ class RemoteParticipant: NSObject, Participant {
     }
     
     private func postUpdate() {
-        let payload = ParticipantUpdate.didUpdate(participant: self)
-        notificationCenter.post(name: .participantDidChange, object: self, payload: payload)
+        let update = ParticipantUpdate.didUpdate(participant: self)
+        notificationCenter.post(name: .participantUpdate, object: self, payload: update)
     }
 }
 

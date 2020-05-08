@@ -65,9 +65,9 @@ class RoomViewModel {
         self.participantsStore = participantsStore
         self.mainParticipantStore = mainParticipantStore
         self.notificationCenter = notificationCenter
-        notificationCenter.addObserver(self, selector: #selector(handleRoomDidChangeNotification(_:)), name: .roomDidChange, object: room)
-        notificationCenter.addObserver(self, selector: #selector(participantListChange(_:)), name: .participantListChange, object: participantsStore)
-        notificationCenter.addObserver(self, selector: #selector(mainParticipantChange(_:)), name: .mainParticipantStoreChange, object: mainParticipantStore)
+        notificationCenter.addObserver(self, selector: #selector(handleRoomUpdate(_:)), name: .roomUpdate, object: room)
+        notificationCenter.addObserver(self, selector: #selector(handleParticipansStoreUpdate(_:)), name: .participantsStoreUpdate, object: participantsStore)
+        notificationCenter.addObserver(self, selector: #selector(handleMainParticipantStoreUpdate), name: .mainParticipantStoreUpdate, object: mainParticipantStore)
     }
     
     func connect() {
@@ -82,8 +82,8 @@ class RoomViewModel {
         participantsStore.togglePin(at: index)
     }
 
-    @objc private func handleRoomDidChangeNotification(_ notification: Notification) {
-        guard let payload = notification.payload as? RoomChange else { return }
+    @objc private func handleRoomUpdate(_ notification: Notification) {
+        guard let payload = notification.payload as? Room.Update else { return }
         
         switch payload {
         case .didStartConnecting, .didConnect: delegate?.didConnect()
@@ -93,8 +93,8 @@ class RoomViewModel {
         }
     }
 
-    @objc private func participantListChange(_ notification: Notification) {
-        guard let payload = notification.payload as? ParticipantListChange else { return }
+    @objc private func handleParticipansStoreUpdate(_ notification: Notification) {
+        guard let payload = notification.payload as? ParticipantsStore.Update else { return }
 
         switch payload {
         case let .didUpdateList(diff): delegate?.didUpdateList(diff: diff)
@@ -102,11 +102,7 @@ class RoomViewModel {
         }
     }
     
-    @objc private func mainParticipantChange(_ notification: Notification) {
-        guard let payload = notification.payload as? MainParticipantStoreChange else { return }
-
-        switch payload {
-        case .didUpdateMainParticipant: delegate?.didUpdateMainParticipant()
-        }
+    @objc private func handleMainParticipantStoreUpdate() {
+        delegate?.didUpdateMainParticipant()
     }
 }

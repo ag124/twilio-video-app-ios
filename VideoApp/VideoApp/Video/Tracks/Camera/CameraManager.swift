@@ -16,13 +16,13 @@
 
 import TwilioVideo
 
-protocol CameraDelegate: AnyObject {
-    func cameraSourceInterruptionEnded(camera: Camera)
-    func cameraSourceWasInterrupted(camera: Camera)
+protocol CameraManagerDelegate: AnyObject {
+    func trackSourceWasInterrupted(track: LocalVideoTrack)
+    func trackSourceInterruptionEnded(track: LocalVideoTrack)
 }
 
-class Camera: NSObject {
-    weak var delegate: CameraDelegate?
+class CameraManager: NSObject {
+    weak var delegate: CameraManagerDelegate?
     let track: LocalVideoTrack
     var position: AVCaptureDevice.Position? {
         get {
@@ -78,12 +78,12 @@ class Camera: NSObject {
     }
 }
 
-extension Camera: CameraSourceDelegate {
+extension CameraManager: CameraSourceDelegate {
     func cameraSourceWasInterrupted(source: CameraSource, reason: AVCaptureSession.InterruptionReason) {
-        delegate?.cameraSourceWasInterrupted(camera: self)
+        delegate?.trackSourceWasInterrupted(track: track)
     }
 
     func cameraSourceInterruptionEnded(source: CameraSource) {
-        delegate?.cameraSourceInterruptionEnded(camera: self)
+        delegate?.trackSourceInterruptionEnded(track: track)
     }
 }

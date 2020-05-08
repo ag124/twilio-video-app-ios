@@ -16,16 +16,16 @@
 
 import TwilioVideo
 
-enum RoomChange {
-    case didStartConnecting
-    case didConnect
-    case didFailToConnect(error: Error)
-    case didDisconnect(error:Error?)
-    case didAddRemoteParticipants(participants: [Participant])
-    case didRemoveRemoteParticipants(participants: [Participant])
-}
-
 @objc class Room: NSObject {
+    enum Update {
+        case didStartConnecting
+        case didConnect
+        case didFailToConnect(error: Error)
+        case didDisconnect(error: Error?)
+        case didAddRemoteParticipants(participants: [Participant])
+        case didRemoveRemoteParticipants(participants: [Participant])
+    }
+
     let localParticipant: LocalParticipant
     private(set) var remoteParticipants: [RemoteParticipant] = []
     private(set) var state: RoomState = .disconnected
@@ -86,8 +86,8 @@ enum RoomChange {
         remoteParticipants = room.remoteParticipants.map { RemoteParticipant(participant: $0, notificationCenter: .default) }
     }
     
-    private func post(_ payload: RoomChange) {
-        notificationCenter.post(name: .roomDidChange, object: self, payload: payload)
+    private func post(_ update: Update) {
+        notificationCenter.post(name: .roomUpdate, object: self, payload: update)
     }
 }
 

@@ -48,20 +48,25 @@ class LocalParticipant: NSObject, Participant {
     var isPinned = false
     var isCameraOn: Bool {
         get {
-            camera?.track.isEnabled ?? false
+            cameraManager?.track.isEnabled ?? false
         }
         set {
             if newValue {
-                guard camera == nil, let camera = cameraFactory.makeCamera(position: cameraPosition) else { return }
+                guard
+                    cameraManager == nil,
+                    let cameraManager = cameraManagerFactory.makeCameraManager(position: cameraPosition)
+                    else {
+                        return
+                }
                 
-                self.camera = camera
-                camera.delegate = self
-                participant?.publishVideoTrack(camera.track)
+                self.cameraManager = cameraManager
+                cameraManager.delegate = self
+                participant?.publishVideoTrack(cameraManager.track)
             } else {
-                guard let camera = camera else { return }
+                guard let cameraManager = cameraManager else { return }
                 
-                participant?.unpublishVideoTrack(camera.track)
-                self.camera = nil
+                participant?.unpublishVideoTrack(cameraManager.track)
+                self.cameraManager = nil
             }
 
             postUpdate()
@@ -70,31 +75,31 @@ class LocalParticipant: NSObject, Participant {
     var participant: TwilioVideo.LocalParticipant? {
         didSet { participant?.delegate = self }
     }
-    var localCameraTrack: LocalVideoTrack? { camera?.track }
+    var localCameraTrack: LocalVideoTrack? { cameraManager?.track }
     var cameraPosition: AVCaptureDevice.Position = .front {
-        didSet { camera?.position = cameraPosition }
+        didSet { cameraManager?.position = cameraPosition }
     }
     private(set) var micTrack: LocalAudioTrack?
     private let micTrackFactory: MicTrackFactory
-    private let cameraFactory: CameraFactory
+    private let cameraManagerFactory: CameraManagerFactory
     private let notificationCenter: NotificationCenter
-    private var camera: Camera?
+    private var cameraManager: CameraManager?
 
     init(
         identity: String,
         micTrackFactory: MicTrackFactory,
-        cameraFactory: CameraFactory,
+        cameraManagerFactory: CameraManagerFactory,
         notificationCenter: NotificationCenter
     ) {
         self.identity = identity
         self.micTrackFactory = micTrackFactory
-        self.cameraFactory = cameraFactory
+        self.cameraManagerFactory = cameraManagerFactory
         self.notificationCenter = notificationCenter
     }
 
     private func postUpdate() {
-        let payload = ParticipantUpdate.didUpdate(participant: self)
-        notificationCenter.post(name: .participantDidChange, object: self, payload: payload)
+        let update = ParticipantUpdate.didUpdate(participant: self)
+        notificationCenter.post(name: .participantUpdate, object: self, payload: update)
     }
 }
 
@@ -133,12 +138,12 @@ extension LocalParticipant: LocalParticipantDelegate {
     }
 }
 
-extension LocalParticipant: CameraDelegate {
-    func cameraSourceWasInterrupted(camera: Camera) {
-        participant?.unpublishVideoTrack(camera.track)
+extension LocalParticipant: CameraManagerDelegate {
+    func trackSourceWasInterrupted(track: LocalVideoTrack) {
+        participant?.unpublishVideoTrack(track)
     }
     
-    func cameraSourceInterruptionEnded(camera: Camera) {
-        participant?.publishVideoTrack(camera.track)
+    func trackSourceInterruptionEnded(track: LocalVideoTrack) {
+        participant?.publishVideoTrack(track)
     }
 }

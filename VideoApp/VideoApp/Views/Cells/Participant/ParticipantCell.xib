@@ -23,7 +23,7 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bw6-zp-Gby" userLabel="Video" customClass="VideoView" customModule="VideoApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="212" height="260"/>
-                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dQx-04-Sus" userLabel="Status">
                         <rect key="frame" x="0.0" y="0.0" width="212" height="260"/>
@@ -41,7 +41,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="network-quality-level-0" translatesAutoresizingMaskIntoConstraints="NO" id="Cn0-bb-Mwd" userLabel="Network Quality">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="network-quality-level-5" translatesAutoresizingMaskIntoConstraints="NO" id="Cn0-bb-Mwd" userLabel="Network Quality">
                                 <rect key="frame" x="5" y="233" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Cn0-bb-Mwd" secondAttribute="height" multiplier="1:1" id="YoV-0P-PER"/>
@@ -147,6 +147,6 @@
     <resources>
         <image name="Pin" width="24" height="24"/>
         <image name="audio-muted-white" width="24" height="24"/>
-        <image name="network-quality-level-0" width="40" height="40"/>
+        <image name="network-quality-level-5" width="40" height="40"/>
     </resources>
 </document>
