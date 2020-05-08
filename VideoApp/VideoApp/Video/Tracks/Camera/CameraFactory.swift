@@ -18,6 +18,6 @@ import AVFoundation
 
 class CameraFactory {
     func makeCamera(position: AVCaptureDevice.Position) -> Camera? {
-        Camera(position: position) // Rename to CameraSession?
+        Camera(position: position)
     }
 }

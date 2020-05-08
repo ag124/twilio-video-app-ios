@@ -26,10 +26,11 @@ extension Notification.Name {
 
 extension NotificationCenter {
     func post(name aName: NSNotification.Name, object anObject: Any?, payload: Any) {
-        post(name: aName, object: anObject, userInfo: ["payload": payload])
+        post(name: aName, object: anObject, userInfo: [Notification.payloadKey: payload])
     }
 }
 
 extension Notification {
-    var payload: Any? { userInfo?["payload"] }
+    static let payloadKey = "payload"
+    var payload: Any? { userInfo?[Self.payloadKey] }
 }

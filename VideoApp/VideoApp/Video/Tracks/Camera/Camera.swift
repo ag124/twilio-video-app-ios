@@ -21,11 +21,10 @@ protocol CameraDelegate: AnyObject {
     func cameraSourceWasInterrupted(camera: Camera)
 }
 
-// TODO: Rename to CameraManager?
 class Camera: NSObject {
     weak var delegate: CameraDelegate?
     let track: LocalVideoTrack
-    var position: AVCaptureDevice.Position? { // TODO: Don't use optional?
+    var position: AVCaptureDevice.Position? {
         get {
             source.device?.position
         }
@@ -35,7 +34,9 @@ class Camera: NSObject {
             }
             
             source.selectCaptureDevice(captureDevice) { _, _, error in
-                guard error == nil else { return } // Log error
+                if let error = error {
+                    print("Select capture device error: \(error)")
+                }
             }
         }
     }
@@ -45,17 +46,16 @@ class Camera: NSObject {
     private let trackFactory = CameraTrackFactory()
     private let source: CameraSource
 
-    // TODO: Really needed?
     deinit {
         source.stopCapture() // Prevent leaking the CameraSource when a Track/Source has been created
     }
 
     init?(position: AVCaptureDevice.Position) {
         guard let source = sourceFactory.makeCameraSource() else {
-            print("unable to create a capturer..."); return nil
+            print("unable to create a capturer."); return nil
         }
         guard let track = trackFactory.makeCameraTrack(source: source) else {
-            print("unable to create a "); return nil
+            print("unable to create camera track"); return nil
         }
         guard let captureDevice = CameraSource.captureDevice(position: .front) else {
             print("Unable to create capture device."); return nil
@@ -70,8 +70,10 @@ class Camera: NSObject {
         
         source.requestOutputFormat(config.outputFormat)
         
-        source.startCapture(device: captureDevice, format: config.inputFormat) { _, _, _ in // TODO: Log error
-            NSLog("TCR: Did start capturing")
+        source.startCapture(device: captureDevice, format: config.inputFormat) { _, _, error in
+            if let error = error {
+                print("Start capture error: \(error)")
+            }
         }
     }
 }
@@ -84,6 +86,4 @@ extension Camera: CameraSourceDelegate {
     func cameraSourceInterruptionEnded(source: CameraSource) {
         delegate?.cameraSourceInterruptionEnded(camera: self)
     }
-    
-    // TODO: Handle other error function also
 }

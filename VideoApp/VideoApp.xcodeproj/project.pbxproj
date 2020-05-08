@@ -914,6 +914,7 @@
 				24A723E41ECE1CBD00486E7A /* Models */,
 				DCAEBEE32376011D00141D2D /* Stores */,
 				DCAEBEE42376049700141D2D /* Storyboards */,
+				DC9A5DE5245CB15200E4B079 /* Video */,
 				24491F791E37F89F00028B24 /* ViewControllers */,
 				24A723E81ECE1D2A00486E7A /* Views */,
 				241282461E36A6AB002198BE /* Assets.xcassets */,
@@ -959,6 +960,12 @@
 			isa = PBXGroup;
 			children = (
 				DC0446C723A2D7720072F597 /* Cells */,
+				DCEDB33524651287006AF70D /* CircleView */,
+				DCEDB3372465129A006AF70D /* CircleButton */,
+				DC9A5DE9245CB2A700E4B079 /* EmptyVideoView */,
+				DC9A5DE7245CB1C400E4B079 /* MainVideoView */,
+				DCEDB3362465128E006AF70D /* ToggleButton */,
+				DC9A5DE8245CB1D600E4B079 /* VideoView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1074,12 +1081,8 @@
 			children = (
 				DC9A5DC9245A215000E4B079 /* RoomViewController.swift */,
 				DC386DD02458DC05009E994A /* RoomViewModel.swift */,
-				DCEDB3272464EB0B006AF70D /* RoomViewModelFactory.swift */,
 				DC9A5E04245DDC1000E4B079 /* RoomViewModelData.swift */,
-				DC9A5E08245DFFC100E4B079 /* ParticipantsStore.swift */,
-				DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */,
-				DC9A5DE5245CB15200E4B079 /* Video */,
-				DC9A5DE6245CB15900E4B079 /* Views */,
+				DCEDB3272464EB0B006AF70D /* RoomViewModelFactory.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -1110,6 +1113,7 @@
 		DC0446C723A2D7720072F597 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				DC9A5E03245DC5FD00E4B079 /* Participant */,
 				DC44C2C023870D0800205174 /* BasicCell.swift */,
 				DC44C2C123870D0800205174 /* BasicCell.xib */,
 				DCAEBF1A2383342C00141D2D /* DestructiveButtonCell.swift */,
@@ -1160,6 +1164,7 @@
 				DC1C2F9123AC34B30044FB4D /* BundleProtocol.swift */,
 				DC1C2F8523A6E7050044FB4D /* DispatchQueueProtocol.swift */,
 				DCEDB32F2464F9BA006AF70D /* IndexSetHelpers.swift */,
+				DC9A5DE1245CA2E000E4B079 /* NibView.swift */,
 				DC1C2F8923A6E7270044FB4D /* NotificationCenterProtocol.swift */,
 				DC1C2F7D23A445740044FB4D /* Notifications.swift */,
 				DC9A5E5224638A9C00E4B079 /* ShowError.swift */,
@@ -1329,55 +1334,40 @@
 			path = Video;
 			sourceTree = "<group>";
 		};
-		DC9A5DE6245CB15900E4B079 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				DC9A5E03245DC5FD00E4B079 /* ParticipantCell */,
-				DC9A5DE9245CB2A700E4B079 /* EmptyVideo */,
-				DC9A5DE8245CB1D600E4B079 /* Video */,
-				DC9A5DE7245CB1C400E4B079 /* MainVideo */,
-				DC9A5DE1245CA2E000E4B079 /* NibView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		DC9A5DE7245CB1C400E4B079 /* MainVideo */ = {
+		DC9A5DE7245CB1C400E4B079 /* MainVideoView */ = {
 			isa = PBXGroup;
 			children = (
 				DC9A5DD9245C8AE500E4B079 /* MainVideoView.swift */,
 				DC9A5DDD245C8CA300E4B079 /* MainVideoView.xib */,
 			);
-			path = MainVideo;
+			path = MainVideoView;
 			sourceTree = "<group>";
 		};
-		DC9A5DE8245CB1D600E4B079 /* Video */ = {
+		DC9A5DE8245CB1D600E4B079 /* VideoView */ = {
 			isa = PBXGroup;
 			children = (
 				DC9A5DFF245CB67600E4B079 /* VideoView.swift */,
 				DC9A5DFB245CB66800E4B079 /* VideoView.xib */,
 			);
-			path = Video;
+			path = VideoView;
 			sourceTree = "<group>";
 		};
-		DC9A5DE9245CB2A700E4B079 /* EmptyVideo */ = {
+		DC9A5DE9245CB2A700E4B079 /* EmptyVideoView */ = {
 			isa = PBXGroup;
 			children = (
 				DC9A5DF2245CB41000E4B079 /* EmptyVideoView.swift */,
 				DC9A5DF6245CB42C00E4B079 /* EmptyVideoView.xib */,
 			);
-			path = EmptyVideo;
+			path = EmptyVideoView;
 			sourceTree = "<group>";
 		};
-		DC9A5E03245DC5FD00E4B079 /* ParticipantCell */ = {
+		DC9A5E03245DC5FD00E4B079 /* Participant */ = {
 			isa = PBXGroup;
 			children = (
 				DC9A5DD5245B7F8600E4B079 /* ParticipantCell.swift */,
-				DC9A5E3A2463161400E4B079 /* CircleView.swift */,
-				DC9A5E3E2463239D00E4B079 /* ToggleButton.swift */,
-				DC9A5E422463247700E4B079 /* CircleButton.swift */,
 				DC9A5E102460CE9800E4B079 /* ParticipantCell.xib */,
 			);
-			path = ParticipantCell;
+			path = Participant;
 			sourceTree = "<group>";
 		};
 		DC9A5E30246215A700E4B079 /* Camera */ = {
@@ -1432,6 +1422,8 @@
 				DC0446B623A182780072F597 /* CrashReport */,
 				DCB7C18C2405C0A4009DEA70 /* Keychain */,
 				DC76FCFF241054A3001B2FFC /* EnvironmentVariable */,
+				DCEDB3342465117E006AF70D /* MainParticipant */,
+				DCEDB33324651140006AF70D /* Participants */,
 				DCDCD370241929C6004A30FC /* TwilioAccessToken */,
 				DC04468F238F1E2D0072F597 /* User */,
 				DCD7675423DF551B00A2939C /* UserActivity */,
@@ -1687,6 +1679,46 @@
 				DCEDB31B2464C4CC006AF70D /* TrackName.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		DCEDB33324651140006AF70D /* Participants */ = {
+			isa = PBXGroup;
+			children = (
+				DC9A5E08245DFFC100E4B079 /* ParticipantsStore.swift */,
+			);
+			path = Participants;
+			sourceTree = "<group>";
+		};
+		DCEDB3342465117E006AF70D /* MainParticipant */ = {
+			isa = PBXGroup;
+			children = (
+				DC9A5E0C245F611D00E4B079 /* MainParticipantStore.swift */,
+			);
+			path = MainParticipant;
+			sourceTree = "<group>";
+		};
+		DCEDB33524651287006AF70D /* CircleView */ = {
+			isa = PBXGroup;
+			children = (
+				DC9A5E3A2463161400E4B079 /* CircleView.swift */,
+			);
+			path = CircleView;
+			sourceTree = "<group>";
+		};
+		DCEDB3362465128E006AF70D /* ToggleButton */ = {
+			isa = PBXGroup;
+			children = (
+				DC9A5E3E2463239D00E4B079 /* ToggleButton.swift */,
+			);
+			path = ToggleButton;
+			sourceTree = "<group>";
+		};
+		DCEDB3372465129A006AF70D /* CircleButton */ = {
+			isa = PBXGroup;
+			children = (
+				DC9A5E422463247700E4B079 /* CircleButton.swift */,
+			);
+			path = CircleButton;
 			sourceTree = "<group>";
 		};
 		DCF4614F23859B9A00DD8FEA /* AppInfo */ = {

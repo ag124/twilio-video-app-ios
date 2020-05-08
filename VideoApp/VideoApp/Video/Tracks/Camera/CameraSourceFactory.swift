@@ -18,10 +18,6 @@ import TwilioVideo
 
 class CameraSourceFactory {
     private let appSettingsStore: AppSettingsStoreWriting = AppSettingsStore.shared
-
-//    init(appSettingsStore: AppSettingsStoreWriting) {
-//        self.appSettingsStore = appSettingsStore
-//    }
     
     func makeCameraSource() -> CameraSource? {
         let options = CameraSourceOptions() { builder in
